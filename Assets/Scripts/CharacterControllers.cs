@@ -11,7 +11,12 @@ public class CharacterControllers : MonoBehaviour
     
     [SerializeField] private float dodgeSpeed;
     [SerializeField] private float speed;
-    
+
+    private void Awake()
+    {
+        
+    }
+
     private void Start(){
         controller = GetComponent<CharacterController>();
     }
