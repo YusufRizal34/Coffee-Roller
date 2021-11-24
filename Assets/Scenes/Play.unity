@@ -223,14 +223,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4649822598562130330, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1535221082}
-    - target: {fileID: 4649822598562130330, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7193325373259580915, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
       propertyPath: m_Name
       value: Platform Container
@@ -454,66 +446,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!1 &1212047737
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1212047740}
-  - component: {fileID: 1212047739}
-  - component: {fileID: 1212047738}
-  m_Layer: 0
-  m_Name: ObjectPooler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1212047738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212047737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29d04bc2866b6ff4cb27ac8f9f906d29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1212047739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212047737}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73a4a7933de0b4d4a922c6b163048777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - type: Ground
-    prefab: {fileID: 7193325373259580915, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
-    size: 5
---- !u!4 &1212047740
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212047737}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
-  m_LocalScale: {x: 0.6097561, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1535221082}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1314338889
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: dodgeSpeed
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: maxJumpTime

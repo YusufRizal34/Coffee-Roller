@@ -23,16 +23,6 @@ public class CharacterControllers : MonoBehaviour
     
     [Header("MOVEMENT CONTROLLER")]
     [SerializeField] private float speed;
-<<<<<<< HEAD
-
-    private void Awake()
-    {
-        
-    }
-
-    private void Start(){
-        controller = GetComponent<CharacterController>();
-=======
     [SerializeField] private float dodgeSpeed;
 
     [Header("GRAVITY SETTING")]
@@ -42,7 +32,6 @@ public class CharacterControllers : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
->>>>>>> f721ae2444540826cf77342e5b37ec9ed23e97d0
     }
 
     private void Update()
