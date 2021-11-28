@@ -113,10 +113,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f8ec9db2408994e87be002c718d60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positions: 1
+  isAndroid: 1
+  leftCollider: {fileID: 0}
+  centerCollider: {fileID: 0}
+  rightCollider: {fileID: 0}
+  stumbleDelay: 1
   initialJumpVelocity: 0
   maxJumpHeight: 4
   maxJumpTime: 0.5
-  dodgeSpeed: 20
   speed: 5
+  dodgeSpeed: 20
   gravity: -9.8
