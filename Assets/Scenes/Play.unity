@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -645,6 +645,23 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &564922861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2113060942830968443, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
+  m_PrefabInstance: {fileID: 776740407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &564922867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564922861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2144be7074bf74b9c909fd251b9351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +755,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &730081261 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7193325373259580915, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
+  m_PrefabInstance: {fileID: 776740407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &730081263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730081261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a8dd04dce7ee24eab4b7ff2b44fd77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundTile: {fileID: 564922861}
 --- !u!1001 &776740407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1520,6 +1555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d04bc2866b6ff4cb27ac8f9f906d29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawningObject: 0
 --- !u!114 &1212047739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,6 +1572,7 @@ MonoBehaviour:
   - type: Ground
     prefab: {fileID: 7193325373259580915, guid: 4aad540fe2eff594c8546ef358efc28e, type: 3}
     size: 5
+  objectToSpawn: {fileID: 0}
 --- !u!4 &1212047740
 Transform:
   m_ObjectHideFlags: 0
@@ -2842,7 +2879,7 @@ Transform:
   - {fileID: 1028095553}
   - {fileID: 1647194473}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1001 &270925727808788406
 PrefabInstance:
