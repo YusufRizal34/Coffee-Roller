@@ -13,7 +13,7 @@ public class FollowedCamera : MonoBehaviour
         offset = transform.position - target.position;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if(target != null){
             Vector3 targetCamPos = target.position + offset;

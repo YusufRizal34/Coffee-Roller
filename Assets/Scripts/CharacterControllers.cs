@@ -10,6 +10,11 @@ public class CharacterControllers : MonoBehaviour
     private float currentXPosition;
     private float currentYPosition;
 
+    [Header("ADNROID CONTROLLER")]
+    public static bool tap, swipeUp, swipeDown;
+    private bool isDraging = false;
+    private Vector2 startTouch, swipeDelta;
+
     [Header("COLLIDER CONTROLLER")]
     public GameObject leftCollider;
     public GameObject centerCollider;
@@ -22,7 +27,7 @@ public class CharacterControllers : MonoBehaviour
     [Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
     
     [Header("MOVEMENT CONTROLLER")]
-    [SerializeField] private float speed;
+    public float speed;
     [SerializeField] private float dodgeSpeed;
 
     [Header("GRAVITY SETTING")]
@@ -42,16 +47,47 @@ public class CharacterControllers : MonoBehaviour
 
     private void MovementController()
     {
-
+        //USING ANDROID
         if(isAndroid){
             currentXPosition = Input.acceleration.x;
 
-            if(Input.GetKeyDown("space")){
-                if(_controller.isGrounded){
-                    currentYPosition = initialJumpVelocity;
+            //CHECK IF TOUCHED
+            if (Input.touches.Length > 0)
+            {
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    tap = true;
+                    isDraging = true;
+                    startTouch = Input.touches[0].position;
+                }
+                else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+                {
+                    isDraging = false;
+                    Reset();
                 }
             }
+
+            swipeDelta = Vector2.zero;
+            if (isDraging)
+            {
+                // if (Input.touches.Length < 0)
+                //     swipeDelta = Input.touches[0].position - startTouch;
+                if (Input.GetMouseButton(0))
+                    swipeDelta = (Vector2)Input.mousePosition - startTouch;
+            }
+
+            if (swipeDelta.magnitude > 100)
+            {
+                float x = swipeDelta.x;
+                float y = swipeDelta.y;
+                if (Mathf.Abs(x) < Mathf.Abs(y))
+                {
+                    if (y > 0) currentYPosition = initialJumpVelocity;
+                }
+                Reset();
+            }
         }
+        //USING KEYBOARD
         else{
             currentXPosition = 0;
 
@@ -77,25 +113,6 @@ public class CharacterControllers : MonoBehaviour
         _controller.Move(moving * Time.deltaTime);
     }
 
-    // public void StumbleController(GameObject objects)
-    // {
-    //     if(objects.name == centerCollider.name){
-    //         gameObject.SetActive(false);
-    //     }
-    //     else if(objects.name == rightCollider.name){
-    //         StartCoroutine(StumbleDelay(stumbleDelay));
-    //         currentXPosition = -newPosition;
-    //         positions = Position.Right;
-    //         _controller.Move(moving);
-    //     }
-    //     else if(objects.name == leftCollider.name){
-    //         StartCoroutine(StumbleDelay(stumbleDelay));
-    //         currentXPosition = newPosition;
-    //         positions = Position.Right;
-    //         _controller.Move(moving);
-    //     }
-    // }
-
     private IEnumerator StumbleDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -113,5 +130,11 @@ public class CharacterControllers : MonoBehaviour
     {
         float timeToApex = maxJumpTime / 2;
         initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+    }
+
+    private void Reset()
+    {
+        startTouch = swipeDelta = Vector2.zero;
+        isDraging = false;
     }
 }
