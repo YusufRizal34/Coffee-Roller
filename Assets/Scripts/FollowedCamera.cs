@@ -6,7 +6,7 @@ public class FollowedCamera : MonoBehaviour
 {
     public Transform target;
     public float smoothing = 5f;
-    Vector3 offset;
+    public Vector3 offset;
 
     private void Start()
     {
