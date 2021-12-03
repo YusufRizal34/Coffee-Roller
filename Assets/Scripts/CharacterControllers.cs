@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterControllers : MonoBehaviour
 {
@@ -32,11 +33,17 @@ public class CharacterControllers : MonoBehaviour
 
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
-    
+
+    [Header("PLAYER DISTANCE")]
+    public Text distancemove;
+    float distanceunit = 0;
+    public string display = "Score : {0}";
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
+        InvokeRepeating("distance", 0, 1 / speed);
     }
 
     private void Update()
@@ -136,5 +143,12 @@ public class CharacterControllers : MonoBehaviour
     {
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
+    }
+
+    void distance()
+    {
+        display = "Score = {0}";
+        distanceunit = distanceunit + 1;
+        distancemove.text = distanceunit.ToString();
     }
 }
