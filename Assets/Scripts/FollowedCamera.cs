@@ -6,14 +6,14 @@ public class FollowedCamera : MonoBehaviour
 {
     public Transform target;
     public float smoothing = 5f;
-    Vector3 offset;
+    public Vector3 offset;
 
     private void Start()
     {
         offset = transform.position - target.position;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if(target != null){
             Vector3 targetCamPos = target.position + offset;
