@@ -122,7 +122,7 @@ public class CharacterControllers : MonoBehaviour
         {
             float x = swipeDelta.x;
             float y = swipeDelta.y;
-            if (Mathf.Abs(x) < Mathf.Abs(y))
+            if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
             {
                 if (y > 0) currentYPosition = initialJumpVelocity;
             }
