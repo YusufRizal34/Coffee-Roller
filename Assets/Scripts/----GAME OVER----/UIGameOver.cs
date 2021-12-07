@@ -7,7 +7,7 @@ public class UIGameOver : MonoBehaviour
 {
     void Update()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
