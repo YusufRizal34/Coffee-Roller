@@ -5,36 +5,39 @@ using UnityEngine.UI;
 
 public class CharacterControllers : MonoBehaviour
 {
-    [Header("CHARACTER CONTROLLER")]
-    private CharacterController _controller;
-    public bool isAndroid = true;
-    private float currentXPosition;
-    private float currentYPosition;
+	[Header("CHARACTER CONTROLLER")]
+	private CharacterController _controller;
+	public bool isAndroid = true;
+	private float currentXPosition;
+	private float currentYPosition;
 
-    [Header("ADNROID CONTROLLER")]
-    public static bool tap, swipeUp, swipeDown;
-    private bool isDraging = false;
-    private Vector2 startTouch, swipeDelta;
+	[Header("ADNROID CONTROLLER")]
+	public static bool tap, swipeUp, swipeDown;
+	private bool isDraging = false;
+	private Vector2 startTouch, swipeDelta;
 
-    [Header("COLLIDER CONTROLLER")]
-    public GameObject leftCollider;
-    public GameObject centerCollider;
-    public GameObject rightCollider;
-    public float stumbleDelay = 1f;
+	[Header("COLLIDER CONTROLLER")]
+	public GameObject leftCollider;
+	public GameObject centerCollider;
+	public GameObject rightCollider;
+	public float stumbleDelay = 1f;
 
-    [Header("JUMP CONTROLLER")]
-    public float initialJumpVelocity;
-    public float maxJumpHeight = 4f;
-    [Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
-    
-    [Header("MOVEMENT CONTROLLER")]
-    public float speed;
-	public float maxSpeed;
-	public int positionZ;
+	[Header("JUMP CONTROLLER")]
+	public float initialJumpVelocity;
+	public float maxJumpHeight = 4f;
+	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
+
+	[Header("MOVEMENT CONTROLLER")]
+	public float speed;
+	private float normalSpeed;
+	public float increaseSpeed;
+	//private float positionZ;
 	[SerializeField] private float dodgeSpeed;
 
 	[Header("ANDROID MOVEMENT CONTROLLER")]
     public float tiltingSpeed;
+	private float normal_TiltingSpeed;
+	public float increase_TiltingSpeed;
     [SerializeField] private float tiltingDodgeSpeed;
 
     [Header("GRAVITY SETTING")]
@@ -44,6 +47,10 @@ public class CharacterControllers : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
+
+		//positionZ = 25f;
+		normalSpeed = speed;
+		normal_TiltingSpeed = tiltingSpeed;
 	}
 
 	private void Update()
@@ -51,11 +58,6 @@ public class CharacterControllers : MonoBehaviour
 		HandleGravity();
 		MovementController();
 
-		//IncreaseSpeed;
-		if (transform.position.z <= positionZ)
-		{
-			speed += 1 * Time.deltaTime;
-		}
 	}
 
     private void MovementController()
@@ -146,6 +148,7 @@ public class CharacterControllers : MonoBehaviour
         yield return new WaitForSeconds(delay);
     }
 
+
     private void HandleGravity()
     {
         if(!_controller.isGrounded)
@@ -165,4 +168,17 @@ public class CharacterControllers : MonoBehaviour
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.CompareTag("IncreaseSpeed"))
+		{
+			speed = increaseSpeed;
+			increaseSpeed += 1;
+
+			tiltingSpeed = increase_TiltingSpeed;
+			increase_TiltingSpeed += 1;
+		}
+	}
+
 }
