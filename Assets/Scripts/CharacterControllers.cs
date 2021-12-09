@@ -27,7 +27,7 @@ public class CharacterControllers : MonoBehaviour
 	public float maxJumpHeight = 4f;
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
-	[Header("MOVEMENT CONTROLLER")]
+	[Header("PC MOVEMENT CONTROLLER")]
 	public float speed;
 	private float normalSpeed;
 	public float increaseSpeed;
@@ -48,8 +48,10 @@ public class CharacterControllers : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         SetupJump();
 
-		//positionZ = 25f;
+		//-------------INCREASE SPEED------------
+		//FOR PC
 		normalSpeed = speed;
+		//FOR ANDROID
 		normal_TiltingSpeed = tiltingSpeed;
 	}
 
@@ -171,11 +173,14 @@ public class CharacterControllers : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		//----------INCRASE SPEED-----------
 		if (other.CompareTag("IncreaseSpeed"))
 		{
+			//FOR PC
 			speed = increaseSpeed;
 			increaseSpeed += 1;
 
+			//FOR ANDROID
 			tiltingSpeed = increase_TiltingSpeed;
 			increase_TiltingSpeed += 1;
 		}
