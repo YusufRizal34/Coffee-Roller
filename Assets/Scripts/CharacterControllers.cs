@@ -29,9 +29,11 @@ public class CharacterControllers : MonoBehaviour
     
     [Header("MOVEMENT CONTROLLER")]
     public float speed;
-    [SerializeField] private float dodgeSpeed;
+	public float maxSpeed;
+	public int positionZ;
+	[SerializeField] private float dodgeSpeed;
 
-    [Header("ANDROID MOVEMENT CONTROLLER")]
+	[Header("ANDROID MOVEMENT CONTROLLER")]
     public float tiltingSpeed;
     [SerializeField] private float tiltingDodgeSpeed;
 
@@ -42,13 +44,19 @@ public class CharacterControllers : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
-    }
+	}
 
-    private void Update()
-    {
-        HandleGravity();
-        MovementController();
-    }
+	private void Update()
+	{
+		HandleGravity();
+		MovementController();
+
+		//IncreaseSpeed;
+		if (transform.position.z <= positionZ)
+		{
+			speed += 1 * Time.deltaTime;
+		}
+	}
 
     private void MovementController()
     {
