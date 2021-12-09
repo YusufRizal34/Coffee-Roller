@@ -29,38 +29,46 @@ public class CharacterControllers : MonoBehaviour
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	public float speed;
-	private float normalSpeed;
-	public float increaseSpeed;
-	//private float positionZ;
 	[SerializeField] private float dodgeSpeed;
 
 	[Header("ANDROID MOVEMENT CONTROLLER")]
     public float tiltingSpeed;
-	private float normal_TiltingSpeed;
-	public float increase_TiltingSpeed;
     [SerializeField] private float tiltingDodgeSpeed;
 
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
+    public bool isIncreaseSpeed = false;
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
-
-		//-------------INCREASE SPEED------------
-		//FOR PC
-		normalSpeed = speed;
-		//FOR ANDROID
-		normal_TiltingSpeed = tiltingSpeed;
 	}
 
 	private void Update()
 	{
 		HandleGravity();
-		MovementController();
 
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false){
+            
+            IncreaseSpeed();
+        }
+
+		MovementController();
 	}
+
+    private void IncreaseSpeed(){
+        speed++;
+        tiltingSpeed++;
+        StartCoroutine(ResetCooldown());
+    }
+
+    private IEnumerator ResetCooldown(){
+        isIncreaseSpeed = true;
+        yield return new WaitForSeconds(1f);
+        isIncreaseSpeed = false;
+    }
 
     private void MovementController()
     {
@@ -170,20 +178,4 @@ public class CharacterControllers : MonoBehaviour
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
     }
-
-	private void OnTriggerEnter(Collider other)
-	{
-		//----------INCRASE SPEED-----------
-		if (other.CompareTag("IncreaseSpeed"))
-		{
-			//FOR PC
-			speed = increaseSpeed;
-			increaseSpeed += 1;
-
-			//FOR ANDROID
-			tiltingSpeed = increase_TiltingSpeed;
-			increase_TiltingSpeed += 1;
-		}
-	}
-
 }
