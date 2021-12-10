@@ -11,7 +11,7 @@ public class PlayerSelection : MonoBehaviour
     public GameObject characterListPanel;
     public GameObject characterPanel;
 
-    [SerializeField] private int currentSelection;
+    public int currentSelection;
     public int CurrentSelection{ get{ return currentSelection; } }
     
     // public Image characterImage;
@@ -45,6 +45,8 @@ public class PlayerSelection : MonoBehaviour
 
         for(int i = 0; i < characters.Length; i++){
             GameObject panel = Instantiate(characterPanel, characterListPanel.transform);
+            panel.GetComponent<SelectCharacter>().panelNumber = i;
+
             GameObject image = Instantiate(characters[i].Image);
             SetPosition(image, panel);
         }
