@@ -20,8 +20,5 @@ public class SpawnCoin : MonoBehaviour
         Instantiate(spawnee, transform.position, transform.rotation);
         if (stopSpawning)
             CancelInvoke("SpawnObject");
-        {
-
-        }
     }
 }

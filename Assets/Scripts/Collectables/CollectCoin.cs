@@ -10,7 +10,6 @@ public class CollectCoin : MonoBehaviour
         if (other.tag == "Player Model")
         {
             CollactableCoin.coinCount += 1;
-            Debug.Log("Coin :" + CollactableCoin.coinCount);
             Destroy(gameObject);
         }
     }
