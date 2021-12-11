@@ -8,8 +8,12 @@ public class CollactableCoin : MonoBehaviour
     public static int coinCount;
     public Text coinText;
 
-    // Update is called once per frame
-    void Update()
+     private void Awake()
+    {
+        coinText = GameObject.Find("Coin Text").GetComponent<Text>();
+    }
+
+    private void Update()
     {
         coinText.text = "" + coinCount;
     }
