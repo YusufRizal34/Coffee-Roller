@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class UIMainMenu : MonoBehaviour
 {
+	public GameObject quitPopupUI;
+	public bool active;
+
 	public void StartGame()
 	{
 		SceneManager.LoadScene("Play");
@@ -22,9 +25,11 @@ public class UIMainMenu : MonoBehaviour
 		Debug.Log("METUOOO");
 	}
 
-	public void RetryGame()
+	public void QuitPoopup()
 	{
-		SceneManager.LoadScene("Play");
-		Debug.Log("MAIN NEH!!!");
+		SceneManager.LoadScene("QuitPopup");
+		quitPopupUI.SetActive(active);
+		Debug.Log("PIYE ?");
 	}
+
 }

@@ -12,5 +12,16 @@ public class UIGameOver : MonoBehaviour
 			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 	}
-    
+
+	public void QuitToMainMenu()
+	{
+		SceneManager.LoadScene("MainMenu");
+		Debug.Log("METUOOO");
+	}
+
+	public void RetryGame()
+	{
+		SceneManager.LoadScene("Play");
+		Debug.Log("MAIN NEH!!!");
+	}
 }
