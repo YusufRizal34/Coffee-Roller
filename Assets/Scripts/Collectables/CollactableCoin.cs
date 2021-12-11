@@ -10,7 +10,7 @@ public class CollactableCoin : MonoBehaviour
 
      private void Awake()
     {
-        coinText = GameObject.Find("Coin Text").GetComponent<Text>();
+        coinText = GameObject.Find("Coin Value Text").GetComponent<Text>();
     }
 
     private void Update()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CollectCoin : MonoBehaviour
 {
-    public AudioClip CoinFX;
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player Model")

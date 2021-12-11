@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterControllers : MonoBehaviour
 {
@@ -15,12 +14,6 @@ public class CharacterControllers : MonoBehaviour
 	public static bool tap, swipeUp, swipeDown;
 	private bool isDraging = false;
 	private Vector2 startTouch, swipeDelta;
-
-	[Header("COLLIDER CONTROLLER")]
-	public GameObject leftCollider;
-	public GameObject centerCollider;
-	public GameObject rightCollider;
-	public float stumbleDelay = 1f;
 
 	[Header("JUMP CONTROLLER")]
 	public float initialJumpVelocity;
@@ -152,12 +145,6 @@ public class CharacterControllers : MonoBehaviour
         Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, tiltingSpeed);
         return moving;
     }
-
-    private IEnumerator StumbleDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-    }
-
 
     private void HandleGravity()
     {

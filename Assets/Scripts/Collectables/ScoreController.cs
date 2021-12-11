@@ -10,7 +10,7 @@ public class ScoreController : MonoBehaviour
 
     private void Awake()
     {
-        scoreText = GameObject.Find("Score Text").GetComponent<Text>();
+        scoreText = GameObject.Find("Score Value Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
