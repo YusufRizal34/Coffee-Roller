@@ -11,22 +11,27 @@ public class PlayerSelection : MonoBehaviour
     public GameObject characterListPanel;
     public GameObject characterPanel;
 
+    public int coins = 5000;
     public int currentSelection;
     public int CurrentSelection{ get{ return currentSelection; } }
     
+    public Text coin;
     // public Image characterImage;
     public Text characterName;
-    public Text characterDescription;
+    public Text characterPrice;
     public Text skillDescription;
+    public bool isCharacterUnlock;
+    public GameObject buyButton;
 
     private void Start() {
+        CurrentCoin();
+
         if(characters.Length > 0){
             Initialize();
         }
         else{
             print("No Character Attached");
         }
-        
     }
 
     private void SetPosition(GameObject child, GameObject parent){
@@ -36,6 +41,7 @@ public class PlayerSelection : MonoBehaviour
 
     private void Update() {
         ChangeToCurrentCharacter(currentSelection);
+        ChangeButtonOption(isCharacterUnlock);
     }
 
     private void Initialize(){
@@ -55,7 +61,32 @@ public class PlayerSelection : MonoBehaviour
     private void ChangeToCurrentCharacter(int current){
         // characterImage.sprite       = characters[currentSelection].Image;
         characterName.text          = characters[currentSelection].Name;
-        // characterDescription.text   = characters[currentSelection].Description;
+        characterPrice.text         = characters[currentSelection].Price.ToString();
         skillDescription.text       = characters[currentSelection].SkillDescription;
+        isCharacterUnlock           = characters[currentSelection].IsUnlock;
+    }
+
+    private void ChangeButtonOption(bool isCharacterUnlock){
+        if(isCharacterUnlock == true){
+            buyButton.SetActive(false);
+        }
+        else{
+            buyButton.SetActive(true);
+        }
+    }
+
+    public void BuyCharacter(){
+        if(coins >= characters[currentSelection].Price){
+            coins -= characters[currentSelection].Price;
+            CurrentCoin();
+            characters[currentSelection].IsUnlock = true;
+        }
+        else{
+            print("NO U CANT!!!");
+        }
+    }
+
+    private void CurrentCoin(){
+        coin.text = coins.ToString();
     }
 }
