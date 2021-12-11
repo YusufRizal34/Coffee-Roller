@@ -10,6 +10,10 @@ public class GroundGenerator : MonoBehaviour
     public PlatformTile[] earlyTilePrefab;
     List<PlatformTile> spawnedTiles = new List<PlatformTile>();
 
+    [Header("Coin Spawm")]
+    public List<CollectCoin> coinSpawn;
+    public float coin;
+
     void Start()
     {
 
@@ -29,7 +33,6 @@ public class GroundGenerator : MonoBehaviour
         for (int i = 0; i < tilePrefab.Length; i++) {
             spawnPosition -= tilePrefab[i].startPoint.localPosition;
             PlatformTile spawnedTile = Instantiate(tilePrefab[i], spawnPosition, Quaternion.identity) as PlatformTile;
-            
             spawnPosition = spawnedTile.endPoint.position;
             spawnedTile.transform.SetParent(transform);
             spawnedTiles.Add(spawnedTile);
