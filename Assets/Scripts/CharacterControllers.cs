@@ -5,49 +5,69 @@ using UnityEngine.UI;
 
 public class CharacterControllers : MonoBehaviour
 {
-    [Header("CHARACTER CONTROLLER")]
-    private CharacterController _controller;
-    public bool isAndroid = true;
-    private float currentXPosition;
-    private float currentYPosition;
+	[Header("CHARACTER CONTROLLER")]
+	private CharacterController _controller;
+	public bool isAndroid = true;
+	private float currentXPosition;
+	private float currentYPosition;
 
-    [Header("ADNROID CONTROLLER")]
-    public static bool tap, swipeUp, swipeDown;
-    private bool isDraging = false;
-    private Vector2 startTouch, swipeDelta;
+	[Header("ADNROID CONTROLLER")]
+	public static bool tap, swipeUp, swipeDown;
+	private bool isDraging = false;
+	private Vector2 startTouch, swipeDelta;
 
-    [Header("COLLIDER CONTROLLER")]
-    public GameObject leftCollider;
-    public GameObject centerCollider;
-    public GameObject rightCollider;
-    public float stumbleDelay = 1f;
+	[Header("COLLIDER CONTROLLER")]
+	public GameObject leftCollider;
+	public GameObject centerCollider;
+	public GameObject rightCollider;
+	public float stumbleDelay = 1f;
 
-    [Header("JUMP CONTROLLER")]
-    public float initialJumpVelocity;
-    public float maxJumpHeight = 4f;
-    [Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
-    
-    [Header("MOVEMENT CONTROLLER")]
-    public float speed;
-    [SerializeField] private float dodgeSpeed;
+	[Header("JUMP CONTROLLER")]
+	public float initialJumpVelocity;
+	public float maxJumpHeight = 4f;
+	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
-    [Header("ANDROID MOVEMENT CONTROLLER")]
+	[Header("PC MOVEMENT CONTROLLER")]
+	public float speed;
+	[SerializeField] private float dodgeSpeed;
+
+	[Header("ANDROID MOVEMENT CONTROLLER")]
     public float tiltingSpeed;
     [SerializeField] private float tiltingDodgeSpeed;
 
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
+    public bool isIncreaseSpeed = false;
+
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
+	}
+
+	private void Update()
+	{
+		HandleGravity();
+
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false){
+            
+            IncreaseSpeed();
+        }
+
+		MovementController();
+	}
+
+    private void IncreaseSpeed(){
+        speed++;
+        tiltingSpeed++;
+        StartCoroutine(ResetCooldown());
     }
 
-    private void Update()
-    {
-        HandleGravity();
-        MovementController();
+    private IEnumerator ResetCooldown(){
+        isIncreaseSpeed = true;
+        yield return new WaitForSeconds(1f);
+        isIncreaseSpeed = false;
     }
 
     private void MovementController()
@@ -137,6 +157,7 @@ public class CharacterControllers : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
     }
+
 
     private void HandleGravity()
     {
