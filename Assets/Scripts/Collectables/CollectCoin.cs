@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CollectCoin : MonoBehaviour
 {
-    public AudioSource CoinFX;
-
     void OnTriggerEnter(Collider other)
     {
-        CoinFX.Play();
-        CollactableCoin.coinCount += 1;
-        this.gameObject.SetActive(false);
+        if (other.tag == "Player Model")
+        {
+            CollactableCoin.coinCount += 1;
+            Destroy(gameObject);
+        }
     }
 }
