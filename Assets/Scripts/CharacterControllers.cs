@@ -20,12 +20,15 @@ public class CharacterControllers : MonoBehaviour
 	public float maxJumpHeight = 4f;
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
+    [Header("PC MOVEMENT CONTROLLER")]
+    public float speed;
+    [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
+    [SerializeField] private float speedIncrease = 1; ///DEFAULT 1
+
 	[Header("PC MOVEMENT CONTROLLER")]
-	public float speed;
-	[SerializeField] private float dodgeSpeed;
+	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
 
 	[Header("ANDROID MOVEMENT CONTROLLER")]
-    public float tiltingSpeed;
     [SerializeField] private float tiltingDodgeSpeed;
 
     [Header("GRAVITY SETTING")]
@@ -43,8 +46,7 @@ public class CharacterControllers : MonoBehaviour
 	{
 		HandleGravity();
 
-        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false){
-            
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
             IncreaseSpeed();
         }
 
@@ -52,8 +54,7 @@ public class CharacterControllers : MonoBehaviour
 	}
 
     private void IncreaseSpeed(){
-        speed++;
-        tiltingSpeed++;
+        speed += speedIncrease;
         StartCoroutine(ResetCooldown());
     }
 
@@ -63,8 +64,7 @@ public class CharacterControllers : MonoBehaviour
         isIncreaseSpeed = false;
     }
 
-    private void MovementController()
-    {
+    private void MovementController(){
         Vector3 moving;
         
         //USING ANDROID
@@ -142,7 +142,7 @@ public class CharacterControllers : MonoBehaviour
             Reset();
         }
 
-        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, tiltingSpeed);
+        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, speed);
         return moving;
     }
 

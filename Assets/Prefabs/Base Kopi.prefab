@@ -15,10 +15,11 @@ GameObject:
   - component: {fileID: 270925728723176173}
   - component: {fileID: 1051339271}
   - component: {fileID: 1051339272}
-  - component: {fileID: 1051339267}
+  - component: {fileID: 916235710695261278}
+  - component: {fileID: 601832857092904000}
   m_Layer: 0
-  m_Name: Player Model
-  m_TagString: Untagged
+  m_Name: Base Kopi
+  m_TagString: Player Model
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,19 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f8ec9db2408994e87be002c718d60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAndroid: 1
-  leftCollider: {fileID: 0}
-  centerCollider: {fileID: 0}
-  rightCollider: {fileID: 0}
-  stumbleDelay: 2
+  isAndroid: 0
   initialJumpVelocity: 0
-  maxJumpHeight: 2
+  maxJumpHeight: 3
   maxJumpTime: 0.5
-  speed: 20
+  speed: 50
+  maxSpeed: 51
+  speedIncrease: 1
   dodgeSpeed: 0.2
-  tiltingSpeed: 20
-  tiltingDodgeSpeed: 5
-  gravity: -0.2
+  tiltingDodgeSpeed: 15
+  gravity: -0.5
   isIncreaseSpeed: 0
 --- !u!114 &1051339271
 MonoBehaviour:
@@ -156,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 0}
---- !u!114 &1051339267
+--- !u!114 &916235710695261278
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,18 +163,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 270925728723176160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52b7ebddb0a5729479340d76c606651e, type: 3}
+  m_Script: {fileID: 11500000, guid: df3dc7ca1d8f9804a9bea464b50e9583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Robusta
-  characterDescription: Lorem Ipsum is simply dummy text of the printing and typesetting
-    industry. Lorem Ipsum has been the industry's standard dummy text ever since
-    the 1500s, when an unknown printer took a galley of type and scrambled it to
-    make a type specimen book.
-  skillDescription: Lorem Ipsum is simply dummy text of the printing and typesetting
-    industry. Lorem Ipsum has been the industry's standard dummy text ever since
-    tLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-    Ipsum has been the industry's standard dummy text ever since t
-  characterPrice: 0
-  characterImage: {fileID: 1779731309479674639, guid: 238abf5f53418f24d837571da4b3d6ab, type: 3}
-  isUnlock: 1
+  coinText: {fileID: 0}
+--- !u!114 &601832857092904000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270925728723176160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508065638e335144a01b20c27136dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
