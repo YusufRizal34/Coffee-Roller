@@ -5,17 +5,8 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public static int distance;
-    public Text scoreText;
-
-    private void Awake()
+   private void Update()
     {
-        scoreText = GameObject.Find("Score Value Text").GetComponent<Text>();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        scoreText.text = "" + (int)transform.position.z;
+        GameManager.currentScore = (int)transform.position.z;
     }
 }

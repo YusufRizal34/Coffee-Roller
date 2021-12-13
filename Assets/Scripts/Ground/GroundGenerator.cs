@@ -11,7 +11,7 @@ public class GroundGenerator : MonoBehaviour
     List<PlatformTile> spawnedTiles = new List<PlatformTile>();
 
     [Header("Coin Spawm")]
-    public List<CollectCoin> coinSpawn;
+    public List<CoinController> coinSpawn;
     public float coin;
 
     void Start()
@@ -46,6 +46,7 @@ public class GroundGenerator : MonoBehaviour
             PlatformTile tileTmp = spawnedTiles[0];
             spawnedTiles.RemoveAt(0);
             tileTmp.transform.position = spawnedTiles[spawnedTiles.Count - 1].endPoint.position - tileTmp.startPoint.localPosition;
+            tileTmp.SpawnObject();
             spawnedTiles.Add(tileTmp);
         }
     }
