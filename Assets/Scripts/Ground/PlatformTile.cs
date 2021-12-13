@@ -10,9 +10,11 @@ public class PlatformTile : MonoBehaviour
     public GameObject[] coinContainer;
 
     public void SpawnObject(){
-        for(int i = 0; i < coinContainer.Length; i++){
-            if(!coinContainer[i].activeSelf){
-                coinContainer[i].SetActive(true);
+        if(coinContainer != null){
+            for(int i = 0; i < coinContainer.Length; i++){
+                if(!coinContainer[i].activeSelf){
+                    coinContainer[i].SetActive(true);
+                }
             }
         }
     }
