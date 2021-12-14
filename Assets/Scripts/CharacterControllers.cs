@@ -20,10 +20,10 @@ public class CharacterControllers : MonoBehaviour
 	public float maxJumpHeight = 4f;
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
-    [Header("PC MOVEMENT CONTROLLER")]
+    [Header("MOVEMENT CONTROLLER")]
     public float speed;
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
-    [SerializeField] private float speedIncrease = 1; ///DEFAULT 1
+    [SerializeField] private float acceleration = 1; ///DEFAULT 1
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
@@ -54,7 +54,7 @@ public class CharacterControllers : MonoBehaviour
 	}
 
     private void IncreaseSpeed(){
-        speed += speedIncrease;
+        speed += acceleration;
         StartCoroutine(ResetCooldown());
     }
 
