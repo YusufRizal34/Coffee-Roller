@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class GroundGenerator : MonoBehaviour
 {
+    [Header("SPAWN CONTROLLER")]
     public Camera mainCamera;
     public Transform startPoint;
+
+    [Header("SPAWN GROUND")]
     public PlatformTile[] tilePrefab;
     public PlatformTile[] earlyTilePrefab;
     List<PlatformTile> spawnedTiles = new List<PlatformTile>();
 
-    [Header("Coin Spawm")]
+    [Header("SPAWN COIN")]
     public List<CoinController> coinSpawn;
     public float coin;
 
@@ -45,6 +48,7 @@ public class GroundGenerator : MonoBehaviour
         if (mainCamera.WorldToViewportPoint(spawnedTiles[0].endPoint.position).z < 0) {
             PlatformTile tileTmp = spawnedTiles[0];
             spawnedTiles.RemoveAt(0);
+            tileTmp.ChangeObjectRotation();
             tileTmp.transform.position = spawnedTiles[spawnedTiles.Count - 1].endPoint.position - tileTmp.startPoint.localPosition;
             tileTmp.SpawnObject();
             spawnedTiles.Add(tileTmp);

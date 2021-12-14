@@ -18,4 +18,14 @@ public class PlatformTile : MonoBehaviour
             }
         }
     }
+
+    public void ChangeObjectRotation(){
+        if(coinContainer != null){
+            Vector3 eulerRotation = new Vector3(90, 190, 0);
+
+            for(int i = 0; i < coinContainer.Length; i++){
+                coinContainer[i].transform.rotation = Quaternion.Euler(eulerRotation);
+            }
+        }
+    }
 }
