@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Arabica : Character
 {
+    private void Start() {
+        CastSkill();
+    }
+
     protected override void CastSkill(){
-        ///CAST
+        GameManager.CastSkill(this.Name);
     }
 }

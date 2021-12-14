@@ -8,6 +8,7 @@ public enum CanvasType{
     MainMenu,
     PlayScene,
     ResultScene,
+    ShopScene,
 }
 
 public class GameManager : MonoBehaviour
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     public CanvasType type;
 
     public static int coin;
-    public static int currentCoin;
+    public static float currentCoin;
 
     public static int highScore;
     public static int currentScore;
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
 
     public Text highScoreText;
     public Text currentScoreText;
+
+    [Header("Skill Character")]
+    private static bool arabicaSkill = false;
+    private static bool libericaSkill = false;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -56,6 +61,9 @@ public class GameManager : MonoBehaviour
         if(currentScoreText != null){
             currentScoreText.text   = UserDataManager.Progress.CurrentScore.ToString();
         }
+
+        arabicaSkill    = false;
+        libericaSkill   = false;
     }
 
     private void Update() {
@@ -75,6 +83,9 @@ public class GameManager : MonoBehaviour
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
             break;
+            case CanvasType.ShopScene :
+                coinText  = GameObject.FindWithTag("Coin").GetComponent<Text>();
+            break;
         }
     }
 
@@ -90,6 +101,9 @@ public class GameManager : MonoBehaviour
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
         }
+        else if(type == CanvasType.ShopScene){
+            coinText.text    = coin.ToString();
+        }
     }
 
     public void Result(){
@@ -101,6 +115,21 @@ public class GameManager : MonoBehaviour
 
     public void Retry(){
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
+    }
+
+    public static void CastSkill(string characterName){
+        if(characterName == "Arabica"){
+            arabicaSkill = true;
+        }
+        else if(characterName == "Liberica"){
+            libericaSkill = true;
+        }
+    }
+
+    public static void SkillController(string characterName){
+        if(arabicaSkill == true){
+            currentCoin *= 1.5f;
+        }
     }
 
     private void AddCoin(){

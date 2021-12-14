@@ -7,4 +7,9 @@ public class UserProgressData
     public float CurrentCoin;
     public float HighScore;
     public float CurrentScore;
+
+    public int CurrentDoppio;
+    public int CurrentLongBlack;
+    public int LevelDoppio;
+    public int LevelLongBlack;
 }
