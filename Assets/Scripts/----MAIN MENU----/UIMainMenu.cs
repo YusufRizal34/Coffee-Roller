@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class UIMainMenu : MonoBehaviour
 {
-	public GameObject quitPopupUI;
-	public bool active;
+	//public GameObject quitPopupUI;
+	//public bool active;
 
 	public void StartGame()
 	{
@@ -28,7 +28,7 @@ public class UIMainMenu : MonoBehaviour
 	public void QuitPoopup()
 	{
 		SceneManager.LoadScene("QuitPopup");
-		quitPopupUI.SetActive(active);
+		//quitPopupUI.SetActive(active);
 		Debug.Log("PIYE ?");
 	}
 
