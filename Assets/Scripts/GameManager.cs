@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
         SwithCanvas();
 
+        FindObjectOfType<AudioManager>().Play("BGM");
+
         UserDataManager.Load();
 
         if(coinText != null){
