@@ -18,7 +18,7 @@ public class GameOverScreen : MonoBehaviour
 	private void Update()
 	{
 		// UNTUK POSISI JATUHNYA KARAKTER
-		if (transform.position.y < fallPositionY)
+		if (_charController.transform.position.y < fallPositionY)
 		{
 			GameOver();
 		}
