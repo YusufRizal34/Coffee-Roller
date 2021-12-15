@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public enum CanvasType{
+    SplashScene,
+    OpeningScene,
     MainMenu,
     PlayScene,
     ResultScene,
@@ -66,9 +68,11 @@ public class GameManager : MonoBehaviour
 
     private void SwithCanvas(){
         switch(type){
-            case CanvasType.MainMenu :
-                //NOTHING
-            break;
+            // case CanvasType.OpeningScene :
+            //     //NOTHING
+            // case CanvasType.MainMenu :
+            //     //NOTHING
+            // break;
             case CanvasType.PlayScene :
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -77,12 +81,19 @@ public class GameManager : MonoBehaviour
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
             break;
+            default :
+            break;
         }
     }
 
     private void UIOnUpdate(){
-        if(type == CanvasType.MainMenu){
-
+        if(type == CanvasType.SplashScene){
+            Invoke("LoadGame", 5f);
+        }
+        if(type == CanvasType.OpeningScene){
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space")){
+                SceneManager.LoadScene("MainMenu");
+            }
         }
         else if(type == CanvasType.PlayScene){
             currentCoinText.text    = currentCoin.ToString();
@@ -119,4 +130,12 @@ public class GameManager : MonoBehaviour
     private void AddCurrentScore(){
         UserDataManager.Progress.CurrentScore = currentScore;
     }
+
+    public void LoadScene(string menu){
+		SceneManager.LoadScene(menu);
+	}
+
+    public void LoadGame(){
+		SceneManager.LoadScene("OpeningScene");
+	}
 }
