@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Result(){
+        SkillController();
         AddCoin();
         AddCurrentScore();
         UserDataManager.Save();
@@ -121,12 +122,9 @@ public class GameManager : MonoBehaviour
         if(characterName == "Arabica"){
             arabicaSkill = true;
         }
-        else if(characterName == "Liberica"){
-            libericaSkill = true;
-        }
     }
 
-    public static void SkillController(string characterName){
+    private void SkillController(){
         if(arabicaSkill == true){
             currentCoin *= 1.5f;
         }
