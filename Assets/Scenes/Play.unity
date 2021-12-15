@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ac5867a11c3d1418ce1d251808baaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 3
   coinText: {fileID: 0}
   currentCoinText: {fileID: 0}
   highScoreText: {fileID: 0}
@@ -2124,12 +2124,20 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: maxSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: isAndroid
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: dodgeSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: tiltingDodgeSpeed
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d85098c01a695444292a2f11cae7b831, type: 3}
