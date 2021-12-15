@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public enum CanvasType{
+    SplashScene,
+    OpeningScene,
     MainMenu,
     PlayScene,
     ResultScene,
-    ShopScene,
 }
 
 public class GameManager : MonoBehaviour
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     public CanvasType type;
 
     public static int coin;
-    public static float currentCoin;
+    public static int currentCoin;
 
     public static int highScore;
     public static int currentScore;
@@ -37,10 +38,6 @@ public class GameManager : MonoBehaviour
 
     public Text highScoreText;
     public Text currentScoreText;
-
-    [Header("Skill Character")]
-    private static bool arabicaSkill = false;
-    private static bool libericaSkill = false;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -61,9 +58,6 @@ public class GameManager : MonoBehaviour
         if(currentScoreText != null){
             currentScoreText.text   = UserDataManager.Progress.CurrentScore.ToString();
         }
-
-        arabicaSkill    = false;
-        libericaSkill   = false;
     }
 
     private void Update() {
@@ -72,9 +66,11 @@ public class GameManager : MonoBehaviour
 
     private void SwithCanvas(){
         switch(type){
-            case CanvasType.MainMenu :
-                //NOTHING
-            break;
+            // case CanvasType.OpeningScene :
+            //     //NOTHING
+            // case CanvasType.MainMenu :
+            //     //NOTHING
+            // break;
             case CanvasType.PlayScene :
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -83,15 +79,19 @@ public class GameManager : MonoBehaviour
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
             break;
-            case CanvasType.ShopScene :
-                coinText  = GameObject.FindWithTag("Coin").GetComponent<Text>();
+            default :
             break;
         }
     }
 
     private void UIOnUpdate(){
-        if(type == CanvasType.MainMenu){
-
+        if(type == CanvasType.SplashScene){
+            Invoke("LoadGame", 5f);
+        }
+        if(type == CanvasType.OpeningScene){
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space")){
+                SceneManager.LoadScene("MainMenu");
+            }
         }
         else if(type == CanvasType.PlayScene){
             currentCoinText.text    = currentCoin.ToString();
@@ -101,13 +101,9 @@ public class GameManager : MonoBehaviour
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
         }
-        else if(type == CanvasType.ShopScene){
-            coinText.text    = coin.ToString();
-        }
     }
 
     public void Result(){
-        SkillController();
         AddCoin();
         AddCurrentScore();
         UserDataManager.Save();
@@ -116,18 +112,6 @@ public class GameManager : MonoBehaviour
 
     public void Retry(){
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
-    }
-
-    public static void CastSkill(string characterName){
-        if(characterName == "Arabica"){
-            arabicaSkill = true;
-        }
-    }
-
-    private void SkillController(){
-        if(arabicaSkill == true){
-            currentCoin *= 1.5f;
-        }
     }
 
     private void AddCoin(){
@@ -144,4 +128,12 @@ public class GameManager : MonoBehaviour
     private void AddCurrentScore(){
         UserDataManager.Progress.CurrentScore = currentScore;
     }
+
+    public void LoadScene(string menu){
+		SceneManager.LoadScene(menu);
+	}
+
+    public void LoadGame(){
+		SceneManager.LoadScene("OpeningScene");
+	}
 }
