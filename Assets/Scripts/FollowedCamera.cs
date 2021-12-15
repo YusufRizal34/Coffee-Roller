@@ -15,6 +15,7 @@ public class FollowedCamera : MonoBehaviour
 
     private void Update()
     {
+		//transform.position = target.position + offset;
         if(target != null){
             Vector3 targetCamPos = target.position + offset;
             transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
