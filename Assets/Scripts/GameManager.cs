@@ -10,6 +10,7 @@ public enum CanvasType{
     MainMenu,
     PlayScene,
     ResultScene,
+    ShopScene,
 }
 
 public class GameManager : MonoBehaviour
@@ -38,6 +39,9 @@ public class GameManager : MonoBehaviour
 
     public Text highScoreText;
     public Text currentScoreText;
+
+    public static int curentScoreDopio;
+    public static int currentLongBlack;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -79,6 +83,9 @@ public class GameManager : MonoBehaviour
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
             break;
+            case CanvasType.ShopScene :
+                coinText  = GameObject.FindWithTag("Coin").GetComponent<Text>();
+            break;
             default :
             break;
         }
@@ -88,7 +95,7 @@ public class GameManager : MonoBehaviour
         if(type == CanvasType.SplashScene){
             Invoke("LoadGame", 5f);
         }
-        if(type == CanvasType.OpeningScene){
+        else if(type == CanvasType.OpeningScene){
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space")){
                 SceneManager.LoadScene("MainMenu");
             }
@@ -101,32 +108,20 @@ public class GameManager : MonoBehaviour
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
         }
+        else if(type == CanvasType.ShopScene){
+            coinText.text    = coin.ToString();
+        }
     }
 
     public void Result(){
-        AddCoin();
-        AddCurrentScore();
+        GameManager.AddCurrentCoin(currentCoin);
+        GameManager.AddCurrentScore(currentScore);
         UserDataManager.Save();
         SceneManager.LoadScene("Result Scene", LoadSceneMode.Single);
     }
 
     public void Retry(){
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
-    }
-
-    private void AddCoin(){
-        UserDataManager.Progress.Coin = coin;
-    }
-
-    private void AddHighScore(){
-        UserDataManager.Progress.CurrentScore = highScore;
-    }
-    private void AddCurrentCoin(){
-        UserDataManager.Progress.Coin = currentCoin;
-    }
-
-    private void AddCurrentScore(){
-        UserDataManager.Progress.CurrentScore = currentScore;
     }
 
     public void LoadScene(string menu){
@@ -136,4 +131,58 @@ public class GameManager : MonoBehaviour
     public void LoadGame(){
 		SceneManager.LoadScene("OpeningScene");
 	}
+
+    public static int ShowCoin(){
+        return UserDataManager.Progress.Coin;
+    }
+
+    public static int ShowHighScore(){
+        return UserDataManager.Progress.HighScore;
+    }
+    public static float ShowCurrentCoin(){
+        return UserDataManager.Progress.CurrentCoin;
+    }
+
+    public static int ShowCurrentScore(){
+        return UserDataManager.Progress.CurrentScore;
+    }
+
+    public static void AddCoin(int coin){
+        UserDataManager.Progress.Coin = coin;
+        UserDataManager.Save();
+    }
+
+    public static void AddHighScore(int highScore){
+        UserDataManager.Progress.HighScore = highScore;
+        UserDataManager.Save();
+    }
+    public static void AddCurrentCoin(int currentCoin){
+        UserDataManager.Progress.Coin = currentCoin;
+        UserDataManager.Save();
+    }
+
+    public static void AddCurrentScore(int currentScore){
+        UserDataManager.Progress.CurrentScore = currentScore;
+        UserDataManager.Save();
+    }
+
+    public static void AddBooster(string booster, int incLevel){
+        if(booster == "Score Doppio"){
+            UserDataManager.Progress.TotalScoreDoppio += incLevel;
+        }
+        else if(booster == "Long Black"){
+            UserDataManager.Progress.TotalLongBlack += incLevel;
+        }
+        UserDataManager.Save();
+    }
+
+    public static void LevelUpItem(string booster, int incLevel){
+        if(booster == "Score Doppio"){
+            UserDataManager.Progress.LevelScoreDoppio += incLevel;
+        }
+        else if(booster == "Long Black"){
+            UserDataManager.Progress.LevelLongBlack += incLevel;
+        }
+        UserDataManager.Save();
+    }
 }
