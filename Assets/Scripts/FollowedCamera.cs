@@ -8,16 +8,17 @@ public class FollowedCamera : MonoBehaviour
     public float smoothing = 4.5f;
     public Vector3 offset;
 
-    private void Start()
+    private void Awake()
     {
+        target = GameObject.FindWithTag("Player").transform;
         offset = transform.position - target.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(target != null){
             Vector3 targetCamPos = target.position + offset;
-            transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.fixedDeltaTime);
         }
     }
 }

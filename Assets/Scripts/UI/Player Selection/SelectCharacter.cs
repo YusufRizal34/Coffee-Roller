@@ -12,7 +12,7 @@ public class SelectCharacter : MonoBehaviour
     private void Awake() {
         btn = GetComponent<Button>();
         btn.onClick.AddListener(GetCurrentPanel);
-        gameManager = GameObject.Find("Game Manager").GetComponent<PlayerSelection>();;
+        gameManager = GameObject.Find("Game Manager").GetComponent<PlayerSelection>();
     }
 
     private void GetCurrentPanel(){

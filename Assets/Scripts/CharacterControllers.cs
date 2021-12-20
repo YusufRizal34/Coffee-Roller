@@ -10,7 +10,7 @@ public class CharacterControllers : MonoBehaviour
 	private float currentXPosition;
 	private float currentYPosition;
 
-	[Header("ADNROID CONTROLLER")]
+	[Header("ANDROID CONTROLLER")]
 	public static bool tap, swipeUp, swipeDown;
 	private bool isDraging = false;
 	private Vector2 startTouch, swipeDelta;
@@ -24,6 +24,7 @@ public class CharacterControllers : MonoBehaviour
     public float speed;
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
+    public bool isIncreaseSpeed = false;
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
@@ -34,24 +35,32 @@ public class CharacterControllers : MonoBehaviour
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
-    public bool isIncreaseSpeed = false;
+    [Header("CHARACTER DEAD")]
+    public int maxStumble = 0; ///DEFAULT IS 0
 
-    private void Start()
+    private void Awake()
     {
+        CheckCharacter();
         _controller = GetComponent<CharacterController>();
         SetupJump();
 	}
 
-	private void Update()
-	{
-		HandleGravity();
+    private void FixedUpdate() {
+        HandleGravity();
 
         if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
             IncreaseSpeed();
         }
 
 		MovementController();
-	}
+    }
+
+    private void CheckCharacter(){
+        Character player = GetComponent<Character>();
+        if(player.Name == "Liberica"){
+            maxStumble = 1;
+        }
+    }
 
     private void IncreaseSpeed(){
         speed += acceleration;
@@ -60,7 +69,7 @@ public class CharacterControllers : MonoBehaviour
 
     private IEnumerator ResetCooldown(){
         isIncreaseSpeed = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         isIncreaseSpeed = false;
     }
 
@@ -76,7 +85,7 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
-        _controller.Move(moving * Time.deltaTime);
+        _controller.Move(moving * Time.fixedDeltaTime);
     }
 
     private Vector3 KeyboardMovement(){
@@ -164,5 +173,17 @@ public class CharacterControllers : MonoBehaviour
     {
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Obstacle" && maxStumble > 0){
+            maxStumble -= 1;
+            // other.gameObject.SetActive(false);
+        }
+        else{
+            // gameObject.SetActive(false);
+            print(other.gameObject);
+        }
     }
 }

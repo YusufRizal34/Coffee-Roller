@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -34,14 +33,19 @@ public class GameManager : MonoBehaviour
     public static int highScore;
     public static int currentScore;
 
+    public static int curentScoreDopio;
+    public static int currentLongBlack;
+
     public Text coinText;
     public Text currentCoinText;
 
     public Text highScoreText;
     public Text currentScoreText;
-
-    public static int curentScoreDopio;
-    public static int currentLongBlack;
+    
+    public Text totalScoreDoppio;
+    public Text totalLongBlack;
+    public Text levelScoreDoppio;
+    public Text levelLongBlack;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -61,6 +65,12 @@ public class GameManager : MonoBehaviour
         }
         if(currentScoreText != null){
             currentScoreText.text   = UserDataManager.Progress.CurrentScore.ToString();
+        }
+        if(totalScoreDoppio != null){
+            totalScoreDoppio.text   = UserDataManager.Progress.TotalScoreDoppio.ToString();
+        }
+        if(totalLongBlack != null){
+            totalLongBlack.text   = UserDataManager.Progress.TotalLongBlack.ToString();
         }
     }
 
@@ -84,7 +94,9 @@ public class GameManager : MonoBehaviour
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
             break;
             case CanvasType.ShopScene :
-                coinText  = GameObject.FindWithTag("Coin").GetComponent<Text>();
+                coinText            = GameObject.FindWithTag("Coin").GetComponent<Text>();
+                totalScoreDoppio    = GameObject.FindWithTag("TotalScoreDopio").GetComponent<Text>();
+                totalLongBlack      = GameObject.FindWithTag("TotalLongBlack").GetComponent<Text>();
             break;
             default :
             break;
@@ -109,7 +121,9 @@ public class GameManager : MonoBehaviour
             currentScoreText.text   = currentScore.ToString();
         }
         else if(type == CanvasType.ShopScene){
-            coinText.text    = coin.ToString();
+            coinText.text           = coin.ToString();
+            totalScoreDoppio.text   = curentScoreDopio.ToString();
+            totalLongBlack.text     = currentLongBlack.ToString();
         }
     }
 
@@ -165,13 +179,13 @@ public class GameManager : MonoBehaviour
         UserDataManager.Progress.CurrentScore = currentScore;
         UserDataManager.Save();
     }
-
-    public static void AddBooster(string booster, int incLevel){
+    
+    public static void AddBooster(string booster, int add){
         if(booster == "Score Doppio"){
-            UserDataManager.Progress.TotalScoreDoppio += incLevel;
+            UserDataManager.Progress.TotalScoreDoppio += add;
         }
         else if(booster == "Long Black"){
-            UserDataManager.Progress.TotalLongBlack += incLevel;
+            UserDataManager.Progress.TotalLongBlack += add;
         }
         UserDataManager.Save();
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -26,8 +27,8 @@ public class ShopManager : MonoBehaviour
         }
 
         SetPosition(booster, itemPanel, boosterPanel);
-        SetPosition(booster, sliderPanel, boosterSliderPanel);
-        SetPosition(powerUp, sliderPanel, powerUpSliderPanel);
+        // SetPosition(booster, sliderPanel, boosterSliderPanel);
+        // SetPosition(powerUp, sliderPanel, powerUpSliderPanel);
     }
 
     public void BuyItem(string itemName, int itemPrice){
@@ -55,11 +56,21 @@ public class ShopManager : MonoBehaviour
     private void SetPosition(List<ShopItem> items, GameObject itemPanel, GameObject parentPanel){
         if(items != null){
             for(int i = 0; i < items.Count; i++){
-                Instantiate(itemPanel, parentPanel.transform);
+                GameObject itemPanels = Instantiate(itemPanel, parentPanel.transform);
+                // Button btn = itemPanels.GetComponent<Button>();
+                // btn.onClick.AddListener(GameManager.AddBooster(items[i].Name, 1));
+                SetContext(items, itemPanels, i);
             }
         }
         else{
             print("No Items");
         }
+    }
+
+    private void SetContext(List<ShopItem> items, GameObject panel, int currentItem){
+        Text name  = panel.transform.Find("Item Title").GetComponent<Text>();
+        name.text = items[currentItem].Name;
+        Text price = panel.transform.Find("Item Price Panel/Item Price").GetComponent<Text>();
+        price.text = items[currentItem].Price.ToString();
     }
 }

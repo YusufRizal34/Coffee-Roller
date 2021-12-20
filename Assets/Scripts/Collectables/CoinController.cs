@@ -13,7 +13,7 @@ public class CoinController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player Model")
+        if (other.tag == "Player")
         {
             GameManager.currentCoin++;
             gameObject.SetActive(false);
