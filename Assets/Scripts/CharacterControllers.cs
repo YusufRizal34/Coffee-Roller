@@ -10,7 +10,7 @@ public class CharacterControllers : MonoBehaviour
 	private float currentXPosition;
 	private float currentYPosition;
 
-	[Header("ADNROID CONTROLLER")]
+	[Header("ANDROID CONTROLLER")]
 	public static bool tap, swipeUp, swipeDown;
 	private bool isDraging = false;
 	private Vector2 startTouch, swipeDelta;
@@ -24,6 +24,7 @@ public class CharacterControllers : MonoBehaviour
     public float speed;
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
+    public bool isIncreaseSpeed = false;
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
@@ -34,25 +35,29 @@ public class CharacterControllers : MonoBehaviour
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
-    public bool isIncreaseSpeed = false;
+    [Header("CHARACTER DEAD")]
+    public int maxStumble = 0; ///DEFAULT IS 0
 
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
         SetupJump();
+	}
+
+    private void Update() {
+        HandleGravity();
+		MovementController();
     }
 
-	private void Update()
-	{
-		HandleGravity();
-
+    private void FixedUpdate() {
         if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
             IncreaseSpeed();
         }
+    }
 
-        MovementController();
-
-	}
+    public void IncreaseStumble(int stumble){
+        maxStumble = stumble;
+    }
 
     private void IncreaseSpeed(){
         speed += acceleration;
@@ -61,7 +66,7 @@ public class CharacterControllers : MonoBehaviour
 
     private IEnumerator ResetCooldown(){
         isIncreaseSpeed = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         isIncreaseSpeed = false;
     }
 
@@ -96,7 +101,6 @@ public class CharacterControllers : MonoBehaviour
         if(Input.GetKeyDown("space")){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
             }
         }
 
@@ -140,7 +144,6 @@ public class CharacterControllers : MonoBehaviour
             if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
             {
                 if (y > 0) currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
             }
             Reset();
         }
@@ -167,5 +170,17 @@ public class CharacterControllers : MonoBehaviour
     {
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Obstacle" && maxStumble > 0){
+            maxStumble -= 1;
+            other.gameObject.SetActive(false);
+        }
+        else if(other.tag == "Obstacle" && maxStumble < 1){
+            gameObject.SetActive(false);
+            GameManager.Instance.GameOver();
+        }
     }
 }

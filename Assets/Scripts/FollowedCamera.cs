@@ -10,6 +10,7 @@ public class FollowedCamera : MonoBehaviour
 
     private void Start()
     {
+        target = GameObject.FindWithTag("Player").transform;
         offset = transform.position - target.position;
     }
 

@@ -13,9 +13,9 @@ public class CoinController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player Model")
+        if (other.tag == "Player")
         {
-            GameManager.currentCoin++;
+            GameManager.Instance.currentCoin++;
             gameObject.SetActive(false);
             FindObjectOfType<AudioManager>().Play("Coin Collect");
         }

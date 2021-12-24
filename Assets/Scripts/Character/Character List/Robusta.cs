@@ -4,7 +4,5 @@ using UnityEngine;
 
 public class Robusta : Character
 {
-    protected override void CastSkill(){
-        ///CAST
-    }
+
 }
