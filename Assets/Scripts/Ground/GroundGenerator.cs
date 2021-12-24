@@ -17,7 +17,7 @@ public class GroundGenerator : MonoBehaviour
     public List<CoinController> coinSpawn;
     public float coin;
 
-    void Awake()
+    void Start()
     {
 
         startPoint = GameObject.FindWithTag("Player").transform;

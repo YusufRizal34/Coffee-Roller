@@ -7,6 +7,6 @@ public class ScoreController : MonoBehaviour
 {
    private void Update()
     {
-        GameManager.currentScore = (int)transform.position.z;
+        GameManager.Instance.currentScore = (int)transform.position.z;
     }
 }

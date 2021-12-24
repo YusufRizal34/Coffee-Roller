@@ -38,28 +38,25 @@ public class CharacterControllers : MonoBehaviour
     [Header("CHARACTER DEAD")]
     public int maxStumble = 0; ///DEFAULT IS 0
 
-    private void Awake()
+    private void Start()
     {
-        CheckCharacter();
         _controller = GetComponent<CharacterController>();
         SetupJump();
 	}
 
-    private void FixedUpdate() {
+    private void Update() {
         HandleGravity();
-
-        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
-            IncreaseSpeed();
-        }
-
 		MovementController();
     }
 
-    private void CheckCharacter(){
-        Character player = GetComponent<Character>();
-        if(player.Name == "Liberica"){
-            maxStumble = 1;
+    private void FixedUpdate() {
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
+            IncreaseSpeed();
         }
+    }
+
+    public void IncreaseStumble(int stumble){
+        maxStumble = stumble;
     }
 
     private void IncreaseSpeed(){
@@ -85,7 +82,7 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
-        _controller.Move(moving * Time.fixedDeltaTime);
+        _controller.Move(moving * Time.deltaTime);
     }
 
     private Vector3 KeyboardMovement(){
@@ -179,11 +176,11 @@ public class CharacterControllers : MonoBehaviour
     {
         if(other.tag == "Obstacle" && maxStumble > 0){
             maxStumble -= 1;
-            // other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
         }
-        else{
-            // gameObject.SetActive(false);
-            print(other.gameObject);
+        else if(other.tag == "Obstacle" && maxStumble < 1){
+            gameObject.SetActive(false);
+            GameManager.Instance.GameOver();
         }
     }
 }

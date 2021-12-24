@@ -17,6 +17,7 @@ public class GameOverScreen : MonoBehaviour
 
 	private void Awake() {
 		character = GameObject.FindWithTag("Player");
+		gameCamera = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
 	}
 
 	private void Update()

@@ -10,27 +10,35 @@ public class PlayerSelection : MonoBehaviour
     
     public GameObject characterListPanel;
     public GameObject characterPanel;
-
-    public int coins = 5000;
-    public int currentSelection;
-    public int CurrentSelection{ get{ return currentSelection; } }
     
-    public Text coin;
     // public Image characterImage;
     public Text characterName;
     public Text characterPrice;
     public Text skillDescription;
-    public bool isCharacterUnlock;
     public GameObject buyButton;
 
     private void Start() {
-        CurrentCoin();
-
         if(characters.Length > 0){
             Initialize();
         }
         else{
-            print("No Character Attached");
+            // print("No Character Attached");
+        }
+    }
+
+    private void Update() {
+        ChangeToCurrentCharacter(GameManager.Instance.ShowCurrentCharacter());
+    }
+
+    private void Initialize(){
+        ChangeToCurrentCharacter(GameManager.Instance.ShowCurrentCharacter());
+
+        for(int i = 0; i < characters.Length; i++){
+            GameObject panel = Instantiate(characterPanel, characterListPanel.transform);
+            panel.GetComponent<SelectCharacter>().panelNumber = characters[i].ID;
+
+            GameObject image = Instantiate(characters[i].Image);
+            SetPosition(image, panel);
         }
     }
 
@@ -39,31 +47,12 @@ public class PlayerSelection : MonoBehaviour
         child.transform.position = parent.transform.position;
     }
 
-    private void Update() {
-        ChangeToCurrentCharacter(currentSelection);
-        ChangeButtonOption(isCharacterUnlock);
-    }
-
-    private void Initialize(){
-        currentSelection = 0;
-
-        ChangeToCurrentCharacter(currentSelection);
-
-        for(int i = 0; i < characters.Length; i++){
-            GameObject panel = Instantiate(characterPanel, characterListPanel.transform);
-            panel.GetComponent<SelectCharacter>().panelNumber = i;
-
-            GameObject image = Instantiate(characters[i].Image);
-            SetPosition(image, panel);
-        }
-    }
-
     private void ChangeToCurrentCharacter(int current){
         // characterImage.sprite       = characters[currentSelection].Image;
-        characterName.text          = characters[currentSelection].Name;
-        characterPrice.text         = characters[currentSelection].Price.ToString();
-        skillDescription.text       = characters[currentSelection].SkillDescription;
-        isCharacterUnlock           = characters[currentSelection].IsUnlock;
+        characterName.text          = characters[current].Name;
+        characterPrice.text         = characters[current].Price.ToString();
+        skillDescription.text       = characters[current].SkillDescription;
+        ChangeButtonOption(GameManager.Instance.ShowUnlockCharacter(current));
     }
 
     private void ChangeButtonOption(bool isCharacterUnlock){
@@ -76,17 +65,15 @@ public class PlayerSelection : MonoBehaviour
     }
 
     public void BuyCharacter(){
-        if(coins >= characters[currentSelection].Price){
-            coins -= characters[currentSelection].Price;
-            CurrentCoin();
-            characters[currentSelection].IsUnlock = true;
+        int currentID = GameManager.Instance.ShowCurrentCharacter();
+        GameManager.Instance.CurrentCharacter(currentID);
+        if(GameManager.Instance.ShowCoin() >= characters[currentID].Price){
+            GameManager.Instance.AddCoin(-characters[currentID].Price);
+            GameManager.Instance.UnlockCharacter(currentID);
+            ChangeButtonOption(characters[currentID].IsUnlock);
         }
         else{
-            print("NO U CANT!!!");
+            // print("NO U CANT!!!");
         }
-    }
-
-    private void CurrentCoin(){
-        coin.text = coins.ToString();
     }
 }

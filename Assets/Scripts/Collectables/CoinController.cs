@@ -15,7 +15,7 @@ public class CoinController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameManager.currentCoin++;
+            GameManager.Instance.currentCoin++;
             gameObject.SetActive(false);
         }
     }

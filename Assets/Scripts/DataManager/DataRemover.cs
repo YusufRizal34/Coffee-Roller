@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataRemover : MonoBehaviour
 {
-    private void Awake() {
-        UserDataManager.Remove();
-    }
+    // private void Awake() {
+    //     UserDataManager.Remove();
+    // }
 }

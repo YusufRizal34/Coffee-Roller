@@ -1,25 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &6218071293399558282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285195343789872793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262b01b439da27d4e98834b91ed93c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: Liberica
-  characterDescription: Ini Liberica
-  skillDescription: Karakter ini mempunyai skill dimana jika dalam kondisi gameplay
-    normal ia menabrak obstacle, Liberica akan selamat. Skill ini hanya berlaku sekali
-    dalam sekali gameplay
-  characterPrice: 30000
-  characterImage: {fileID: 1779731309479674639, guid: 661a451aee2ac2943b435ad7bd5caccd, type: 3}
-  isUnlock: 0
 --- !u!1001 &15676994549177465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4455748146083970882, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 270925728723176160, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: m_Name
       value: Liberica
@@ -79,12 +63,33 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2096c7385b4fd784babbefd967a20820, type: 2}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterName
+      value: Liberica
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterImage
+      value: 
+      objectReference: {fileID: 1779731309479674639, guid: 661a451aee2ac2943b435ad7bd5caccd, type: 3}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterPrice
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: skillDescription
+      value: Karakter ini mempunyai skill dimana jika dalam kondisi gameplay normal
+        ia menabrak obstacle, Liberica akan selamat. Skill ini hanya berlaku sekali
+        dalam sekali gameplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterDescription
+      value: Ini Liberica
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1051339271, guid: d85098c01a695444292a2f11cae7b831, type: 3}
     - {fileID: 916235710695261278, guid: d85098c01a695444292a2f11cae7b831, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d85098c01a695444292a2f11cae7b831, type: 3}
---- !u!1 &285195343789872793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 270925728723176160, guid: d85098c01a695444292a2f11cae7b831, type: 3}
-  m_PrefabInstance: {fileID: 15676994549177465}
-  m_PrefabAsset: {fileID: 0}
