@@ -6,6 +6,7 @@ public class CharacterControllers : MonoBehaviour
 {
 	[Header("CHARACTER CONTROLLER")]
 	private CharacterController _controller;
+    private Rigidbody rb;
 	public bool isAndroid = true;
 	private float currentXPosition;
 	private float currentYPosition;
@@ -40,6 +41,7 @@ public class CharacterControllers : MonoBehaviour
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
 	}
@@ -82,6 +84,7 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
+        rb.AddForce(0,-Mathf.Abs(moving.y),0, ForceMode.Impulse);
         _controller.Move(moving * Time.deltaTime);
     }
 

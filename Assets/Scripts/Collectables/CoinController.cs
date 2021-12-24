@@ -17,7 +17,6 @@ public class CoinController : MonoBehaviour
         {
             GameManager.Instance.currentCoin++;
             gameObject.SetActive(false);
-            FindObjectOfType<AudioManager>().Play("Coin Collect");
         }
     }
 }
