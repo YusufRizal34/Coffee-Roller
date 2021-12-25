@@ -114,7 +114,8 @@ public class GameManager : MonoBehaviour
 		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
-            break;
+                FindObjectOfType<AudioManager>().Play("BGM Main");
+                break;
             case CanvasType.ResultScene :
                 UserDataManager.Load();
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
@@ -206,6 +207,7 @@ public class GameManager : MonoBehaviour
 	}
 
     public void Retry(){
+        FindObjectOfType<AudioManager>().Play("BGM Gameplay");
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
     }
 
@@ -214,7 +216,8 @@ public class GameManager : MonoBehaviour
 	}
 
     public void LoadGame(){
-		SceneManager.LoadScene("OpeningScene");
+        FindObjectOfType<AudioManager>().Play("BGM Main");
+        SceneManager.LoadScene("OpeningScene");
 	}
 
     public int ShowUsedCharacter(){
