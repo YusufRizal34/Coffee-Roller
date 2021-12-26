@@ -27,7 +27,6 @@ public class GroundGenerator : MonoBehaviour
         for (int i = 0; i < earlyTilePrefab.Length; i++) {
             spawnPosition -= earlyTilePrefab[i].startPoint.localPosition;
             PlatformTile spawnedTile = Instantiate(earlyTilePrefab[i], spawnPosition, Quaternion.identity) as PlatformTile;
-            
             spawnPosition = spawnedTile.endPoint.position;
             spawnedTile.transform.SetParent(transform);
             spawnedTiles.Add(spawnedTile);

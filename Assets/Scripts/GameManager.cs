@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
                 GameManager.Instance.AddCoin(100000);
             break;
             case CanvasType.MainMenu :
+                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
@@ -114,9 +115,11 @@ public class GameManager : MonoBehaviour
 		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
-                FindObjectOfType<AudioManager>().Play("BGM Main");
+                AudioManager.instance.Stop("BGM Main");
+                AudioManager.instance.Play("BGM Gameplay");
                 break;
             case CanvasType.ResultScene :
+                AudioManager.instance.Stop("BGM Gameplay");
                 UserDataManager.Load();
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -207,7 +210,6 @@ public class GameManager : MonoBehaviour
 	}
 
     public void Retry(){
-        FindObjectOfType<AudioManager>().Play("BGM Gameplay");
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
     }
 
@@ -216,7 +218,6 @@ public class GameManager : MonoBehaviour
 	}
 
     public void LoadGame(){
-        FindObjectOfType<AudioManager>().Play("BGM Main");
         SceneManager.LoadScene("OpeningScene");
 	}
 
