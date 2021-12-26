@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     private void SwithCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
+                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Remove();
                 UserDataManager.Load();
                 GameManager.Instance.AddCoin(100000);
