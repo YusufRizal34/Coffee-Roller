@@ -820,6 +820,8 @@ MonoBehaviour:
   - {fileID: 2625619084311603973, guid: 19f0339932d9e71479a8122c01b73bf3, type: 3}
   - {fileID: 6969570631142957460, guid: 3f775eb207ac73748b6ee17487800d5b, type: 3}
   - {fileID: 4377681390378126551, guid: 54a80b0a18ee7524bab6c0f1c9810917, type: 3}
+  duration: 0
+  active: 0
   characterPosition: {fileID: 0}
   gameCamera: {fileID: 0}
   gameOverScreen: {fileID: 1979247542}
@@ -905,61 +907,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517823684}
   m_CullTransparentMesh: 1
---- !u!1 &597633128
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 597633130}
-  - component: {fileID: 597633129}
-  m_Layer: 0
-  m_Name: GroundGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &597633129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597633128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f374062175f3ac24b9c8f9c4b8ac393b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 963194227}
-  startPoint: {fileID: 0}
-  tilePrefab:
-  - {fileID: 7598605952135565510, guid: a46c1302bb52fb04288b5d287f85c5f9, type: 3}
-  - {fileID: 7598605952135565510, guid: 05d72ea33c1dbeb409b8bcdd620422e8, type: 3}
-  - {fileID: 7598605952135565510, guid: b232a476597fdd64b9cdae8aeced002c, type: 3}
-  - {fileID: 7598605952135565510, guid: b969f8b6427dee84a9b2db735800be53, type: 3}
-  earlyTilePrefab:
-  - {fileID: 7598605952135565510, guid: c5128c7cc76d3bd4d8c7b9484c1e58ae, type: 3}
-  coinSpawn:
-  - {fileID: 8666908397114508039, guid: 725d6cc702718c5458f3c6df036af4ac, type: 3}
-  coin: 13
---- !u!4 &597633130
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597633128}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &673194070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,3 +2122,57 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &476508054086584944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 476508054086584946}
+  - component: {fileID: 476508054086584945}
+  m_Layer: 0
+  m_Name: GroundGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &476508054086584945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476508054086584944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f374062175f3ac24b9c8f9c4b8ac393b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  startPoint: {fileID: 0}
+  tilePrefab:
+  - {fileID: 7598605952135565510, guid: a46c1302bb52fb04288b5d287f85c5f9, type: 3}
+  - {fileID: 7598605952135565510, guid: 05d72ea33c1dbeb409b8bcdd620422e8, type: 3}
+  - {fileID: 7598605952135565510, guid: b232a476597fdd64b9cdae8aeced002c, type: 3}
+  earlyTilePrefab:
+  - {fileID: 7598605952135565510, guid: c5128c7cc76d3bd4d8c7b9484c1e58ae, type: 3}
+  coinSpawn:
+  - {fileID: 0}
+  coin: 13
+--- !u!4 &476508054086584946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476508054086584944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

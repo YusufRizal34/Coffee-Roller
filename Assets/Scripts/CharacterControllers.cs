@@ -22,7 +22,14 @@ public class CharacterControllers : MonoBehaviour
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
     [Header("MOVEMENT CONTROLLER")]
-    public float speed;
+    public float intialSpeed;
+    public float currentSpeed;
+    public float CurrentSpeed{
+        get{ return currentSpeed; }
+        set{
+            currentSpeed = Mathf.Clamp(value, intialSpeed, maxSpeed);
+        }
+    }
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
     public bool isIncreaseSpeed = false;
@@ -44,6 +51,7 @@ public class CharacterControllers : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
+        CurrentSpeed = intialSpeed;
 	}
 
     private void Update() {
@@ -52,7 +60,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed){
             IncreaseSpeed();
         }
     }
@@ -62,7 +70,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void IncreaseSpeed(){
-        speed += acceleration;
+        CurrentSpeed += acceleration;
         StartCoroutine(ResetCooldown());
     }
 
@@ -93,12 +101,12 @@ public class CharacterControllers : MonoBehaviour
 
         if(Input.GetKey("left"))
         {
-            currentXPosition = -speed;
+            currentXPosition = -CurrentSpeed;
         }
 
         if(Input.GetKey("right"))
         {
-            currentXPosition = speed;
+            currentXPosition = CurrentSpeed;
         }
 
         if(Input.GetKeyDown("space")){
@@ -108,7 +116,7 @@ public class CharacterControllers : MonoBehaviour
             }
         }
 
-        Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, speed);
+        Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, CurrentSpeed);
         return moving;
     }
 
@@ -153,7 +161,7 @@ public class CharacterControllers : MonoBehaviour
             Reset();
         }
 
-        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, speed);
+        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, CurrentSpeed);
         return moving;
     }
 
@@ -179,13 +187,9 @@ public class CharacterControllers : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Obstacle" && maxStumble > 0){
-            maxStumble -= 1;
-            other.gameObject.SetActive(false);
-        }
-        else if(other.tag == "Obstacle" && maxStumble < 1){
-            gameObject.SetActive(false);
-            GameManager.Instance.GameOver();
+        if(other.tag == "Interactable"){
+            var objects = other.GetComponent<IInteractable>();
+            if(objects != null) objects.Interaction();
         }
     }
 }

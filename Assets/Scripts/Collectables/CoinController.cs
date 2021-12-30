@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour
+public class CoinController : MonoBehaviour, IInteractable
 {
     public int rotatespeed = 1;
 
@@ -11,13 +11,10 @@ public class CoinController : MonoBehaviour
         transform.Rotate(0, rotatespeed, 0, Space.World);   
     }
 
-    void OnTriggerEnter(Collider other)
+    public void Interaction()
     {
-        if (other.tag == "Player")
-        {
-            GameManager.Instance.currentCoin++;
-            FindObjectOfType<AudioManager>().Play("Coin Collect");
-            gameObject.SetActive(false);
-        }
+        GameManager.Instance.currentCoin++;
+        FindObjectOfType<AudioManager>().Play("Coin Collect");
+        gameObject.SetActive(false);
     }
 }

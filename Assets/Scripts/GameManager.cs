@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
     [Header("CHARACTER CONTROLLER")]
     public Character[] character;
     private Characters characters;
+    private CharacterControllers characterControllers;
+
+    [Header("BOOSTER/POWER UP CONTROLLER")]
+    public float duration;
+    public bool active;
 
     [Header("GAME OVER CONTROLLER")]
 	public GameObject characterPosition;
@@ -108,6 +113,7 @@ public class GameManager : MonoBehaviour
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
+                characterControllers = players;
                 if(character[currentCharacter].Name == "Liberica"){
                     players.IncreaseStumble(1);
                 }
@@ -165,6 +171,10 @@ public class GameManager : MonoBehaviour
         else if(type == CanvasType.PlayerSelectionScene){
             coinText.text           = ShowCoin().ToString();
         }
+    }
+
+    public void IncreaseSpeed(){
+
     }
 
     public void Result(){
