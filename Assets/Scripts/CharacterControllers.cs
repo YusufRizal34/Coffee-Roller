@@ -26,6 +26,7 @@ public class CharacterControllers : MonoBehaviour
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
     public bool isIncreaseSpeed = false;
+    public float force = 20f;
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
@@ -84,7 +85,7 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
-        rb.AddForce(0,-Mathf.Abs(moving.y),0, ForceMode.Impulse);
+        rb.AddForce(0,-force,0, ForceMode.Impulse);
         _controller.Move(moving * Time.deltaTime);
     }
 
@@ -104,10 +105,8 @@ public class CharacterControllers : MonoBehaviour
         if(Input.GetKeyDown("space")){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
             }
         }
-
         Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, speed);
         return moving;
     }
