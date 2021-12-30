@@ -85,16 +85,8 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
-        print(transform.position.y);
-        if(gameObject.transform.position.y < 0){
-            gameObject.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-            print(transform.position.y);
-        }
-
         rb.AddForce(0,-force,0, ForceMode.Impulse);
         _controller.Move(moving * Time.deltaTime);
-
-        
     }
 
     private Vector3 KeyboardMovement(){
