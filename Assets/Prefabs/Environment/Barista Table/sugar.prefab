@@ -91,9 +91,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1819431401590853076}
   - component: {fileID: 804079079802054705}
+  - component: {fileID: -3783055927625651011}
   m_Layer: 0
   m_Name: sugar
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,11 +126,23 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329753300239898478}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.7760506, y: 1.4934158, z: 1.1535892}
   m_Center: {x: 5.0584393, y: 0.75795364, z: 0.016352654}
+--- !u!114 &-3783055927625651011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329753300239898478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 965a917a04dca3042a07b1cafc1656b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3537107098179811859
 GameObject:
   m_ObjectHideFlags: 0
