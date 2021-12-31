@@ -39,7 +39,11 @@ public class GameManager : MonoBehaviour
     [Header("CHARACTER CONTROLLER")]
     public Character[] character;
     private Characters characters;
+    private CharacterControllers characterControllers;
 
+    [Header("BOOSTER/POWER UP CONTROLLER")]
+    public List<IBuffable> buff = new List<IBuffable>();
+    
     [Header("GAME OVER CONTROLLER")]
 	public GameObject characterPosition;
 	public FollowedCamera gameCamera;
@@ -87,7 +91,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
-        UIOnUpdate();
+        UIUpdate();
+        BuffUpdate();
     }
 
     private void SwithCanvas(){
@@ -99,7 +104,7 @@ public class GameManager : MonoBehaviour
                 GameManager.Instance.AddCoin(100000);
             break;
             case CanvasType.MainMenu :
-                AudioManager.instance.Play("BGM Main");
+                // AudioManager.instance.Play("BGM Main");
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
@@ -109,6 +114,7 @@ public class GameManager : MonoBehaviour
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
+                characterControllers = players;
                 if(character[currentCharacter].Name == "Liberica"){
                     players.IncreaseStumble(1);
                 }
@@ -116,11 +122,11 @@ public class GameManager : MonoBehaviour
 		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
-                AudioManager.instance.Stop("BGM Main");
-                AudioManager.instance.Play("BGM Gameplay");
+                // AudioManager.instance.Stop("BGM Main");
+                // AudioManager.instance.Play("BGM Gameplay");
                 break;
             case CanvasType.ResultScene :
-                AudioManager.instance.Stop("BGM Gameplay");
+                // AudioManager.instance.Stop("BGM Gameplay");
                 UserDataManager.Load();
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -140,7 +146,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void UIOnUpdate(){
+    private void UIUpdate(){
         if(type == CanvasType.SplashScene){
             Invoke("LoadGame", 5f);
         }
@@ -166,6 +172,22 @@ public class GameManager : MonoBehaviour
         else if(type == CanvasType.PlayerSelectionScene){
             coinText.text           = ShowCoin().ToString();
         }
+    }
+
+    public void BuffUpdate(){
+        for(int i = 0; i < buff.Count; i++){
+            buff[i].FinishTime -= Time.deltaTime;
+
+            if(buff[i].FinishTime <= 0){
+                buff[i].Finished(characterControllers);
+                buff.Remove(buff[i]);
+            }
+        }
+    }
+
+    public void AddBuff(IBuffable buffs){
+        buff.Add(buffs);
+        buffs.Apply(characterControllers);
     }
 
     public void Result(){
@@ -204,7 +226,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
 	{
-		characterPosition.GetComponent<CharacterControllers>().enabled = false;
+		characterControllers.enabled = false;
 		gameCamera.enabled = false;
 		gameOverScreen.SetActive(true);
 		this.enabled = false;

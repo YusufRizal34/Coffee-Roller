@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopItem : MonoBehaviour
+[CreateAssetMenu(fileName = "ShopItem", menuName = "Coffee-Roller/ShopItem", order = 0)]
+public class ShopItem : ScriptableObject
 {
     [SerializeField] protected string itemName;
     [SerializeField] protected ItemCategory category;
