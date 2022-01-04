@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class CharacterControllers : MonoBehaviour
 	private float currentYPosition;
 
 	[Header("ANDROID CONTROLLER")]
-	public static bool tap, swipeUp, swipeDown;
+	private bool swipeUp, swipeDown;
 	private bool isDraging = false;
 	private Vector2 startTouch, swipeDelta;
 
@@ -22,10 +23,16 @@ public class CharacterControllers : MonoBehaviour
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
     [Header("MOVEMENT CONTROLLER")]
-    public float speed;
+    public float intialSpeed;
+    public float currentSpeed;
+    public float CurrentSpeed{
+        get{ return currentSpeed; }
+        set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, intialSpeed, maxSpeed), 2); }
+    }
     [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
     public bool isIncreaseSpeed = false;
+    public float force = 20f;
 
 	[Header("PC MOVEMENT CONTROLLER")]
 	[SerializeField] private float dodgeSpeed = 0.2f; ///DEFAULT 0.2
@@ -36,6 +43,10 @@ public class CharacterControllers : MonoBehaviour
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
+    [Header("CHARACTER BUFF")]
+    public bool invisible = false;
+    public bool Invisible{ get; set; }
+
     [Header("CHARACTER DEAD")]
     public int maxStumble = 0; ///DEFAULT IS 0
 
@@ -44,6 +55,7 @@ public class CharacterControllers : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
+        CurrentSpeed = intialSpeed;
 	}
 
     private void Update() {
@@ -52,7 +64,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && speed < maxSpeed){
+        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed){
             IncreaseSpeed();
         }
     }
@@ -62,7 +74,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void IncreaseSpeed(){
-        speed += acceleration;
+        CurrentSpeed += acceleration;
         StartCoroutine(ResetCooldown());
     }
 
@@ -84,7 +96,7 @@ public class CharacterControllers : MonoBehaviour
             moving = KeyboardMovement();
         }
 
-        rb.AddForce(0,-Mathf.Abs(moving.y),0, ForceMode.Impulse);
+        transform.Rotate(new Vector3(currentSpeed / 2, 0, 0), Space.Self);
         _controller.Move(moving * Time.deltaTime);
     }
 
@@ -93,22 +105,20 @@ public class CharacterControllers : MonoBehaviour
 
         if(Input.GetKey("left"))
         {
-            currentXPosition = -speed;
+            currentXPosition = -CurrentSpeed;
         }
 
         if(Input.GetKey("right"))
         {
-            currentXPosition = speed;
+            currentXPosition = CurrentSpeed;
         }
 
         if(Input.GetKeyDown("space")){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
             }
         }
-
-        Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, speed);
+        Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, CurrentSpeed);
         return moving;
     }
 
@@ -120,7 +130,6 @@ public class CharacterControllers : MonoBehaviour
         {
             if (Input.touches[0].phase == TouchPhase.Began)
             {
-                tap = true;
                 isDraging = true;
                 startTouch = Input.touches[0].position;
             }
@@ -153,7 +162,7 @@ public class CharacterControllers : MonoBehaviour
             Reset();
         }
 
-        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, speed);
+        Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, CurrentSpeed);
         return moving;
     }
 
@@ -179,13 +188,16 @@ public class CharacterControllers : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Obstacle" && maxStumble > 0){
-            maxStumble -= 1;
-            other.gameObject.SetActive(false);
+        if(other.tag == "Interactable"){
+            var objects = other.GetComponent<IInteractable>();
+            if(objects != null) objects.Interaction();
         }
-        else if(other.tag == "Obstacle" && maxStumble < 1){
-            gameObject.SetActive(false);
-            GameManager.Instance.GameOver();
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag == "Interactable"){
+            var objects = other.gameObject.GetComponent<IInteractable>();
+            if(objects != null) objects.Interaction();
         }
     }
 }
