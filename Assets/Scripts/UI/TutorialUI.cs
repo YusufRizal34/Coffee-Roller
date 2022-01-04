@@ -8,9 +8,12 @@ public class TutorialUI : MonoBehaviour {
     public GameObject[] tutorialUI;
     private int _tutorialIndex;
     public float timeScale;
+
+    private Touch theTouch;
+    private float timeTouchEnded;
+
     void Start() {
         tutorial.SetActive(true);
-        Cursor.lockState = CursorLockMode.Locked;
         this.timeScale = Time.timeScale;   
     }
     void Update() {
@@ -18,7 +21,6 @@ public class TutorialUI : MonoBehaviour {
             if (i == tutorialUI.Length) {
                 //Time.timeScale = 1;
                 //tutorial.SetActive(false);
-                //Cursor.lockState = CursorLockMode.None;
             }
             else {
                  
@@ -38,7 +40,7 @@ public class TutorialUI : MonoBehaviour {
         }
 
         if(_tutorialIndex!=tutorialUI.Length) {
-            if(Input.GetKeyDown(KeyCode.Space)) {
+            if(Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) {
                 _tutorialIndex++;
             }
         }

@@ -116,6 +116,7 @@ public class CharacterControllers : MonoBehaviour
         if(Input.GetKeyDown("space")){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
+                AudioManager.instance.Play("Character Jump");
             }
         }
         Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, CurrentSpeed);
@@ -157,7 +158,7 @@ public class CharacterControllers : MonoBehaviour
             if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
             {
                 if (y > 0) currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
+                AudioManager.instance.Play("Character Jump");
             }
             Reset();
         }

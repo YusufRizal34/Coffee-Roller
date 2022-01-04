@@ -16,6 +16,7 @@ public class SecondShot : MonoBehaviour, IInteractable, IBuffable
     }
 
     public void Interaction(){
+        AudioManager.instance.Play("Powerup Collect");
         GameManager.Instance.AddBuff(this);
         gameObject.SetActive(false);
     }

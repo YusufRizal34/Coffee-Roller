@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
                 }
             break;
             case CanvasType.PlayScene :
+                AudioManager.instance.Play("BGM Gameplay");
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
