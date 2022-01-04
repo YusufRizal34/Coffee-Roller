@@ -13,7 +13,15 @@ public class CoinController : MonoBehaviour, IInteractable
 
     public void Interaction()
     {
-        GameManager.Instance.coinFromTrack++;
+        var objects = FindObjectOfType<CharacterControllers>();
+        if(objects.Invisible == true){
+            GameManager.Instance.currentCoin++;
+        }
+        else{
+            GameManager.Instance.currentCoin++;
+            GameManager.Instance.coinFromTrack++;
+        }
+        
         FindObjectOfType<AudioManager>().Play("Coin Collect");
         gameObject.SetActive(false);
     }

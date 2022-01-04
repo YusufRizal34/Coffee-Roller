@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
     public Character[] character;
     private Characters characters;
     private CharacterControllers characterControllers;
+    public int specialModeCoin = 100;
+    public bool isSpecialMode;
 
     [Header("BOOSTER/POWER UP CONTROLLER")]
     public List<IBuffable> buff = new List<IBuffable>();
@@ -53,7 +55,6 @@ public class GameManager : MonoBehaviour
     [Header("ITEM CONTROLLER")]
     public int currentCoin;
     public int coinFromTrack;
-    public int coinFromSpecialMode;
     public int currentScore;
 
     private Text coinText;
@@ -66,6 +67,8 @@ public class GameManager : MonoBehaviour
     private Text totalLongBlack;
     private Text levelScoreDoppio;
     private Text levelLongBlack;
+
+    public Slider specialMode;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -90,11 +93,19 @@ public class GameManager : MonoBehaviour
         if(totalLongBlack != null){
             totalLongBlack.text   = UserDataManager.Progress.TotalLongBlack.ToString();
         }
+        if(specialMode != null){
+            specialMode.maxValue   = specialModeCoin;
+        }
     }
 
     private void Update() {
         UIUpdate();
+        if(coinFromTrack == specialModeCoin && isSpecialMode == false){
+            isSpecialMode = !isSpecialMode;
+            SpecialMode();
+        }
         BuffUpdate();
+        specialMode.value = coinFromTrack;
     }
 
     private void SwithCanvas(){
@@ -189,6 +200,10 @@ public class GameManager : MonoBehaviour
     public void AddBuff(IBuffable buffs){
         buff.Add(buffs);
         buffs.Apply(characterControllers);
+    }
+
+    private void SpecialMode(){
+        GameManager.Instance.AddBuff(new CaffeineBoost());
     }
 
     public void Result(){

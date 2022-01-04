@@ -6,7 +6,7 @@ public class ExtraShot : MonoBehaviour, IInteractable, IBuffable
 {
     public float duration;
     public float speedIncrease = 1.1f;
-    public float FinishTime{ get{ return duration; } set{ duration = value; } }
+    public float FinishTime{ get{ return duration * GameManager.Instance.ShowLevelExtraShot(); } set{ duration = value; } }
 
     public void Apply(CharacterControllers character){
         float speed = character.CurrentSpeed * speedIncrease;

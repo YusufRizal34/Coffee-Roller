@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaffeineBoost : MonoBehaviour, IBuffable
+public class CaffeineBoost : IBuffable
 {
-    public float duration;
+    public float duration = 10f;
     public float FinishTime{ get{ return duration; } set{ duration = value; } }
 
     public void Apply(CharacterControllers character){
@@ -13,5 +13,7 @@ public class CaffeineBoost : MonoBehaviour, IBuffable
 
     public void Finished(CharacterControllers character){
         character.Invisible = false;
+        GameManager.Instance.coinFromTrack = 0;
+        GameManager.Instance.isSpecialMode = false;
     }
 }
