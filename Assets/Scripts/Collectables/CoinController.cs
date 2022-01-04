@@ -13,7 +13,7 @@ public class CoinController : MonoBehaviour, IInteractable
 
     public void Interaction()
     {
-        GameManager.Instance.currentCoin++;
+        GameManager.Instance.coinFromTrack++;
         FindObjectOfType<AudioManager>().Play("Coin Collect");
         gameObject.SetActive(false);
     }

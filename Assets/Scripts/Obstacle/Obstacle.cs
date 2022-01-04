@@ -8,6 +8,7 @@ public class Obstacle : MonoBehaviour, IInteractable
     {
         var objects = FindObjectOfType<CharacterControllers>();
         if(objects.Invisible == true){
+            GameManager.Instance.coinFromSpecialMode++;
             gameObject.SetActive(false);
         }
         else{

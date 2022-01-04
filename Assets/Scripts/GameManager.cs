@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     [Header("ITEM CONTROLLER")]
     public int currentCoin;
+    public int coinFromTrack;
+    public int coinFromSpecialMode;
     public int currentScore;
 
     private Text coinText;
