@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Cinemachine;
 
 public enum CanvasType{
     SplashScene,
@@ -47,8 +48,8 @@ public class GameManager : MonoBehaviour
     public List<IBuffable> buff = new List<IBuffable>();
     
     [Header("GAME OVER CONTROLLER")]
+    private CinemachineVirtualCamera gameCamera;
 	public GameObject characterPosition;
-	public FollowedCamera gameCamera;
 	public float fallPositionY;
 
     [Header("ITEM CONTROLLER")]
@@ -131,7 +132,9 @@ public class GameManager : MonoBehaviour
                     players.IncreaseStumble(1);
                 }
                 characterPosition       = GameObject.FindWithTag("Player");
-		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
+		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
+                gameCamera.Follow       = characterControllers.transform;
+                gameCamera.LookAt       = characterControllers.transform;
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
                 break;
