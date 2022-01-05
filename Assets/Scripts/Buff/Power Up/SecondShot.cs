@@ -5,7 +5,7 @@ using UnityEngine;
 public class SecondShot : MonoBehaviour, IInteractable, IBuffable
 {
     public float duration;
-    public float FinishTime{ get{ return duration; } set{ duration = value; } }
+    public float FinishTime{ get{ return duration * GameManager.Instance.ShowLevelSecondShot(); } set{ duration = value; } }
 
     public void Apply(CharacterControllers character){
         character.Invisible = true;
@@ -16,6 +16,7 @@ public class SecondShot : MonoBehaviour, IInteractable, IBuffable
     }
 
     public void Interaction(){
+        AudioManager.instance.Play("Powerup Collect");
         GameManager.Instance.AddBuff(this);
         gameObject.SetActive(false);
     }

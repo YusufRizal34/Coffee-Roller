@@ -21,7 +21,7 @@ public class PlatformTile : MonoBehaviour
 
     public void ChangeObjectRotation(){
         if(coinContainer != null){
-            Vector3 eulerRotation = new Vector3(-90, 0, 0);
+            Vector3 eulerRotation = new Vector3(0, 0, 0);
 
             for(int i = 0; i < coinContainer.Length; i++){
                 coinContainer[i].transform.rotation = Quaternion.Euler(eulerRotation);

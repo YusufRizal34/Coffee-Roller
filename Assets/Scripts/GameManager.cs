@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using Cinemachine;
 
 public enum CanvasType{
     SplashScene,
@@ -41,18 +40,20 @@ public class GameManager : MonoBehaviour
     public Character[] character;
     private Characters characters;
     private CharacterControllers characterControllers;
+    public int specialModeCoin = 100;
+    public bool isSpecialMode;
 
     [Header("BOOSTER/POWER UP CONTROLLER")]
     public List<IBuffable> buff = new List<IBuffable>();
     
     [Header("GAME OVER CONTROLLER")]
-	private GameObject characterPosition;
-	private CinemachineVirtualCamera gameCamera;
-	public GameObject gameOverScreen;
+	public GameObject characterPosition;
+	public FollowedCamera gameCamera;
 	public float fallPositionY;
 
     [Header("ITEM CONTROLLER")]
     public int currentCoin;
+    public int coinFromTrack;
     public int currentScore;
 
     private Text coinText;
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
     private Text totalLongBlack;
     private Text levelScoreDoppio;
     private Text levelLongBlack;
+
+    public Slider specialMode;
 
     private void Awake() {
         Application.targetFrameRate = 120;
@@ -89,28 +92,37 @@ public class GameManager : MonoBehaviour
         if(totalLongBlack != null){
             totalLongBlack.text   = UserDataManager.Progress.TotalLongBlack.ToString();
         }
+        if(specialMode != null){
+            specialMode.maxValue   = specialModeCoin;
+        }
     }
 
     private void Update() {
         UIUpdate();
+        if(coinFromTrack == specialModeCoin && isSpecialMode == false){
+            isSpecialMode = !isSpecialMode;
+            SpecialMode();
+        }
         BuffUpdate();
     }
 
     private void SwithCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
+                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Remove();
                 UserDataManager.Load();
                 GameManager.Instance.AddCoin(100000);
             break;
             case CanvasType.MainMenu :
-                // AudioManager.instance.Play("BGM Main");
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
             break;
             case CanvasType.PlayScene :
+                AudioManager.instance.Stop("BGM Main");
+                AudioManager.instance.Play("BGM Gameplay");
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
@@ -119,16 +131,11 @@ public class GameManager : MonoBehaviour
                     players.IncreaseStumble(1);
                 }
                 characterPosition       = GameObject.FindWithTag("Player");
-		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
-                gameCamera.Follow       = characterControllers.transform;
-                gameCamera.LookAt       = characterControllers.transform;
+		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
-                // AudioManager.instance.Stop("BGM Main");
-                // AudioManager.instance.Play("BGM Gameplay");
                 break;
             case CanvasType.ResultScene :
-                // AudioManager.instance.Stop("BGM Gameplay");
                 UserDataManager.Load();
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -158,7 +165,8 @@ public class GameManager : MonoBehaviour
             }
         }
         else if(type == CanvasType.PlayScene){
-            if (characterPosition.transform.position.y < fallPositionY) GameOver();
+            specialMode.value = coinFromTrack;
+            if (characterPosition.transform.position.y < fallPositionY) Result();
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
         }
@@ -190,6 +198,10 @@ public class GameManager : MonoBehaviour
     public void AddBuff(IBuffable buffs){
         buff.Add(buffs);
         buffs.Apply(characterControllers);
+    }
+
+    private void SpecialMode(){
+        GameManager.Instance.AddBuff(new CaffeineBoost());
     }
 
     public void Result(){
@@ -226,13 +238,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
-	{
-		characterControllers.enabled = false;
-		gameCamera.enabled = false;
-		gameOverScreen.SetActive(true);
-		this.enabled = false;
-	}
+    public void MainMenu(){
+        AudioManager.instance.Stop("BGM Gameplay");
+        AudioManager.instance.Play("BGM Main");
+        LoadScene("MainMenu");
+    }
 
     public void Retry(){
         SceneManager.LoadScene("Play", LoadSceneMode.Single);

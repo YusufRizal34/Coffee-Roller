@@ -8,6 +8,7 @@ public class Obstacle : MonoBehaviour, IInteractable
     {
         var objects = FindObjectOfType<CharacterControllers>();
         if(objects.Invisible == true){
+            GameManager.Instance.currentCoin += 5;
             gameObject.SetActive(false);
         }
         else{
@@ -17,7 +18,6 @@ public class Obstacle : MonoBehaviour, IInteractable
             }
             else if(objects.maxStumble < 1){
                 objects.gameObject.SetActive(false);
-                GameManager.Instance.GameOver();
             }
         }
     }
