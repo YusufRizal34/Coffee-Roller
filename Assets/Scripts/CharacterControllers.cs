@@ -29,7 +29,7 @@ public class CharacterControllers : MonoBehaviour
         get{ return currentSpeed; }
         set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, intialSpeed, maxSpeed), 2); }
     }
-    [SerializeField] private float maxSpeed = 100; ///DEFAULT 100
+    [SerializeField] private float maxSpeed = 50; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
     public bool isIncreaseSpeed = false;
     public float force = 20f;
@@ -64,7 +64,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 25 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed){
+        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed){
             IncreaseSpeed();
         }
     }
@@ -116,6 +116,7 @@ public class CharacterControllers : MonoBehaviour
         if(Input.GetKeyDown("space")){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
+                AudioManager.instance.Play("Character Jump");
             }
         }
         Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, CurrentSpeed);
@@ -157,7 +158,7 @@ public class CharacterControllers : MonoBehaviour
             if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
             {
                 if (y > 0) currentYPosition = initialJumpVelocity;
-                FindObjectOfType<AudioManager>().Play("Character Jump");
+                AudioManager.instance.Play("Character Jump");
             }
             Reset();
         }

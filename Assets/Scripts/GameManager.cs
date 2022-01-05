@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
     private void SwithCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
+                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Remove();
                 UserDataManager.Load();
                 GameManager.Instance.AddCoin(100000);
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
                 }
             break;
             case CanvasType.PlayScene :
+                AudioManager.instance.Play("BGM Gameplay");
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());

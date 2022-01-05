@@ -19,7 +19,9 @@ public class ExtraShot : MonoBehaviour, IInteractable, IBuffable
     }
 
     public void Interaction(){
+        AudioManager.instance.Play("Powerup Collect");
         GameManager.Instance.AddBuff(this);
         gameObject.SetActive(false);
+        AudioManager.instance.Play("Character Boost");
     }
 }
