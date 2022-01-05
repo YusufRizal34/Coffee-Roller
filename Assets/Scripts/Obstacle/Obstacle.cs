@@ -18,7 +18,6 @@ public class Obstacle : MonoBehaviour, IInteractable
             }
             else if(objects.maxStumble < 1){
                 objects.gameObject.SetActive(false);
-                GameManager.Instance.GameOver();
             }
         }
     }

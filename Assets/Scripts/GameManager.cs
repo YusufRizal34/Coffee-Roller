@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
     [Header("GAME OVER CONTROLLER")]
 	public GameObject characterPosition;
 	public FollowedCamera gameCamera;
-	public GameObject gameOverScreen;
 	public float fallPositionY;
 
     [Header("ITEM CONTROLLER")]
@@ -105,7 +104,6 @@ public class GameManager : MonoBehaviour
             SpecialMode();
         }
         BuffUpdate();
-        specialMode.value = coinFromTrack;
     }
 
     private void SwithCanvas(){
@@ -117,13 +115,13 @@ public class GameManager : MonoBehaviour
                 GameManager.Instance.AddCoin(100000);
             break;
             case CanvasType.MainMenu :
-                // AudioManager.instance.Play("BGM Main");
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
             break;
             case CanvasType.PlayScene :
+                AudioManager.instance.Stop("BGM Main");
                 AudioManager.instance.Play("BGM Gameplay");
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
@@ -136,11 +134,8 @@ public class GameManager : MonoBehaviour
 		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<FollowedCamera>();
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
-                // AudioManager.instance.Stop("BGM Main");
-                // AudioManager.instance.Play("BGM Gameplay");
                 break;
             case CanvasType.ResultScene :
-                // AudioManager.instance.Stop("BGM Gameplay");
                 UserDataManager.Load();
                 currentCoinText  = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
@@ -170,7 +165,8 @@ public class GameManager : MonoBehaviour
             }
         }
         else if(type == CanvasType.PlayScene){
-            if (characterPosition.transform.position.y < fallPositionY) GameOver();
+            specialMode.value = coinFromTrack;
+            if (characterPosition.transform.position.y < fallPositionY) Result();
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
         }
@@ -242,13 +238,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
-	{
-		characterControllers.enabled = false;
-		gameCamera.enabled = false;
-		gameOverScreen.SetActive(true);
-		this.enabled = false;
-	}
+    public void MainMenu(){
+        AudioManager.instance.Stop("BGM Gameplay");
+        AudioManager.instance.Play("BGM Main");
+        LoadScene("MainMenu");
+    }
 
     public void Retry(){
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
