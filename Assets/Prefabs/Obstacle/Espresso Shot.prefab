@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965a917a04dca3042a07b1cafc1656b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterDeadTime: 3
 --- !u!65 &1930666069638093474
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,6 +141,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8215425367070132671}
     m_Modifications:
+    - target: {fileID: -5443550477647777559, guid: fd9fa6b62cf39c24b8027afdc5dcf573, type: 3}
+      propertyPath: characterDeadTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 189435671460135350, guid: fd9fa6b62cf39c24b8027afdc5dcf573, type: 3}
       propertyPath: m_Name
       value: 'Expresso Shot Glass '
