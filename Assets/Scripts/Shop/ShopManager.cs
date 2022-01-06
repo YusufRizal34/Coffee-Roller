@@ -51,7 +51,7 @@ public class ShopManager : MonoBehaviour
     private void SetItemCollectionPosition(List<ShopItem> items, GameObject itemPanel, GameObject parentPanel){
         if(items != null){
             for(int i = 0; i < items.Count; i++){
-                GameObject itemPanels = Instantiate(itemPanel, parentPanel.transform);
+                GameObject itemPanels = Instantiate(items[i].Image, parentPanel.transform);
                 SetItemCollectionContext(items, itemPanels, i);
             }
         }
@@ -75,10 +75,6 @@ public class ShopManager : MonoBehaviour
     private void SetItemCollectionContext(List<ShopItem> items, GameObject panel, int currentItem){
         Button btn = panel.GetComponent<Button>();
         btn.onClick.AddListener(() => BuyItem(items[currentItem].Name, items[currentItem].Price));
-        Text name  = panel.transform.Find("Item Title").GetComponent<Text>();
-        name.text = items[currentItem].Name;
-        Text price = panel.transform.Find("Item Price Panel/Item Price").GetComponent<Text>();
-        price.text = items[currentItem].Price.ToString();
     }
 
     private void SetItemUpgradeContext(List<ShopItem> items, GameObject panel, int currentItem){

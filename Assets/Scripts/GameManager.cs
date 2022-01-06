@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     [Header("CANVAS CONTROLLER")]
     public CanvasType type;
+    public GameObject pauseMenu;
+    public bool isPause;
 
     [Header("CHARACTER CONTROLLER")]
     public Character[] character;
@@ -168,6 +170,14 @@ public class GameManager : MonoBehaviour
             }
         }
         else if(type == CanvasType.PlayScene){
+            if(isPause){
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+            }
+            else{
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
             specialMode.value = coinFromTrack;
             if (characterPosition.transform.position.y < fallPositionY) Result();
             currentCoinText.text    = currentCoin.ToString();
@@ -250,6 +260,14 @@ public class GameManager : MonoBehaviour
     public void BackMainMenu()
     {
         LoadScene("MainMenu");
+    }
+
+    public void Pause(){
+        isPause = !isPause;
+    }
+
+    public void Resume(){
+        isPause = !isPause;
     }
 
     public void Retry(){
