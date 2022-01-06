@@ -25,13 +25,13 @@ public class TutorialUI : MonoBehaviour {
             else {
                  
                 if (i == _tutorialIndex) {
-                    Time.timeScale = 0;
+                    GameManager.Instance.isPause = true;
                     tutorialUI[i].SetActive(true);
                 }
                 else {
                     tutorialUI[i].SetActive(false);
                     if(_tutorialIndex == tutorialUI.Length) {
-                        Time.timeScale = 1;
+                        GameManager.Instance.isPause = false;
                         Cursor.lockState = CursorLockMode.None;
                         tutorial.SetActive(false);
                     }
