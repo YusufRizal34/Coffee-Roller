@@ -5,7 +5,7 @@ using UnityEngine;
 public class SecondShot : MonoBehaviour, IInteractable, IBuffable
 {
     public float duration;
-    public float FinishTime{ get{ return duration * GameManager.Instance.ShowLevelSecondShot(); } set{ duration = value; } }
+    public float FinishTime{ get{ return duration * (GameManager.Instance.ShowLevelSecondShot() + 1); } set{ duration = value; } }
 
     public void Apply(CharacterControllers character){
         character.Invisible = true;

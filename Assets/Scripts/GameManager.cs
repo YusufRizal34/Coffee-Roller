@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
     public void BuffUpdate(){
         for(int i = 0; i < buff.Count; i++){
             buff[i].FinishTime -= Time.deltaTime;
-
+            print(buff[i].FinishTime);
             if(buff[i].FinishTime <= 0){
                 buff[i].Finished(characterControllers);
                 buff.Remove(buff[i]);
@@ -247,7 +247,13 @@ public class GameManager : MonoBehaviour
         LoadScene("MainMenu");
     }
 
+    public void BackMainMenu()
+    {
+        LoadScene("MainMenu");
+    }
+
     public void Retry(){
+        AudioManager.instance.Play("BGM Gameplay");
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,9 @@ public class CharacterControllers : MonoBehaviour
 
     [Header("CHARACTER DEAD")]
     public int maxStumble = 0; ///DEFAULT IS 0
+    public bool isDead = false;
+    public Vector3 beforeDeadPosition;
+    public Vector3 afterDeadPosition;
 
     private void Start()
     {
@@ -60,11 +64,13 @@ public class CharacterControllers : MonoBehaviour
 
     private void Update() {
         HandleGravity();
-		MovementController();
+        if(isDead != true){
+            MovementController();
+        }
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed){
+        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed && isDead != true){
             IncreaseSpeed();
         }
     }
@@ -185,6 +191,16 @@ public class CharacterControllers : MonoBehaviour
     {
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
+    }
+
+    public IEnumerator CharacterDeadDuration(){
+        yield return new WaitForSeconds(5);
+    }
+
+    public void Dead(){
+        isDead = true;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.AddForce(0,5,-1, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider other)
