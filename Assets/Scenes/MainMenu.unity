@@ -1458,7 +1458,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1047134062}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1698,7 +1698,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2049007697}
-  - {fileID: 1913115093}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2326,11 +2325,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1412175839}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[0].clip
@@ -2349,6 +2348,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d5d56cb0b1135a04d9b7e3fabc724bdd, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
+      propertyPath: sounds.Array.data[1].loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[1].name
       value: Character Jump
       objectReference: {fileID: 0}
@@ -2363,18 +2366,18 @@ PrefabInstance:
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[3].clip
       value: 
-      objectReference: {fileID: 8300000, guid: c18a935cd838541479b4cc3397afde8c, type: 3}
+      objectReference: {fileID: 8300000, guid: 24484813781c03e4e90afb24b994ae03, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[3].name
-      value: BGM Main
+      value: Character Boost
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[4].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 24484813781c03e4e90afb24b994ae03, type: 3}
+      objectReference: {fileID: 8300000, guid: e050a2d0714800e4daace5b0d9885f16, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[4].name
-      value: Character Boost
+      value: Powerup Collect
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[5].clip
@@ -2426,7 +2429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[4].volume
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[5].volume
@@ -2434,7 +2437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555507, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555507, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2482,11 +2485,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
---- !u!4 &1913115093 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1379026785086555507, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
-  m_PrefabInstance: {fileID: 1913115092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1967626233
 GameObject:
   m_ObjectHideFlags: 0

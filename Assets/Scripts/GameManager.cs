@@ -244,7 +244,13 @@ public class GameManager : MonoBehaviour
         LoadScene("MainMenu");
     }
 
+    public void BackMainMenu()
+    {
+        LoadScene("MainMenu");
+    }
+
     public void Retry(){
+        AudioManager.instance.Play("BGM Gameplay");
         SceneManager.LoadScene("Play", LoadSceneMode.Single);
     }
 
