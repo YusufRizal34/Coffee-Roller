@@ -197,7 +197,7 @@ public class CharacterControllers : MonoBehaviour
         yield return new WaitForSeconds(5);
     }
 
-    public async void Dead(){
+    public void Dead(){
         isDead = true;
         rb.constraints = RigidbodyConstraints.None;
         rb.AddForce(0,5,-1, ForceMode.Impulse);
