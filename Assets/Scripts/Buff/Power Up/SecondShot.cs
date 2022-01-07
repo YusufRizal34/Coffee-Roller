@@ -8,11 +8,11 @@ public class SecondShot : MonoBehaviour, IInteractable, IBuffable
     public float FinishTime{ get{ return duration * (GameManager.Instance.ShowLevelSecondShot() + 1); } set{ duration = value; } }
 
     public void Apply(CharacterControllers character){
-        character.Invisible = true;
+        character.IsShielded = true;
     }
 
     public void Finished(CharacterControllers character){
-        character.Invisible = false;
+        character.IsShielded = false;
     }
 
     public void Interaction(){

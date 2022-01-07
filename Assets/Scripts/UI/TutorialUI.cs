@@ -7,31 +7,31 @@ public class TutorialUI : MonoBehaviour {
     public GameObject tutorial;
     public GameObject[] tutorialUI;
     private int _tutorialIndex;
-    public float timeScale;
 
     private Touch theTouch;
     private float timeTouchEnded;
 
     void Start() {
+        GameManager.Instance.isTutorial = true;
         tutorial.SetActive(true);
-        this.timeScale = Time.timeScale;   
     }
+
     void Update() {
         for(int i=0; i<tutorialUI.Length; i++) {
             if (i == tutorialUI.Length) {
-                //Time.timeScale = 1;
-                //tutorial.SetActive(false);
+                Time.timeScale = 1;
+                GameManager.Instance.isTutorial = false;
+                tutorial.SetActive(false);
             }
             else {
-                 
                 if (i == _tutorialIndex) {
-                    GameManager.Instance.isPause = true;
+                    GameManager.Instance.isTutorial = true;
                     tutorialUI[i].SetActive(true);
                 }
                 else {
                     tutorialUI[i].SetActive(false);
                     if(_tutorialIndex == tutorialUI.Length) {
-                        GameManager.Instance.isPause = false;
+                        GameManager.Instance.isTutorial = false;
                         Cursor.lockState = CursorLockMode.None;
                         tutorial.SetActive(false);
                     }

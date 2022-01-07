@@ -13,6 +13,9 @@ public class CharacterControllers : MonoBehaviour
 	private float currentXPosition;
 	private float currentYPosition;
 
+    public bool Invisible{ get; set; }
+    public bool IsShielded{ get; set; }
+
 	[Header("ANDROID CONTROLLER")]
 	private bool swipeUp, swipeDown;
 	private bool isDraging = false;
@@ -43,10 +46,6 @@ public class CharacterControllers : MonoBehaviour
 
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
-
-    [Header("CHARACTER BUFF")]
-    public bool invisible = false;
-    public bool Invisible{ get; set; }
 
     [Header("CHARACTER DEAD")]
     public int maxStumble = 0; ///DEFAULT IS 0
@@ -214,7 +213,12 @@ public class CharacterControllers : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Interactable"){
             var objects = other.gameObject.GetComponent<IInteractable>();
-            if(objects != null) objects.Interaction();
+            if(IsShielded){
+                Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            }
+            else{
+                if(objects != null) objects.Interaction();
+            }
         }
     }
 }

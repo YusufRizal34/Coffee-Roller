@@ -8,12 +8,24 @@ public class PlatformTile : MonoBehaviour
     public Transform endPoint;
 
     public GameObject[] coinContainer;
+    public GameObject[] buffContainer;
+
+    public Transform[] buffPosition;
 
     public void SpawnObject(){
         if(coinContainer != null){
             for(int i = 0; i < coinContainer.Length; i++){
                 if(!coinContainer[i].activeSelf){
                     coinContainer[i].SetActive(true);
+                }
+            }
+        }
+
+        if(buffContainer != null){
+            for(int i = 0; i < buffContainer.Length; i++){
+                if(!buffContainer[i].activeSelf){
+                    buffContainer[i].SetActive(true);
+                    buffContainer[i].transform.position = buffPosition[Random.Range(0, buffPosition.Length)].position;
                 }
             }
         }

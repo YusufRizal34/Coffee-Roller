@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public CanvasType type;
     public GameObject pauseMenu;
     public bool isPause;
+    public bool isTutorial;
 
     [Header("CHARACTER CONTROLLER")]
     public Character[] character;
@@ -73,6 +74,8 @@ public class GameManager : MonoBehaviour
     public Slider specialMode;
 
     private void Awake() {
+        isPause = false;
+        isTutorial = false;
         Application.targetFrameRate = 120;
         
         SwithCanvas();
@@ -124,7 +127,9 @@ public class GameManager : MonoBehaviour
                 }
             break;
             case CanvasType.PlayScene :
-                AudioManager.instance.Stop("BGM Main");
+                if(FindObjectOfType<AudioManager>()){
+                    AudioManager.instance.Stop("BGM Main");
+                }
                 AudioManager.instance.Play("BGM Gameplay");
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
@@ -170,7 +175,10 @@ public class GameManager : MonoBehaviour
             }
         }
         else if(type == CanvasType.PlayScene){
-            if(isPause){
+            if(isTutorial == true){
+                Time.timeScale = 0;
+            }
+            else if(isPause == true && isTutorial != true){
                 Time.timeScale = 0;
                 pauseMenu.SetActive(true);
             }
@@ -200,7 +208,6 @@ public class GameManager : MonoBehaviour
     public void BuffUpdate(){
         for(int i = 0; i < buff.Count; i++){
             buff[i].FinishTime -= Time.deltaTime;
-            print(buff[i].FinishTime);
             if(buff[i].FinishTime <= 0){
                 buff[i].Finished(characterControllers);
                 buff.Remove(buff[i]);
@@ -252,9 +259,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void MainMenu(){
-        AudioManager.instance.Stop("BGM Gameplay");
+        if(FindObjectOfType<AudioManager>()){
+            AudioManager.instance.Stop("BGM Gameplay");
+        }
         AudioManager.instance.Play("BGM Main");
-        LoadScene("MainMenu");
+        BackMainMenu();
     }
 
     public void BackMainMenu()
@@ -262,11 +271,7 @@ public class GameManager : MonoBehaviour
         LoadScene("MainMenu");
     }
 
-    public void Pause(){
-        isPause = !isPause;
-    }
-
-    public void Resume(){
+    public void PauseControl(){
         isPause = !isPause;
     }
 
