@@ -36,7 +36,7 @@ public class ShopManager : MonoBehaviour
         }
 
         if(booster != null){
-            SetItemCollectionPosition(booster, itemPanel, boosterPanel);
+            SetItemCollectionPosition(booster, boosterPanel);
             SetItemUpgradeItemPosition(booster, sliderPanel, boosterSliderPanel);
         }
         if(powerUp != null){
@@ -48,7 +48,7 @@ public class ShopManager : MonoBehaviour
         UpdateSliderValue();
     }
 
-    private void SetItemCollectionPosition(List<ShopItem> items, GameObject itemPanel, GameObject parentPanel){
+    private void SetItemCollectionPosition(List<ShopItem> items, GameObject parentPanel){
         if(items != null){
             for(int i = 0; i < items.Count; i++){
                 GameObject itemPanels = Instantiate(items[i].Image, parentPanel.transform);
@@ -73,7 +73,7 @@ public class ShopManager : MonoBehaviour
     }
 
     private void SetItemCollectionContext(List<ShopItem> items, GameObject panel, int currentItem){
-        Button btn = panel.GetComponent<Button>();
+        Button btn = panel.transform.Find("Image Panel").GetComponent<Button>();
         btn.onClick.AddListener(() => BuyItem(items[currentItem].Name, items[currentItem].Price));
     }
 
@@ -96,6 +96,7 @@ public class ShopManager : MonoBehaviour
     }
 
     public void BuyItem(string itemName, double itemPrice){
+        print(itemName);
         double coin = GameManager.Instance.ShowCoin();
         if(coin >= itemPrice){
             if(itemName == "Score Doppio" && GameManager.Instance.ShowTotalScoreDoppio() < maxTotalItem){
