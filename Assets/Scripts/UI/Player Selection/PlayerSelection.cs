@@ -11,7 +11,7 @@ public class PlayerSelection : MonoBehaviour
     public GameObject characterListPanel;
     public GameObject characterPanel;
     
-    // public Image characterImage;
+    public Image characterImage;
     public Text characterName;
     public Text characterPrice;
     public Text skillDescription;
@@ -37,18 +37,17 @@ public class PlayerSelection : MonoBehaviour
             GameObject panel = Instantiate(characterPanel, characterListPanel.transform);
             panel.GetComponent<SelectCharacter>().panelNumber = characters[i].ID;
 
-            GameObject image = Instantiate(characters[i].Image);
+            Sprite image = Instantiate(characters[i].Button);
             SetPosition(image, panel);
         }
     }
 
-    private void SetPosition(GameObject child, GameObject parent){
-        child.transform.SetParent(parent.transform);
-        child.transform.position = parent.transform.position;
+    private void SetPosition(Sprite child, GameObject parent){
+        parent.GetComponent<Image>().sprite = child;
     }
 
     private void ChangeToCurrentCharacter(int current){
-        // characterImage.sprite       = characters[currentSelection].Image;
+        characterImage.sprite       = characters[current].Image;
         characterName.text          = characters[current].Name;
         characterPrice.text         = characters[current].Price.ToString();
         skillDescription.text       = characters[current].SkillDescription;
