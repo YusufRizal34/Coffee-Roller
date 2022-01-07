@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class CaffeineBoost : IBuffable
 {
+    public string name = "CaffeineBoost";
     public float duration = 10f;
-    public float FinishTime{ get{ return duration; } set{ duration = value; } }
+    
+    public string BuffName{ get{ return name; } }
+    public float FinishTime{
+        get{ return duration; }
+        set{ duration = value; }
+    }
 
     public void Apply(CharacterControllers character){
         character.Invisible = true;

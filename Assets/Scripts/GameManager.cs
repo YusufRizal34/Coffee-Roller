@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
     public void BuffUpdate(){
         for(int i = 0; i < buff.Count; i++){
             buff[i].FinishTime -= Time.deltaTime;
+            print(buff[i].FinishTime);
             if(buff[i].FinishTime <= 0){
                 buff[i].Finished(characterControllers);
                 buff.Remove(buff[i]);
@@ -216,8 +217,19 @@ public class GameManager : MonoBehaviour
     }
 
     public void AddBuff(IBuffable buffs){
-        buff.Add(buffs);
-        buffs.Apply(characterControllers);
+        bool isOnList = false;
+        for(int i = 0; i < buff.Count; i++){
+            if(buff[i].BuffName == buffs.BuffName){
+                isOnList = true;
+                buff[i].FinishTime = buffs.FinishTime;
+                break;
+            }
+        }
+
+        if(isOnList != true){
+            buff.Add(buffs);
+            buffs.Apply(characterControllers);
+        }
     }
 
     private void SpecialMode(){

@@ -15,6 +15,7 @@ public class CharacterControllers : MonoBehaviour
 
     public bool Invisible{ get; set; }
     public bool IsShielded{ get; set; }
+    public bool IsSpeedUp{ get; set; }
 
 	[Header("ANDROID CONTROLLER")]
 	private bool swipeUp, swipeDown;
@@ -69,7 +70,7 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed && isDead != true){
+        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed && isDead != true && IsSpeedUp != true){
             IncreaseSpeed();
         }
     }
