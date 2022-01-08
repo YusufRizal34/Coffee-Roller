@@ -65,4 +65,20 @@ public class AudioManager : MonoBehaviour
         }
         GameManager.Instance.toggleMuteOff.SetActive(isMute);
     }
+
+    public void MuteToggle()
+    {
+        isMute = !isMute;
+
+        if (isMute)
+        {
+            AudioListener.volume = 0;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+        }
+
+        GameManager.Instance.toggleMuteOff.SetActive(isMute);
+    }
 }
