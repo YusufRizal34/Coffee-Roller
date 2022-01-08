@@ -9,5 +9,4 @@ public interface IBuffable
 
     void Apply(CharacterControllers character);
     void Finished(CharacterControllers character);
-    // void Refresh(IBuffable buffs);
 }

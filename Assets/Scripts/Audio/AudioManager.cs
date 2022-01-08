@@ -9,8 +9,6 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
 
     public static AudioManager instance;
-
-    private bool isMute = true;
     
     void Awake()
     {
@@ -56,29 +54,5 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Stop();
-    }
-
-    public void ToggleMute(){
-        isMute = !isMute;
-        foreach(Sound audio in sounds){
-            audio.source.volume = 0;
-        }
-        GameManager.Instance.toggleMuteOff.SetActive(isMute);
-    }
-
-    public void MuteToggle()
-    {
-        isMute = !isMute;
-
-        if (isMute)
-        {
-            AudioListener.volume = 0;
-        }
-        else
-        {
-            AudioListener.volume = 1;
-        }
-
-        GameManager.Instance.toggleMuteOff.SetActive(isMute);
     }
 }

@@ -17,12 +17,12 @@ public class ExtraShot : MonoBehaviour, IInteractable, IBuffable
     public void Apply(CharacterControllers character){
         character.IsSpeedUp = true;
         float speed = character.CurrentSpeed * speedIncrease;
+        character.speedAfterBuff = character.CurrentSpeed;
         character.CurrentSpeed = speed;
     }
 
     public void Finished(CharacterControllers character){
-        float speed = character.CurrentSpeed / speedIncrease;
-        character.CurrentSpeed = speed;
+        character.CurrentSpeed = character.speedAfterBuff;
         character.IsSpeedUp = false;
     }
 

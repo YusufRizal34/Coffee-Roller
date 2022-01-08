@@ -28,11 +28,12 @@ public class CharacterControllers : MonoBehaviour
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
     [Header("MOVEMENT CONTROLLER")]
-    public float intialSpeed;
+    public float initialSpeed;
+    public float speedAfterBuff;
     public float currentSpeed;
     public float CurrentSpeed{
         get{ return currentSpeed; }
-        set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, intialSpeed, maxSpeed), 2); }
+        set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, initialSpeed, maxSpeed), 2); }
     }
     [SerializeField] private float maxSpeed = 50; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
@@ -60,7 +61,7 @@ public class CharacterControllers : MonoBehaviour
         rb          = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
-        CurrentSpeed = intialSpeed;
+        CurrentSpeed = initialSpeed;
 	}
 
     private void Update() {

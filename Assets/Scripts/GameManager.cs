@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
     public int specialModeCoin = 100;
     public bool isSpecialMode;
 
-    
-
     [Header("GAME OVER CONTROLLER")]
 	public GameObject characterPosition;
 	public float fallPositionY;
@@ -73,7 +71,8 @@ public class GameManager : MonoBehaviour
 
     public List<IBuffable> buff = new List<IBuffable>();
     public CinemachineVirtualCamera gameCamera;
-    public GameObject toggleMuteOff;
+    public GameObject toggleMuteOn;
+    private bool isMute = true;
 
     private void Awake() {
         isPause = false;
@@ -127,7 +126,7 @@ public class GameManager : MonoBehaviour
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
-                // toggleMuteOff = GameObject.FindWithTag("AudioOff");
+                toggleMuteOn = GameObject.FindWithTag("ToggleOn");
             break;
             case CanvasType.PlayScene :
                 if(FindObjectOfType<AudioManager>()){
@@ -210,6 +209,7 @@ public class GameManager : MonoBehaviour
     public void BuffUpdate(){
         for(int i = 0; i < buff.Count; i++){
             buff[i].FinishTime -= Time.deltaTime;
+            Debug.Log(buff[i].FinishTime);
 
             if(buff[i].FinishTime <= 0){
                 buff[i].Finished(characterControllers);
@@ -288,6 +288,18 @@ public class GameManager : MonoBehaviour
                 GameManager.Instance.AddNewCharacter(characters);
             }
         }
+    }
+
+    public void MuteToggle()
+    {
+        isMute = !isMute;
+        if (isMute == false){
+            AudioListener.volume = 0;
+        }
+        else{
+            AudioListener.volume = 1;
+        }
+        toggleMuteOn.SetActive(isMute);
     }
 
     public void MainMenu(){
