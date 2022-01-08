@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ExtraShot : MonoBehaviour, IInteractable, IBuffable
 {
-    public string name = "SecondShot";
+    private string buffName;
     public float duration = 3f;
     public float speedIncrease = 1.1f;
 
-    public string BuffName{ get{ return name; } }
+    public string BuffName{ get{ return buffName; } }
     public float FinishTime{
         get{ return duration; }
         set{ duration = value; }

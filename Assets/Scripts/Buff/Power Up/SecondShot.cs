@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SecondShot : MonoBehaviour, IInteractable, IBuffable
 {
-    public string name = "SecondShot";
+    private string buffName;
     public float duration = 3f;
     
-    public string BuffName{ get{ return name; } set{ name = value; } }
+    public string BuffName{ get{ return buffName; } }
     public float FinishTime{
         get{ return duration; }
         set{ duration = value; }

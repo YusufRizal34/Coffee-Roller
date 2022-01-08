@@ -138,7 +138,6 @@ public class ShopManager : MonoBehaviour
             else{
                 // print("Max Level");
             }
-            
         }
         else{
             // print("Not Enough Money");
@@ -146,9 +145,9 @@ public class ShopManager : MonoBehaviour
     }
 
     private void UpdateSliderValue(){
-        scoreDoppioLevel.value = GameManager.Instance.ShowLevelScoreDoppio();
-        longBlackLevel.value = GameManager.Instance.ShowLevelLongBlack();
-        extraShotLevel.value = GameManager.Instance.ShowLevelExtraShot();
-        secondShotLevel.value = GameManager.Instance.ShowLevelSecondShot();
+        scoreDoppioLevel.value  = GameManager.Instance.ShowLevelScoreDoppio();
+        longBlackLevel.value    = GameManager.Instance.ShowLevelLongBlack();
+        extraShotLevel.value    = GameManager.Instance.ShowLevelExtraShot();
+        secondShotLevel.value   = GameManager.Instance.ShowLevelSecondShot();
     }
 }

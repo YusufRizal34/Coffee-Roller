@@ -36,6 +36,7 @@ public class CharacterControllers : MonoBehaviour
     }
     [SerializeField] private float maxSpeed = 50; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
+    public int increaseSpeedModulo = 100; ///DEFAUL 100
     public bool isIncreaseSpeed = false;
     public float force = 20f;
 
@@ -56,7 +57,7 @@ public class CharacterControllers : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb          = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
         CurrentSpeed = intialSpeed;
@@ -70,7 +71,10 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed && isDead != true && IsSpeedUp != true){
+        if((int)transform.position.z % increaseSpeedModulo == 0 &&
+            isIncreaseSpeed == false &&
+            CurrentSpeed < maxSpeed &&
+            isDead != true && IsSpeedUp != true){
             IncreaseSpeed();
         }
     }
@@ -173,22 +177,19 @@ public class CharacterControllers : MonoBehaviour
         return moving;
     }
 
-    private void HandleGravity()
-    {
+    private void HandleGravity(){
         if(!_controller.isGrounded)
         {
             currentYPosition += gravity;
         }
     }
 
-    private void SetupJump()
-    {
+    private void SetupJump(){
         float timeToApex = maxJumpTime / 2;
         initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
 
-    private void Reset()
-    {
+    private void Reset(){
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
     }
@@ -203,15 +204,14 @@ public class CharacterControllers : MonoBehaviour
         rb.AddForce(0,5,-1, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other){
         if(other.tag == "Interactable"){
             var objects = other.GetComponent<IInteractable>();
             if(objects != null) objects.Interaction();
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other){
         if(other.gameObject.tag == "Interactable"){
             var objects = other.gameObject.GetComponent<IInteractable>();
             if(IsShielded){

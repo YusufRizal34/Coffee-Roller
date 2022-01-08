@@ -20,7 +20,6 @@ public class GroundGenerator : MonoBehaviour
 
     void Start()
     {
-
         startPoint = GameObject.FindWithTag("Player").transform;
         Vector3 spawnPosition = startPoint.position - new Vector3(0, 0, 10);
 
@@ -54,7 +53,7 @@ public class GroundGenerator : MonoBehaviour
             spawnedTiles.RemoveAt(0);
             SpawnTile(tileTmp);
 
-            ///ADD TILE TO LIST<spawnedTiles>
+            ///ADD TILE TO LIST spawnedTiles
             spawnedTiles.Add(tileTmp);
         }
     }
