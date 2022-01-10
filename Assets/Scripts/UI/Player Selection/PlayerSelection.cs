@@ -15,6 +15,7 @@ public class PlayerSelection : MonoBehaviour
     public Text characterName;
     public Text characterPrice;
     public Text skillDescription;
+    public Text characterDescription;
     public GameObject buyButton;
 
     private void Start() {
@@ -51,6 +52,7 @@ public class PlayerSelection : MonoBehaviour
         characterName.text          = characters[current].Name;
         characterPrice.text         = characters[current].Price.ToString();
         skillDescription.text       = characters[current].SkillDescription;
+        characterDescription.text   = characters[current].Description;
         ChangeButtonOption(GameManager.Instance.ShowUnlockCharacter(current));
     }
 
