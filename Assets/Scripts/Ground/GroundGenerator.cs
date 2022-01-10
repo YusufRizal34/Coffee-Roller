@@ -32,7 +32,7 @@ public class GroundGenerator : MonoBehaviour
 
     void Start()
     {
-        startPoint = GameObject.FindWithTag("Player").transform;
+        // startPoint = GameObject.FindWithTag("Player").transform;
         Vector3 spawnPosition = startPoint.position - new Vector3(0, 0, zStartPoint);
 
         //SPAWN EARLY TILE FIRST

@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera gameCamera2;
     
     private float currentDuration;
-    private float duration = 3f; ///DEFAULT 3
+    public float duration = 3f; ///DEFAULT 3
     private float CutSceneDuration{
         get{ return currentDuration; }
         set{ currentDuration = Mathf.Clamp(value, 0, duration); }
