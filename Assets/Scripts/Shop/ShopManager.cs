@@ -96,7 +96,6 @@ public class ShopManager : MonoBehaviour
     }
 
     public void BuyItem(string itemName, double itemPrice){
-        print(itemName);
         double coin = GameManager.Instance.ShowCoin();
         if(coin >= itemPrice){
             if(itemName == "Score Doppio" && GameManager.Instance.ShowTotalScoreDoppio() < maxTotalItem){
