@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
 
     [Header("CANVAS CONTROLLER")]
     public CanvasType type;
+    public GameObject pauseMenu;
+    public bool isPause;
+    public bool isTutorial;
 
     [Header("CHARACTER CONTROLLER")]
     public Character[] character;
@@ -44,15 +47,11 @@ public class GameManager : MonoBehaviour
     public int specialModeCoin = 100;
     public bool isSpecialMode;
 
-    [Header("BOOSTER/POWER UP CONTROLLER")]
-    public List<IBuffable> buff = new List<IBuffable>();
-    
     [Header("GAME OVER CONTROLLER")]
-    private CinemachineVirtualCamera gameCamera;
 	public GameObject characterPosition;
 	public float fallPositionY;
 
-    [Header("ITEM CONTROLLER")]
+    [Header("UI ITEM CONTROLLER")]
     public int currentCoin;
     public int coinFromTrack;
     public int currentScore;
@@ -70,7 +69,14 @@ public class GameManager : MonoBehaviour
 
     public Slider specialMode;
 
+    public List<IBuffable> buff = new List<IBuffable>();
+    public CinemachineVirtualCamera gameCamera;
+    public GameObject toggleMuteOn;
+    private bool isMute = true;
+
     private void Awake() {
+        isPause = false;
+        isTutorial = false;
         Application.targetFrameRate = 120;
         
         SwithCanvas();
@@ -120,10 +126,12 @@ public class GameManager : MonoBehaviour
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
+                toggleMuteOn = GameObject.FindWithTag("ToggleOn");
             break;
             case CanvasType.PlayScene :
-                AudioManager.instance.Stop("BGM Main");
-                AudioManager.instance.Play("BGM Gameplay");
+                if(FindObjectOfType<AudioManager>()){
+                    AudioManager.instance.Stop("BGM Main");
+                }
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
                 CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
@@ -168,6 +176,17 @@ public class GameManager : MonoBehaviour
             }
         }
         else if(type == CanvasType.PlayScene){
+            if(isTutorial == true){
+                Time.timeScale = 0;
+            }
+            else if(isPause == true && isTutorial != true){
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+            }
+            else{
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
             specialMode.value = coinFromTrack;
             if (characterPosition.transform.position.y < fallPositionY) Result();
             currentCoinText.text    = currentCoin.ToString();
@@ -190,7 +209,8 @@ public class GameManager : MonoBehaviour
     public void BuffUpdate(){
         for(int i = 0; i < buff.Count; i++){
             buff[i].FinishTime -= Time.deltaTime;
-            print(buff[i].FinishTime);
+            Debug.Log(buff[i].FinishTime);
+
             if(buff[i].FinishTime <= 0){
                 buff[i].Finished(characterControllers);
                 buff.Remove(buff[i]);
@@ -199,12 +219,41 @@ public class GameManager : MonoBehaviour
     }
 
     public void AddBuff(IBuffable buffs){
-        buff.Add(buffs);
-        buffs.Apply(characterControllers);
+        bool isOnList = false;
+        for(int i = 0; i < buff.Count; i++){
+            if(buff[i].BuffName == buffs.BuffName){
+                isOnList = true;
+                buff[i].FinishTime = FinishTimeWithLevel(buffs);
+                break;
+            }
+        }
+
+        if(isOnList != true){
+            buffs.FinishTime = FinishTimeWithLevel(buffs);
+            buff.Add(buffs);
+            buffs.Apply(characterControllers);
+        }
     }
 
     private void SpecialMode(){
         GameManager.Instance.AddBuff(new CaffeineBoost());
+    }
+
+    private float FinishTimeWithLevel(IBuffable buffs){
+        if(buffs.BuffName == "SecondShot"){
+            return buffs.FinishTime *= ShowLevelSecondShot();
+        }
+        else if(buffs.BuffName == "ExtrShot"){
+            return buffs.FinishTime *= ShowLevelExtraShot();
+        }
+        else if(buffs.BuffName == "LongBlack"){
+            return buffs.FinishTime *= ShowLevelLongBlack();
+        }
+        else if(buffs.BuffName == "ScoreDoppio"){
+            return buffs.FinishTime *= ShowLevelScoreDoppio();
+        }
+
+        return buffs.FinishTime;
     }
 
     public void Result(){
@@ -241,10 +290,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MuteToggle()
+    {
+        isMute = !isMute;
+        if (isMute == false){
+            AudioListener.volume = 0;
+        }
+        else{
+            AudioListener.volume = 1;
+        }
+        toggleMuteOn.SetActive(isMute);
+    }
+
     public void MainMenu(){
-        AudioManager.instance.Stop("BGM Gameplay");
+        if(FindObjectOfType<AudioManager>()){
+            AudioManager.instance.Stop("BGM Gameplay");
+        }
         AudioManager.instance.Play("BGM Main");
-        LoadScene("MainMenu");
+        BackMainMenu();
     }
 
     public void BackMainMenu()
@@ -252,9 +315,13 @@ public class GameManager : MonoBehaviour
         LoadScene("MainMenu");
     }
 
+    public void PauseControl(){
+        isPause = !isPause;
+    }
+
     public void Retry(){
         AudioManager.instance.Play("BGM Gameplay");
-        SceneManager.LoadScene("Play", LoadSceneMode.Single);
+        SceneManager.LoadScene("Play");
     }
 
     public void LoadScene(string menu){
@@ -264,6 +331,9 @@ public class GameManager : MonoBehaviour
     public void LoadGame(){
         SceneManager.LoadScene("OpeningScene");
 	}
+
+    ///GET USER DATA MANAGER VALUE
+    #region GET USERDATA
 
     public int ShowUsedCharacter(){
         return UserDataManager.Progress.UsedCharacter;
@@ -316,6 +386,11 @@ public class GameManager : MonoBehaviour
     public bool ShowUnlockCharacter(int current){
         return UserDataManager.Progress.character[current].isUnlock;
     }
+
+    #endregion
+
+    ///SET USER DATA MANAGER VALUE
+    #region SET USERDATA
 
     public void CurrentCharacter(int current){
         UserDataManager.Progress.CurrentCharacter = current;
@@ -381,4 +456,6 @@ public class GameManager : MonoBehaviour
         }
         UserDataManager.Save();
     }
+
+    #endregion
 }

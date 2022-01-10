@@ -158,7 +158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: maxSpeed
-      value: 50
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 270925728723176173, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: initialSpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 270925728723176174, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: m_Enabled
@@ -199,10 +203,14 @@ PrefabInstance:
     - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: characterImage
       value: 
-      objectReference: {fileID: 1779731309479674639, guid: 238abf5f53418f24d837571da4b3d6ab, type: 3}
+      objectReference: {fileID: 21300000, guid: 16fe43190e02df34db8eec636698f276, type: 3}
+    - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
+      propertyPath: characterButton
+      value: 
+      objectReference: {fileID: 21300000, guid: 10925de9356f85c4ebe861d76715cb59, type: 3}
     - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: skillDescription
-      value: '-'
+      value: 'Default '
       objectReference: {fileID: 0}
     - target: {fileID: 6957869785824280045, guid: d85098c01a695444292a2f11cae7b831, type: 3}
       propertyPath: characterDescription

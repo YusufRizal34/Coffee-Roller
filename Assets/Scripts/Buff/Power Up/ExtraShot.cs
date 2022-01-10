@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class ExtraShot : MonoBehaviour, IInteractable, IBuffable
 {
-    public float duration;
+    private string buffName;
+    public float duration = 3f;
     public float speedIncrease = 1.1f;
-    public float FinishTime{ get{ return duration * (GameManager.Instance.ShowLevelExtraShot() + 1); } set{ duration = value; } }
+
+    public string BuffName{ get{ return buffName; } }
+    public float FinishTime{
+        get{ return duration; }
+        set{ duration = value; }
+    }
 
     public void Apply(CharacterControllers character){
+        character.IsSpeedUp = true;
         float speed = character.CurrentSpeed * speedIncrease;
-        print(speed);
+        character.speedAfterBuff = character.CurrentSpeed;
         character.CurrentSpeed = speed;
     }
 
     public void Finished(CharacterControllers character){
-        float speed = character.CurrentSpeed / speedIncrease;
-        print(speed);
-        character.CurrentSpeed = speed;
+        character.CurrentSpeed = character.speedAfterBuff;
+        character.IsSpeedUp = false;
     }
 
     public void Interaction(){

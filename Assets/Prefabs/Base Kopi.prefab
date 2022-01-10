@@ -150,16 +150,17 @@ MonoBehaviour:
   initialJumpVelocity: 0
   maxJumpHeight: 2
   maxJumpTime: 0.5
-  intialSpeed: 20
+  initialSpeed: 20
+  speedAfterBuff: 0
   currentSpeed: 0
   maxSpeed: 100
   acceleration: 1
+  increaseSpeedModulo: 100
   isIncreaseSpeed: 0
   force: 5
   dodgeSpeed: 0.5
-  tiltingDodgeSpeed: 40
+  tiltingDodgeSpeed: 45
   gravity: -0.5
-  invisible: 0
   maxStumble: 0
   isDead: 0
   beforeDeadPosition: {x: 0, y: 0, z: 0}
@@ -194,4 +195,5 @@ MonoBehaviour:
   skillDescription: 
   characterPrice: 0
   characterImage: {fileID: 0}
+  characterButton: {fileID: 0}
   isUnlock: 0

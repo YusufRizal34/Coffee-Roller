@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class SecondShot : MonoBehaviour, IInteractable, IBuffable
 {
-    public float duration;
-    public float FinishTime{ get{ return duration * (GameManager.Instance.ShowLevelSecondShot() + 1); } set{ duration = value; } }
+    private string buffName;
+    public float duration = 3f;
+    
+    public string BuffName{ get{ return buffName; } }
+    public float FinishTime{
+        get{ return duration; }
+        set{ duration = value; }
+    }
 
     public void Apply(CharacterControllers character){
-        character.Invisible = true;
+        character.IsShielded = true;
     }
 
     public void Finished(CharacterControllers character){
-        character.Invisible = false;
+        character.IsShielded = false;
     }
 
     public void Interaction(){

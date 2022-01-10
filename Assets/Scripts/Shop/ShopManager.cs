@@ -36,7 +36,7 @@ public class ShopManager : MonoBehaviour
         }
 
         if(booster != null){
-            SetItemCollectionPosition(booster, itemPanel, boosterPanel);
+            SetItemCollectionPosition(booster, boosterPanel);
             SetItemUpgradeItemPosition(booster, sliderPanel, boosterSliderPanel);
         }
         if(powerUp != null){
@@ -48,10 +48,10 @@ public class ShopManager : MonoBehaviour
         UpdateSliderValue();
     }
 
-    private void SetItemCollectionPosition(List<ShopItem> items, GameObject itemPanel, GameObject parentPanel){
+    private void SetItemCollectionPosition(List<ShopItem> items, GameObject parentPanel){
         if(items != null){
             for(int i = 0; i < items.Count; i++){
-                GameObject itemPanels = Instantiate(itemPanel, parentPanel.transform);
+                GameObject itemPanels = Instantiate(items[i].Image, parentPanel.transform);
                 SetItemCollectionContext(items, itemPanels, i);
             }
         }
@@ -73,12 +73,8 @@ public class ShopManager : MonoBehaviour
     }
 
     private void SetItemCollectionContext(List<ShopItem> items, GameObject panel, int currentItem){
-        Button btn = panel.GetComponent<Button>();
+        Button btn = panel.transform.Find("Image Panel").GetComponent<Button>();
         btn.onClick.AddListener(() => BuyItem(items[currentItem].Name, items[currentItem].Price));
-        Text name  = panel.transform.Find("Item Title").GetComponent<Text>();
-        name.text = items[currentItem].Name;
-        Text price = panel.transform.Find("Item Price Panel/Item Price").GetComponent<Text>();
-        price.text = items[currentItem].Price.ToString();
     }
 
     private void SetItemUpgradeContext(List<ShopItem> items, GameObject panel, int currentItem){
@@ -141,7 +137,6 @@ public class ShopManager : MonoBehaviour
             else{
                 // print("Max Level");
             }
-            
         }
         else{
             // print("Not Enough Money");
@@ -149,9 +144,9 @@ public class ShopManager : MonoBehaviour
     }
 
     private void UpdateSliderValue(){
-        scoreDoppioLevel.value = GameManager.Instance.ShowLevelScoreDoppio();
-        longBlackLevel.value = GameManager.Instance.ShowLevelLongBlack();
-        extraShotLevel.value = GameManager.Instance.ShowLevelExtraShot();
-        secondShotLevel.value = GameManager.Instance.ShowLevelSecondShot();
+        scoreDoppioLevel.value  = GameManager.Instance.ShowLevelScoreDoppio();
+        longBlackLevel.value    = GameManager.Instance.ShowLevelLongBlack();
+        extraShotLevel.value    = GameManager.Instance.ShowLevelExtraShot();
+        secondShotLevel.value   = GameManager.Instance.ShowLevelSecondShot();
     }
 }

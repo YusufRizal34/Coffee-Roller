@@ -13,6 +13,10 @@ public class CharacterControllers : MonoBehaviour
 	private float currentXPosition;
 	private float currentYPosition;
 
+    public bool Invisible{ get; set; }
+    public bool IsShielded{ get; set; }
+    public bool IsSpeedUp{ get; set; }
+
 	[Header("ANDROID CONTROLLER")]
 	private bool swipeUp, swipeDown;
 	private bool isDraging = false;
@@ -24,14 +28,16 @@ public class CharacterControllers : MonoBehaviour
 	[Range(0.1f, 1f)] public float maxJumpTime = 0.5f;
 
     [Header("MOVEMENT CONTROLLER")]
-    public float intialSpeed;
+    public float initialSpeed;
+    public float speedAfterBuff;
     public float currentSpeed;
     public float CurrentSpeed{
         get{ return currentSpeed; }
-        set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, intialSpeed, maxSpeed), 2); }
+        set{ currentSpeed = (float)Math.Round(Mathf.Clamp(value, initialSpeed, maxSpeed), 2); }
     }
     [SerializeField] private float maxSpeed = 50; ///DEFAULT 100
     [SerializeField] private float acceleration = 1; ///DEFAULT 1
+    public int increaseSpeedModulo = 100; ///DEFAUL 100
     public bool isIncreaseSpeed = false;
     public float force = 20f;
 
@@ -44,10 +50,6 @@ public class CharacterControllers : MonoBehaviour
     [Header("GRAVITY SETTING")]
     public float gravity = -0.5f;
 
-    [Header("CHARACTER BUFF")]
-    public bool invisible = false;
-    public bool Invisible{ get; set; }
-
     [Header("CHARACTER DEAD")]
     public int maxStumble = 0; ///DEFAULT IS 0
     public bool isDead = false;
@@ -56,10 +58,10 @@ public class CharacterControllers : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb          = GetComponent<Rigidbody>();
         _controller = GetComponent<CharacterController>();
         SetupJump();
-        CurrentSpeed = intialSpeed;
+        CurrentSpeed = initialSpeed;
 	}
 
     private void Update() {
@@ -70,7 +72,10 @@ public class CharacterControllers : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if((int)transform.position.z % 100 == 0 && isIncreaseSpeed == false && CurrentSpeed < maxSpeed && isDead != true){
+        if((int)transform.position.z % increaseSpeedModulo == 0 &&
+            isIncreaseSpeed == false &&
+            CurrentSpeed < maxSpeed &&
+            isDead != true && IsSpeedUp != true){
             IncreaseSpeed();
         }
     }
@@ -173,22 +178,19 @@ public class CharacterControllers : MonoBehaviour
         return moving;
     }
 
-    private void HandleGravity()
-    {
+    private void HandleGravity(){
         if(!_controller.isGrounded)
         {
             currentYPosition += gravity;
         }
     }
 
-    private void SetupJump()
-    {
+    private void SetupJump(){
         float timeToApex = maxJumpTime / 2;
         initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
 
-    private void Reset()
-    {
+    private void Reset(){
         startTouch = swipeDelta = Vector2.zero;
         isDraging = false;
     }
@@ -203,18 +205,22 @@ public class CharacterControllers : MonoBehaviour
         rb.AddForce(0,5,-1, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other){
         if(other.tag == "Interactable"){
             var objects = other.GetComponent<IInteractable>();
             if(objects != null) objects.Interaction();
         }
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other){
         if(other.gameObject.tag == "Interactable"){
             var objects = other.gameObject.GetComponent<IInteractable>();
-            if(objects != null) objects.Interaction();
+            if(IsShielded){
+                Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            }
+            else{
+                if(objects != null) objects.Interaction();
+            }
         }
     }
 }
