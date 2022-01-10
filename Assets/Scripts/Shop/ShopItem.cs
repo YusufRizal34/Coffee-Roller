@@ -9,6 +9,7 @@ public class ShopItem : ScriptableObject
     [SerializeField] protected string itemName;
     [SerializeField] protected ItemCategory category;
     [SerializeField] [TextArea] protected string itemDescription;
+    [SerializeField] protected Sprite icon;
     [SerializeField] protected GameObject image;
     [SerializeField] protected double itemPrice;
     [SerializeField] protected int itemLevel;
@@ -18,6 +19,7 @@ public class ShopItem : ScriptableObject
     public string Name{ get{ return itemName; } }
     public string Description{ get{ return itemDescription; } }
     public ItemCategory Category{ get{ return category; } }
+    public Sprite Icon{ get{ return icon; } }
     public GameObject Image{ get{ return image; } }
     public double Price{ get{ return itemPrice; } }
     public int Level{ get{ return itemLevel; } set{ itemLevel = value; } }
