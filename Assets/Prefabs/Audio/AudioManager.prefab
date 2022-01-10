@@ -43,4 +43,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f686009d202ba354ba0e2e8686ac7c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: BGM Main
+    clip: {fileID: 8300000, guid: c18a935cd838541479b4cc3397afde8c, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BGM Gameplay
+    clip: {fileID: 8300000, guid: 18347e34a662948438d59754b5dc13e2, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Character Jump
+    clip: {fileID: 8300000, guid: d5d56cb0b1135a04d9b7e3fabc724bdd, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Coin Collect
+    clip: {fileID: 8300000, guid: 3b48d74d8fe82da45841331cb1353faa, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Character Boost
+    clip: {fileID: 8300000, guid: 24484813781c03e4e90afb24b994ae03, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Powerup Collect
+    clip: {fileID: 8300000, guid: e050a2d0714800e4daace5b0d9885f16, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Character Crash
+    clip: {fileID: 8300000, guid: f200c208ca5061245aa0411820526365, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Obstacle Destroy
+    clip: {fileID: 8300000, guid: 7b42387ccdf0ce946ac11b67085a02e1, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

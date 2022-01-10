@@ -203,6 +203,7 @@ public class CharacterControllers : MonoBehaviour
         isDead = true;
         rb.constraints = RigidbodyConstraints.None;
         rb.AddForce(0,5,-1, ForceMode.Impulse);
+        AudioManager.instance.Play("Character Crash");
     }
 
     private void OnTriggerEnter(Collider other){

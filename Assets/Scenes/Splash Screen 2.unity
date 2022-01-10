@@ -647,16 +647,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  pauseMenu: {fileID: 0}
+  isPause: 0
+  isTutorial: 0
   character: []
   specialModeCoin: 5
   isSpecialMode: 0
   characterPosition: {fileID: 0}
-  gameCamera: {fileID: 0}
   fallPositionY: -15
   currentCoin: 0
   coinFromTrack: 0
   currentScore: 0
   specialMode: {fileID: 0}
+  gameCamera: {fileID: 0}
+  toggleMuteOn: {fileID: 0}
 --- !u!1 &1639789479
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,43 +767,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 18347e34a662948438d59754b5dc13e2, type: 3}
+      objectReference: {fileID: 8300000, guid: c18a935cd838541479b4cc3397afde8c, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[0].loop
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[0].name
-      value: BGM Gameplay
+      value: BGM Main
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[1].clip
       value: 
-      objectReference: {fileID: 8300000, guid: d5d56cb0b1135a04d9b7e3fabc724bdd, type: 3}
+      objectReference: {fileID: 8300000, guid: 18347e34a662948438d59754b5dc13e2, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[1].name
-      value: Character Jump
+      value: BGM Gameplay
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[2].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 3b48d74d8fe82da45841331cb1353faa, type: 3}
+      objectReference: {fileID: 8300000, guid: d5d56cb0b1135a04d9b7e3fabc724bdd, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[2].name
-      value: Coin Collect
+      value: Character Jump
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[3].clip
       value: 
-      objectReference: {fileID: 8300000, guid: c18a935cd838541479b4cc3397afde8c, type: 3}
+      objectReference: {fileID: 8300000, guid: 3b48d74d8fe82da45841331cb1353faa, type: 3}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[3].name
-      value: BGM Main
+      value: Coin Collect
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[4].clip
@@ -843,15 +847,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[0].volume
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[1].volume
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[2].volume
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1379026785086555506, guid: 7bcce16ede850234d8c1f177c10e2e06, type: 3}
       propertyPath: sounds.Array.data[3].volume
