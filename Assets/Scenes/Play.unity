@@ -143,6 +143,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 731343665847680288, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
   m_PrefabInstance: {fileID: 731343665799522727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &113313733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1614554387609579037, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+  m_PrefabInstance: {fileID: 731343665799522727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &223974227 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3266131801758573428, guid: d7009cc300d69f74ea74da2d4fce77ba, type: 3}
@@ -282,6 +287,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &426454081 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6218125667905798898, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+  m_PrefabInstance: {fileID: 731343665799522727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &500106765
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +758,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1746885651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 779250338836826821, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+  m_PrefabInstance: {fileID: 731343665799522727}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1753747032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3941644542055606718, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+  m_PrefabInstance: {fileID: 731343665799522727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1762614825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4623684885904811643, guid: 18cbb128a07035c45aa4f1094a2186da, type: 3}
@@ -891,6 +911,11 @@ PrefabInstance:
       objectReference: {fileID: 940459187}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 060f804b45ac3e64cab4868c91b0af9b, type: 3}
+--- !u!1 &1866250435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2027137402092495415, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+  m_PrefabInstance: {fileID: 731343665799522727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &731343665799522727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -985,6 +1010,10 @@ PrefabInstance:
     - target: {fileID: 731343665800014398, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
       propertyPath: m_Name
       value: Tutorial Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 731343665800014398, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 143d6dafe61795842aba4974075b1fdb, type: 3}
@@ -1499,12 +1528,32 @@ PrefabInstance:
       objectReference: {fileID: 754585}
     - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
       propertyPath: tutorialUI.Array.size
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
       propertyPath: tutorialUI.Array.data[0]
       value: 
       objectReference: {fileID: 52647047}
+    - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
+      propertyPath: tutorialUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 1746885651}
+    - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
+      propertyPath: tutorialUI.Array.data[2]
+      value: 
+      objectReference: {fileID: 1753747032}
+    - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
+      propertyPath: tutorialUI.Array.data[3]
+      value: 
+      objectReference: {fileID: 1866250435}
+    - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
+      propertyPath: tutorialUI.Array.data[4]
+      value: 
+      objectReference: {fileID: 426454081}
+    - target: {fileID: 1242660881876371907, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
+      propertyPath: tutorialUI.Array.data[5]
+      value: 
+      objectReference: {fileID: 113313733}
     - target: {fileID: 2927768818021756486, guid: 5b52f660cca6a9a47a6b543b5915eb2d, type: 3}
       propertyPath: m_Name
       value: Tutorial Manager
