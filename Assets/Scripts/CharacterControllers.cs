@@ -17,6 +17,8 @@ public class CharacterControllers : MonoBehaviour
     public bool IsShielded{ get; set; }
     public bool IsSpeedUp{ get; set; }
 
+    public bool isCutScene;
+
 	[Header("ANDROID CONTROLLER")]
 	private bool swipeUp, swipeDown;
 	private bool isDraging = false;
@@ -109,22 +111,23 @@ public class CharacterControllers : MonoBehaviour
 
         transform.Rotate(new Vector3(currentSpeed / 2, 0, 0), Space.Self);
         _controller.Move(moving * Time.deltaTime);
+        
     }
 
     private Vector3 KeyboardMovement(){
         currentXPosition = 0;
 
-        if(Input.GetKey("left"))
+        if(Input.GetKey("left") && GameManager.Instance.isCutscene != true)
         {
             currentXPosition = -CurrentSpeed;
         }
 
-        if(Input.GetKey("right"))
+        if(Input.GetKey("right") && GameManager.Instance.isCutscene != true)
         {
             currentXPosition = CurrentSpeed;
         }
 
-        if(Input.GetKeyDown("space")){
+        if(Input.GetKeyDown("space") && GameManager.Instance.isCutscene != true){
             if(_controller.isGrounded){
                 currentYPosition = initialJumpVelocity;
                 AudioManager.instance.Play("Character Jump");
@@ -166,7 +169,7 @@ public class CharacterControllers : MonoBehaviour
         {
             float x = swipeDelta.x;
             float y = swipeDelta.y;
-            if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
+            if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded && GameManager.Instance.isCutscene != true)
             {
                 if (y > 0) currentYPosition = initialJumpVelocity;
                 AudioManager.instance.Play("Character Jump");
