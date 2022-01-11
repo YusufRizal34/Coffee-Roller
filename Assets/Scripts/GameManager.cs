@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
             case CanvasType.PlayScene :
                 if(FindObjectOfType<AudioManager>()){
                     AudioManager.instance.Stop("BGM Main");
+                    AudioManager.instance.Play("BGM Gameplay");
                 }
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();

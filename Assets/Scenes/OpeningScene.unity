@@ -586,15 +586,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6156863, g: 0.2627451, b: 0.09803922, a: 1}
+  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d13073a8a63140249a62ab63cf62afb3, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -723,6 +723,7 @@ MonoBehaviour:
   type: 1
   pauseMenu: {fileID: 0}
   isPause: 0
+  isTutorial: 0
   character:
   - {fileID: 2625619084311603973, guid: 19f0339932d9e71479a8122c01b73bf3, type: 3}
   - {fileID: 6969570631142957460, guid: 3f775eb207ac73748b6ee17487800d5b, type: 3}
@@ -735,6 +736,11 @@ MonoBehaviour:
   coinFromTrack: 0
   currentScore: 0
   specialMode: {fileID: 0}
+  toggleMuteOn: {fileID: 0}
+  gameCamera1: {fileID: 0}
+  gameCamera2: {fileID: 0}
+  duration: 3
+  isCutscene: 1
 --- !u!1 &1659950751
 GameObject:
   m_ObjectHideFlags: 0

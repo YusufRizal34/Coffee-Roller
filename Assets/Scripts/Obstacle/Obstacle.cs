@@ -15,6 +15,7 @@ public class Obstacle : MonoBehaviour, IInteractable
         if(objects.Invisible == true){
             GameManager.Instance.currentCoin += 5;
             gameObject.SetActive(false);
+            AudioManager.instance.Play("Obstacle Destroy");
         }
         else{
             if(objects.maxStumble > 0){
@@ -22,8 +23,9 @@ public class Obstacle : MonoBehaviour, IInteractable
                 gameObject.SetActive(false);
             }
             else if(objects.maxStumble < 1){
-                objects.gameObject.GetComponent<CharacterControllers>().Dead();
-                while(characterDeadTime > 0){
+                AudioManager.instance.Play("Character Crash");
+                objects.gameObject.GetComponent<CharacterControllers>().Dead(); 
+                while (characterDeadTime > 0){
                     characterDeadTime -= Time.deltaTime;
                     await Task.Yield();
                 }
