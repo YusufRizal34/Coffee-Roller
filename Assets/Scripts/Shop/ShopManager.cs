@@ -13,7 +13,6 @@ public class ShopManager : MonoBehaviour
     public GameObject boosterSliderPanel;
     public GameObject powerUpSliderPanel;
     
-    public GameObject itemPanel;
     public GameObject sliderPanel;
 
     public int maxTotalItem = 3; ///DEFAULT 3
@@ -80,6 +79,7 @@ public class ShopManager : MonoBehaviour
     private void SetItemUpgradeContext(List<ShopItem> items, GameObject panel, int currentItem){
         UserDataManager.Load();
         Button btn = panel.transform.Find("Button").GetComponent<Button>();
+        btn.gameObject.transform.Find("Image Panel/Image").GetComponent<Image>().sprite = items[currentItem].Icon;
         btn.onClick.AddListener(() => LevelUp(btn, items, currentItem));
         if(items[currentItem].Name == "Score Doppio"){
             scoreDoppioLevel = panel.transform.Find("Slider").GetComponent<Slider>();

@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class GroundGenerator : MonoBehaviour
 {
+    private static GroundGenerator _instance;
+    public static GroundGenerator Instance{
+        get{
+            if(_instance == null){
+                _instance = FindObjectOfType<GroundGenerator>();
+            }
+            return _instance;
+        }
+    }
+
     [Header("SPAWN CONTROLLER")]
     public Camera mainCamera;
     public Transform startPoint;
+    public float zStartPoint = 10f; ///DEFAULT 10
+    public bool isCutscene = true;
 
     [Header("SPAWN GROUND")]
     public PlatformTile[] tilePrefab;
@@ -20,8 +32,8 @@ public class GroundGenerator : MonoBehaviour
 
     void Start()
     {
-        startPoint = GameObject.FindWithTag("Player").transform;
-        Vector3 spawnPosition = startPoint.position - new Vector3(0, 0, 10);
+        // startPoint = GameObject.FindWithTag("Player").transform;
+        Vector3 spawnPosition = startPoint.position - new Vector3(0, 0, zStartPoint);
 
         //SPAWN EARLY TILE FIRST
         for (int i = 0; i < earlyTilePrefab.Length; i++) {
@@ -47,12 +59,12 @@ public class GroundGenerator : MonoBehaviour
     void Update()
     {
         //IF CAMERA POINT(ENDPOINT ON CURRENT TILE) NEAR 0
-        if (mainCamera.WorldToViewportPoint(spawnedTiles[0].endPoint.position).z < 0) {
+        if(mainCamera.WorldToViewportPoint(spawnedTiles[0].endPoint.position).z < 0 && isCutscene == false) {
             PlatformTile tileTmp = spawnedTiles[0];
             spawnedTiles[maxTile].gameObject.SetActive(true);
             spawnedTiles.RemoveAt(0);
             SpawnTile(tileTmp);
-
+            
             ///ADD TILE TO LIST spawnedTiles
             spawnedTiles.Add(tileTmp);
         }
