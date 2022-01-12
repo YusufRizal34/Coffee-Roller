@@ -32,7 +32,6 @@ public class TutorialUI : MonoBehaviour {
                     tutorialUI[i].SetActive(false);
                     if(_tutorialIndex == tutorialUI.Length) {
                         GameManager.Instance.isTutorial = false;
-                        Cursor.lockState = CursorLockMode.None;
                         tutorial.SetActive(false);
                     }
                 }
@@ -40,7 +39,11 @@ public class TutorialUI : MonoBehaviour {
         }
 
         if(_tutorialIndex!=tutorialUI.Length) {
-            if(Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) {
+            if(Input.GetKeyDown(KeyCode.Space)) {
+                _tutorialIndex++;
+            }
+            if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
                 _tutorialIndex++;
             }
         }

@@ -13,9 +13,9 @@ public class Obstacle : MonoBehaviour, IInteractable
         var objects = FindObjectOfType<CharacterControllers>();
         
         if(objects.Invisible == true){
+            AudioManager.instance.Play("Obstacle Destroy");
             GameManager.Instance.currentCoin += 5;
             gameObject.SetActive(false);
-            AudioManager.instance.Play("Obstacle Destroy");
         }
         else{
             if(objects.maxStumble > 0){
