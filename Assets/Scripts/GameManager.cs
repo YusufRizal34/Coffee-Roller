@@ -114,6 +114,11 @@ public class GameManager : MonoBehaviour
         if(specialMode != null){
             specialMode.maxValue   = specialModeCoin;
         }
+
+        if(gameCamera1 != null && gameCamera2 != null){
+            print(gameCamera1.transform.position);
+            print(gameCamera2.transform.position);
+        }
     }
 
     private void Update(){
@@ -416,6 +421,10 @@ public class GameManager : MonoBehaviour
         return UserDataManager.Progress.character[current].isUnlock;
     }
 
+    public bool ShowIsTutorialDone(){
+        return UserDataManager.Progress.IsTutorialDone;
+    }
+
     #endregion
 
     ///SET USER DATA MANAGER VALUE
@@ -457,6 +466,11 @@ public class GameManager : MonoBehaviour
 
     public void AddCurrentScore(double currentScore){
         UserDataManager.Progress.CurrentScore = currentScore;
+        UserDataManager.Save();
+    }
+
+    public void AddTutorialDone(){
+        UserDataManager.Progress.IsTutorialDone = true;
         UserDataManager.Save();
     }
     

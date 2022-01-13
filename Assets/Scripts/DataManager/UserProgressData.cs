@@ -5,6 +5,7 @@ public class UserProgressData
 {
     public int currentCharacterID;
     public int usedCharacter;
+    public bool isTutorialDone;
     public List<Characters> character;
 
     public double coin;
@@ -21,6 +22,7 @@ public class UserProgressData
     public int levelSecondShot;
 
     public int UsedCharacter{ get{ return usedCharacter; } set{ usedCharacter = value; } }
+    public bool IsTutorialDone{ get{ return isTutorialDone; } set{ isTutorialDone = value; } }
     public int CurrentCharacter{ get{ return currentCharacterID; } set{ currentCharacterID = value; } }
 
     public double Coin{ get{ return coin; } set{ coin = value; } }
