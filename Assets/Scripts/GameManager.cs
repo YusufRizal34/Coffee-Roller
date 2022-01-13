@@ -382,7 +382,7 @@ public class GameManager : MonoBehaviour
     }
 
     public double ShowCurrentCoin(){
-        return UserDataManager.Progress.CurrentCoin;
+        return (int)UserDataManager.Progress.CurrentCoin;
     }
 
     public double ShowCurrentScore(){
