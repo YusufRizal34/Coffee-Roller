@@ -51,7 +51,7 @@ public class TutorialUI : MonoBehaviour {
                 }
             }
             else {
-                GameManager.Instance.AddTutorialDone();
+                GameManager.Instance.SetTutorialDone();
                 return;
             }
         }

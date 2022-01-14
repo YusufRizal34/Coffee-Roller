@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     public List<IBuffable> buff = new List<IBuffable>();
     public GameObject toggleMuteOn;
-    private bool isMute = true;
+    private bool isMute;
 
     [Header("CUTSCENE CONTROLLER")]
     public CinemachineVirtualCamera gameCamera1;
@@ -87,8 +87,6 @@ public class GameManager : MonoBehaviour
     public bool isCutscene = true;
 
     private void Awake(){
-        isPause = false;
-        isTutorial = false;
         Application.targetFrameRate = 120;
         
         SwithCanvas();
@@ -114,11 +112,6 @@ public class GameManager : MonoBehaviour
         if(specialMode != null){
             specialMode.maxValue   = specialModeCoin;
         }
-
-        if(gameCamera1 != null && gameCamera2 != null){
-            print(gameCamera1.transform.position);
-            print(gameCamera2.transform.position);
-        }
     }
 
     private void Update(){
@@ -133,19 +126,26 @@ public class GameManager : MonoBehaviour
     private void SwithCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
-                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Remove();
                 UserDataManager.Load();
                 GameManager.Instance.AddCoin(100000);
+                GameManager.Instance.SetSoundMuted(true);
+                isMute = GameManager.Instance.ShowIsSoundMuted();
+                AudioManager.instance.Play("BGM Main");
             break;
             case CanvasType.MainMenu :
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
+                isMute = GameManager.Instance.ShowIsSoundMuted();
+                CheckIsMute();
                 toggleMuteOn = GameObject.FindWithTag("ToggleOn");
+                CheckMuteButton();
             break;
             case CanvasType.PlayScene :
+                isPause = false;
+                isTutorial = false;
                 if(FindObjectOfType<AudioManager>()){
                     AudioManager.instance.Stop("BGM Main");
                     AudioManager.instance.Play("BGM Gameplay");
@@ -271,14 +271,21 @@ public class GameManager : MonoBehaviour
 
     public void MuteToggle(){
         isMute = !isMute;
+        CheckIsMute();
+        CheckMuteButton();
+        GameManager.Instance.SetSoundMuted(isMute);
+    }
 
+    public void CheckIsMute(){
         if (isMute == false){
             AudioListener.volume = 0;
         }
         else{
             AudioListener.volume = 1;
         }
+    }
 
+    public void CheckMuteButton(){
         toggleMuteOn.SetActive(isMute);
     }
 
@@ -425,6 +432,10 @@ public class GameManager : MonoBehaviour
         return UserDataManager.Progress.IsTutorialDone;
     }
 
+    public bool ShowIsSoundMuted(){
+        return UserDataManager.Progress.IsSoundMuted;
+    }
+
     #endregion
 
     ///SET USER DATA MANAGER VALUE
@@ -469,8 +480,13 @@ public class GameManager : MonoBehaviour
         UserDataManager.Save();
     }
 
-    public void AddTutorialDone(){
+    public void SetTutorialDone(){
         UserDataManager.Progress.IsTutorialDone = true;
+        UserDataManager.Save();
+    }
+
+    public void SetSoundMuted(bool value){
+        UserDataManager.Progress.IsSoundMuted = value;
         UserDataManager.Save();
     }
     
