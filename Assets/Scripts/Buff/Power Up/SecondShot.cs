@@ -6,7 +6,13 @@ public class SecondShot : MonoBehaviour, IInteractable, IBuffable
 {
     private string buffName;
     public float duration = 3f;
-    
+
+    public int rotatespeed = 1;
+
+    void Update()
+    {
+        transform.Rotate(0, rotatespeed, 0, Space.World);
+    }
     public string BuffName{ get{ return buffName; } }
     public float FinishTime{
         get{ return duration; }

@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    public static GameManager Instance {
+    public static GameManager Instance{
         get{
             if(_instance == null){
                 _instance = FindObjectOfType<GameManager>();
@@ -70,13 +70,23 @@ public class GameManager : MonoBehaviour
     public Slider specialMode;
 
     public List<IBuffable> buff = new List<IBuffable>();
-    public CinemachineVirtualCamera gameCamera;
     public GameObject toggleMuteOn;
-    private bool isMute = true;
+    private bool isMute;
 
-    private void Awake() {
-        isPause = false;
-        isTutorial = false;
+    [Header("CUTSCENE CONTROLLER")]
+    public CinemachineVirtualCamera gameCamera1;
+    public CinemachineVirtualCamera gameCamera2;
+    
+    private float currentDuration;
+    public float duration = 3f; ///DEFAULT 3
+    private float CutSceneDuration{
+        get{ return currentDuration; }
+        set{ currentDuration = Mathf.Clamp(value, 0, duration); }
+    }
+
+    public bool isCutscene = true;
+
+    private void Awake(){
         Application.targetFrameRate = 120;
         
         SwithCanvas();
@@ -104,7 +114,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void Update(){
         UIUpdate();
         if(coinFromTrack == specialModeCoin && isSpecialMode == false){
             isSpecialMode = !isSpecialMode;
@@ -116,33 +126,43 @@ public class GameManager : MonoBehaviour
     private void SwithCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
-                AudioManager.instance.Play("BGM Main");
                 UserDataManager.Remove();
                 UserDataManager.Load();
                 GameManager.Instance.AddCoin(100000);
+                GameManager.Instance.SetSoundMuted(true);
+                isMute = GameManager.Instance.ShowIsSoundMuted();
+                AudioManager.instance.Play("BGM Main");
             break;
             case CanvasType.MainMenu :
                 UserDataManager.Load();
                 if(UserDataManager.Progress.character == null || UserDataManager.Progress.character.Count < character.Length){
                     GameManager.Instance.LoadCharacter();
                 }
+                isMute = GameManager.Instance.ShowIsSoundMuted();
+                CheckIsMute();
                 toggleMuteOn = GameObject.FindWithTag("ToggleOn");
+                CheckMuteButton();
             break;
             case CanvasType.PlayScene :
+                isPause = false;
+                isTutorial = false;
                 if(FindObjectOfType<AudioManager>()){
                     AudioManager.instance.Stop("BGM Main");
+                    AudioManager.instance.Play("BGM Gameplay");
                 }
                 UserDataManager.Load();
                 int currentCharacter    = GameManager.Instance.ShowUsedCharacter();
-                CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>());
+                CharacterControllers players = Instantiate(character[currentCharacter].GetComponent<CharacterControllers>(), transform.position, character[currentCharacter].transform.rotation);
                 characterControllers = players;
                 if(character[currentCharacter].Name == "Liberica"){
                     players.IncreaseStumble(1);
                 }
                 characterPosition       = GameObject.FindWithTag("Player");
-		        gameCamera              = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
-                gameCamera.Follow       = characterControllers.transform;
-                gameCamera.LookAt       = characterControllers.transform;
+		        gameCamera1             = GameObject.FindWithTag("MainCamera").GetComponent<CinemachineVirtualCamera>();
+                gameCamera1.LookAt      = characterControllers.transform;
+                gameCamera1.Follow      = characterControllers.transform;
+		        gameCamera2             = GameObject.FindWithTag("CutSceneCamera").GetComponent<CinemachineVirtualCamera>();
+                gameCamera2.LookAt      = characterControllers.transform;
                 currentCoinText         = GameObject.FindWithTag("CurrentCoin").GetComponent<Text>();
                 currentScoreText        = GameObject.FindWithTag("CurrentScore").GetComponent<Text>();
                 break;
@@ -187,7 +207,16 @@ public class GameManager : MonoBehaviour
                 pauseMenu.SetActive(false);
                 Time.timeScale = 1;
             }
+
+            CutSceneDuration += Time.deltaTime;
+            if(CutSceneDuration >= duration){
+                gameCamera2.gameObject.SetActive(false);
+                isCutscene = false;
+                GroundGenerator.Instance.isCutscene = false;
+            }
+
             specialMode.value = coinFromTrack;
+
             if (characterPosition.transform.position.y < fallPositionY) Result();
             currentCoinText.text    = currentCoin.ToString();
             currentScoreText.text   = currentScore.ToString();
@@ -204,56 +233,6 @@ public class GameManager : MonoBehaviour
         else if(type == CanvasType.PlayerSelectionScene){
             coinText.text           = ShowCoin().ToString();
         }
-    }
-
-    public void BuffUpdate(){
-        for(int i = 0; i < buff.Count; i++){
-            buff[i].FinishTime -= Time.deltaTime;
-            // Debug.Log(buff[i].FinishTime);
-
-            if(buff[i].FinishTime <= 0){
-                buff[i].Finished(characterControllers);
-                buff.Remove(buff[i]);
-            }
-        }
-    }
-
-    public void AddBuff(IBuffable buffs){
-        bool isOnList = false;
-        for(int i = 0; i < buff.Count; i++){
-            if(buff[i].BuffName == buffs.BuffName){
-                isOnList = true;
-                buff[i].FinishTime = FinishTimeWithLevel(buffs);
-                break;
-            }
-        }
-
-        if(isOnList != true){
-            buffs.FinishTime = FinishTimeWithLevel(buffs);
-            buff.Add(buffs);
-            buffs.Apply(characterControllers);
-        }
-    }
-
-    private void SpecialMode(){
-        GameManager.Instance.AddBuff(new CaffeineBoost());
-    }
-
-    private float FinishTimeWithLevel(IBuffable buffs){
-        if(buffs.BuffName == "SecondShot"){
-            return buffs.FinishTime *= ShowLevelSecondShot();
-        }
-        else if(buffs.BuffName == "ExtrShot"){
-            return buffs.FinishTime *= ShowLevelExtraShot();
-        }
-        else if(buffs.BuffName == "LongBlack"){
-            return buffs.FinishTime *= ShowLevelLongBlack();
-        }
-        else if(buffs.BuffName == "ScoreDoppio"){
-            return buffs.FinishTime *= ShowLevelScoreDoppio();
-        }
-
-        return buffs.FinishTime;
     }
 
     public void Result(){
@@ -290,15 +269,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void MuteToggle()
-    {
+    public void MuteToggle(){
         isMute = !isMute;
+        CheckIsMute();
+        CheckMuteButton();
+        GameManager.Instance.SetSoundMuted(isMute);
+    }
+
+    public void CheckIsMute(){
         if (isMute == false){
             AudioListener.volume = 0;
         }
         else{
             AudioListener.volume = 1;
         }
+    }
+
+    public void CheckMuteButton(){
         toggleMuteOn.SetActive(isMute);
     }
 
@@ -310,8 +297,7 @@ public class GameManager : MonoBehaviour
         BackMainMenu();
     }
 
-    public void BackMainMenu()
-    {
+    public void BackMainMenu(){
         LoadScene("MainMenu");
     }
 
@@ -332,6 +318,61 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("OpeningScene");
 	}
 
+    ///BUFF SYSTEM
+    #region BUFF
+
+    public void BuffUpdate(){
+        for(int i = 0; i < buff.Count; i++){
+            buff[i].FinishTime -= Time.deltaTime;
+            Debug.Log(buff[i].FinishTime);
+
+            if(buff[i].FinishTime <= 0){
+                buff[i].Finished(characterControllers);
+                buff.Remove(buff[i]);
+            }
+        }
+    }
+
+    public void AddBuff(IBuffable buffs){
+        bool isOnList = false;
+        for(int i = 0; i < buff.Count; i++){
+            if(buff[i].BuffName == buffs.BuffName){
+                isOnList = true;
+                buff[i].FinishTime = FinishTimeWithLevel(buffs);
+                break;
+            }
+        }
+
+        if(isOnList != true){
+            buffs.FinishTime = FinishTimeWithLevel(buffs);
+            buff.Add(buffs);
+            buffs.Apply(characterControllers);
+        }
+    }
+
+    private float FinishTimeWithLevel(IBuffable buffs){
+        if(buffs.BuffName == "SecondShot"){
+            return buffs.FinishTime *= ShowLevelSecondShot();
+        }
+        else if(buffs.BuffName == "ExtrShot"){
+            return buffs.FinishTime *= ShowLevelExtraShot();
+        }
+        else if(buffs.BuffName == "LongBlack"){
+            return buffs.FinishTime *= ShowLevelLongBlack();
+        }
+        else if(buffs.BuffName == "ScoreDoppio"){
+            return buffs.FinishTime *= ShowLevelScoreDoppio();
+        }
+
+        return buffs.FinishTime;
+    }
+
+    private void SpecialMode(){
+        GameManager.Instance.AddBuff(new CaffeineBoost());
+    }
+
+    #endregion
+
     ///GET USER DATA MANAGER VALUE
     #region GET USERDATA
 
@@ -348,7 +389,7 @@ public class GameManager : MonoBehaviour
     }
 
     public double ShowCurrentCoin(){
-        return UserDataManager.Progress.CurrentCoin;
+        return (int)UserDataManager.Progress.CurrentCoin;
     }
 
     public double ShowCurrentScore(){
@@ -385,6 +426,14 @@ public class GameManager : MonoBehaviour
 
     public bool ShowUnlockCharacter(int current){
         return UserDataManager.Progress.character[current].isUnlock;
+    }
+
+    public bool ShowIsTutorialDone(){
+        return UserDataManager.Progress.IsTutorialDone;
+    }
+
+    public bool ShowIsSoundMuted(){
+        return UserDataManager.Progress.IsSoundMuted;
     }
 
     #endregion
@@ -428,6 +477,16 @@ public class GameManager : MonoBehaviour
 
     public void AddCurrentScore(double currentScore){
         UserDataManager.Progress.CurrentScore = currentScore;
+        UserDataManager.Save();
+    }
+
+    public void SetTutorialDone(){
+        UserDataManager.Progress.IsTutorialDone = true;
+        UserDataManager.Save();
+    }
+
+    public void SetSoundMuted(bool value){
+        UserDataManager.Progress.IsSoundMuted = value;
         UserDataManager.Save();
     }
     

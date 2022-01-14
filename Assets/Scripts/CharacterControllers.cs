@@ -17,6 +17,8 @@ public class CharacterControllers : MonoBehaviour
     public bool IsShielded{ get; set; }
     public bool IsSpeedUp{ get; set; }
 
+    public bool isCutScene;
+
 	[Header("ANDROID CONTROLLER")]
 	private bool swipeUp, swipeDown;
 	private bool isDraging = false;
@@ -109,69 +111,75 @@ public class CharacterControllers : MonoBehaviour
 
         transform.Rotate(new Vector3(currentSpeed / 2, 0, 0), Space.Self);
         _controller.Move(moving * Time.deltaTime);
+        
     }
 
     private Vector3 KeyboardMovement(){
         currentXPosition = 0;
 
-        if(Input.GetKey("left"))
-        {
-            currentXPosition = -CurrentSpeed;
-        }
+        if(GameManager.Instance.isCutscene != true){
+            if(Input.GetKey("left") )
+            {
+                currentXPosition = -CurrentSpeed;
+            }
 
-        if(Input.GetKey("right"))
-        {
-            currentXPosition = CurrentSpeed;
-        }
+            if(Input.GetKey("right"))
+            {
+                currentXPosition = CurrentSpeed;
+            }
 
-        if(Input.GetKeyDown("space")){
-            if(_controller.isGrounded){
-                currentYPosition = initialJumpVelocity;
-                AudioManager.instance.Play("Character Jump");
+            if(Input.GetKeyDown("space")){
+                if(_controller.isGrounded){
+                    currentYPosition = initialJumpVelocity;
+                    AudioManager.instance.Play("Character Jump");
+                }
             }
         }
+        
         Vector3 moving = new Vector3(currentXPosition * dodgeSpeed, currentYPosition, CurrentSpeed);
         return moving;
     }
 
     private Vector3 AndroidMovement(){
-        currentXPosition = Input.acceleration.x;
+        if(GameManager.Instance.isCutscene != true){
+            currentXPosition = Input.acceleration.x;
 
-        //CHECK IF TOUCHED
-        if (Input.touches.Length > 0)
-        {
-            if (Input.touches[0].phase == TouchPhase.Began)
+            //CHECK IF TOUCHED
+            if (Input.touches.Length > 0)
             {
-                isDraging = true;
-                startTouch = Input.touches[0].position;
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    isDraging = true;
+                    startTouch = Input.touches[0].position;
+                }
+                else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+                {
+                    isDraging = false;
+                    Reset();
+                }
             }
-            else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+
+            swipeDelta = Vector2.zero;
+
+            if (isDraging)
             {
-                isDraging = false;
+                // if (Input.touches.Length < 0)
+                //     swipeDelta = Input.touches[0].position - startTouch;
+                if (Input.GetMouseButton(0))
+                    swipeDelta = (Vector2)Input.mousePosition - startTouch;
+            }
+
+            if (swipeDelta.magnitude > 100)
+            {
+                float x = swipeDelta.x;
+                float y = swipeDelta.y;
+                if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
+                {
+                    if (y > 0) currentYPosition = initialJumpVelocity;
+                    AudioManager.instance.Play("Character Jump");
+                }
                 Reset();
             }
-        }
-
-        swipeDelta = Vector2.zero;
-
-        if (isDraging)
-        {
-            // if (Input.touches.Length < 0)
-            //     swipeDelta = Input.touches[0].position - startTouch;
-            if (Input.GetMouseButton(0))
-                swipeDelta = (Vector2)Input.mousePosition - startTouch;
-        }
-
-        if (swipeDelta.magnitude > 100)
-        {
-            float x = swipeDelta.x;
-            float y = swipeDelta.y;
-            if (Mathf.Abs(x) < Mathf.Abs(y) && _controller.isGrounded)
-            {
-                if (y > 0) currentYPosition = initialJumpVelocity;
-                AudioManager.instance.Play("Character Jump");
-            }
-            Reset();
         }
 
         Vector3 moving = new Vector3(currentXPosition * tiltingDodgeSpeed, currentYPosition, CurrentSpeed);
