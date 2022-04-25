@@ -57,8 +57,8 @@ public class Chest : MonoBehaviour
     {
         lastChestOpen = (ulong)DateTime.Now.Ticks;
         PlayerPrefs.SetString("LastChestOpen", lastChestOpen.ToString());
-        GameManager.Instance.addCoin(250);
-        GameManager.Instance.updateCoin();
+        GameManager.Instance.AddCoin(250);
+/*        GameManager.Instance.updateCoin();*/
         chestButton.interactable = false;
     }
 

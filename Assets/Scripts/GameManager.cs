@@ -13,6 +13,7 @@ public enum CanvasType{
     ResultScene,
     ShopScene,
     PlayerSelectionScene,
+    CafeScene,
 }
 
 [System.Serializable]
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
         isTutorial = false;
         Application.targetFrameRate = 120;
         
-        SwithCanvas();
+        SwitchCanvas();
 
         if(coinText != null){
             coinText.text   = UserDataManager.Progress.Coin.ToString();
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
         BuffUpdate();
     }
 
-    private void SwithCanvas(){
+    private void SwitchCanvas(){
         switch(type){
             case CanvasType.OpeningScene:
                 AudioManager.instance.Play("BGM Main");
@@ -181,6 +182,10 @@ public class GameManager : MonoBehaviour
                 UserDataManager.Load();
                 coinText            = GameObject.FindWithTag("Coin").GetComponent<Text>();
             break;
+            case CanvasType.CafeScene :
+                UserDataManager.Load();
+                coinText = GameObject.FindWithTag("Coin").GetComponent<Text>();
+                break;
             default :
             break;
         }
@@ -232,6 +237,9 @@ public class GameManager : MonoBehaviour
         }
         else if(type == CanvasType.PlayerSelectionScene){
             coinText.text           = ShowCoin().ToString();
+        }
+        else if(type == CanvasType.CafeScene){
+            coinText.text = ShowCoin().ToString();
         }
     }
 
