@@ -310,6 +310,10 @@ public class GameManager : MonoBehaviour
     public void LoadGame(){
         SceneManager.LoadScene("OpeningScene");
 	}
+    public void Cafe()
+    {
+        SceneManager.LoadScene("Cafe");
+    }
 
     ///BUFF SYSTEM
     #region BUFF
