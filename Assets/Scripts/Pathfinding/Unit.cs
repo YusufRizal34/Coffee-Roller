@@ -1,18 +1,27 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
 
 
-	public Transform target;
+	public Transform[] target;
+	public int currentTarget;
 	float speed = 1;
 	Vector3[] path;
 	int targetIndex;
 
+
 	void Start()
+    {
+		currentTarget = Random.Range(0, target.Length);
+		PathRequestManager.RequestPath(transform.position, target[currentTarget].position, OnPathFound);
+	}
+
+	void LateUpdate()
 	{
-		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+		PathRequestManager.RequestPath(transform.position, target[currentTarget].position, OnPathFound);
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
@@ -22,7 +31,7 @@ public class Unit : MonoBehaviour
 			path = newPath;
 			targetIndex = 0;
 			StopCoroutine("FollowPath");
-			StartCoroutine("FollowPath");
+			StartCoroutine("FollowPath");	
 		}
 	}
 
@@ -39,6 +48,7 @@ public class Unit : MonoBehaviour
 					yield break;
 				}
 				currentWaypoint = path[targetIndex];
+/*				print(currentWaypoint);*/
 			}
 
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
@@ -67,4 +77,6 @@ public class Unit : MonoBehaviour
 			}
 		}
 	}
+
+
 }

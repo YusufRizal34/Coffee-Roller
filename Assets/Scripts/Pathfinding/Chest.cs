@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Chest : MonoBehaviour
 {
-    public float msToWait = 108000.0f;
+    public float msToWait = 5000.0f;
     private Text chestTimer;
     private Button chestButton;
     private ulong lastChestOpen;
@@ -69,7 +70,7 @@ public class Chest : MonoBehaviour
 
         if (secondsLeft < 0)
         {
-            chestTimer.text = "ready!";
+            chestTimer.text = "COLLECT";
 
             return true;
         }
