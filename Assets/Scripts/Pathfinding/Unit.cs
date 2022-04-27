@@ -5,8 +5,7 @@ using System.Collections.Generic;
 public class Unit : MonoBehaviour
 {
 
-
-	public Transform[] target;
+	public List<Kursi> target = new List<Kursi>();
 	public int currentTarget;
 	float speed = 1;
 	Vector3[] path;
@@ -15,13 +14,13 @@ public class Unit : MonoBehaviour
 
 	void Start()
     {
-		currentTarget = Random.Range(0, target.Length);
-		PathRequestManager.RequestPath(transform.position, target[currentTarget].position, OnPathFound);
+		currentTarget = CompareDistance();
+		PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);
 	}
 
 	void LateUpdate()
 	{
-		PathRequestManager.RequestPath(transform.position, target[currentTarget].position, OnPathFound);
+		PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
@@ -51,7 +50,7 @@ public class Unit : MonoBehaviour
 /*				print(currentWaypoint);*/
 			}
 
-			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, new Vector3(currentWaypoint.x, transform.position.y, currentWaypoint.z), speed * Time.deltaTime) ;
 			yield return null;
 
 		}
@@ -78,5 +77,39 @@ public class Unit : MonoBehaviour
 		}
 	}
 
+	private int CompareDistance()
+    {
+		int minDistance = -1;
+		for (int i = 0; i < target.Count; i++)
+        {
 
+
+			if (target[i].IsSit == true) 
+			{
+				target.Remove(target[i]);
+				break;
+			}
+
+			if(minDistance < 0)
+            {
+				minDistance = i;
+            }
+
+			else if (Vector3.Distance(transform.position, target[i].transform.position) < Vector3.Distance(transform.position, target[minDistance].transform.position) && i !=0)
+			{
+				minDistance = i;
+			}
+			print(minDistance);
+		}
+		return minDistance;
+    }
+
+	private void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "Interactable")
+		{
+			var objects = other.gameObject.GetComponent<IInteractable>();
+			objects.Interaction();
+		}
+	}
 }

@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kursi : MonoBehaviour
+public class Kursi : MonoBehaviour, IInteractable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool IsSit { get; set; }
 
-    // Update is called once per frame
-    void Update()
+    public void Interaction()
     {
-        
+        IsSit = !IsSit;
     }
 }
