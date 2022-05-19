@@ -24,26 +24,24 @@ public class Unit : MonoBehaviour
 
 	void LateUpdate()
 	{
-        if (cekSampai != true)
-        {
-            PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);
-        }
-        else
-        {
-/*            print("mbarang");*/
-        }
+/*            PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);*/
     }
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
 	{
 		if (pathSuccessful)
 		{
+			StopCoroutine("FollowPath");
 			path = newPath;
 			targetIndex = 0;
-			StopCoroutine("FollowPath");
-			StartCoroutine("FollowPath");
+			float distanceFromTarget = Vector3.Distance(target[currentTarget].gameObject.transform.position, transform.position);
+
+			if (distanceFromTarget > 0.5f)
+			{
+				StartCoroutine("FollowPath");
+			}
 		}
-	}
+    }
 
 	IEnumerator FollowPath()
 	{
@@ -57,14 +55,9 @@ public class Unit : MonoBehaviour
 				{
 					targetIndex = 0;
 					path = new Vector3[0];
-/*                    if (cekEksekusi != true)
-                    {
-                        print("tidak sampai");
-                    }*/
                     yield break;
 				}
 				currentWaypoint = path[targetIndex];
-/*                print("tes print");*/
             }
 
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);

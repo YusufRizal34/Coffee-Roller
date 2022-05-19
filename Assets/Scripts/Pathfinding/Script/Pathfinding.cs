@@ -72,7 +72,7 @@ public class Pathfinding : MonoBehaviour
 		if (pathSuccess)
 		{
 			waypoints = RetracePath(startNode, targetNode);
-			
+
 		}
 		requestManager.FinishedProcessingPath(waypoints, pathSuccess);
 
@@ -88,13 +88,13 @@ public class Pathfinding : MonoBehaviour
 			path.Add(currentNode);
 			currentNode = currentNode.parent;
 		}
-		Vector3[] waypoints = SimplifyPath(path);
+		Vector3[] waypoints = SimplifyPath(path, endNode);
 		Array.Reverse(waypoints);
 		return waypoints;
 
 	}
 
-	Vector3[] SimplifyPath(List<Node> path)
+	Vector3[] SimplifyPath(List<Node> path, Node endNode)
 	{
 		List<Vector3> waypoints = new List<Vector3>();
 		Vector2 directionOld = Vector2.zero;
@@ -104,9 +104,13 @@ public class Pathfinding : MonoBehaviour
 			Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
 			if (directionNew != directionOld)
 			{
-				waypoints.Add(path[i].worldPosition);
+				waypoints.Add(path[i-1].worldPosition);
 			}
 			directionOld = directionNew;
+		}
+		if (waypoints.Count < 1)
+		{
+			waypoints.Add(endNode.worldPosition);
 		}
 		return waypoints.ToArray();
 	}
