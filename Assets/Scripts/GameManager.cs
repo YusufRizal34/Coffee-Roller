@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public Slider specialMode;
 
-    public List<IBuffable> buff = new List<IBuffable>();
+/*    public List<IBuffable> buff = new List<IBuffable>();*/
     public GameObject toggleMuteOn;
     private bool isMute = true;
 
@@ -124,11 +124,11 @@ public class GameManager : MonoBehaviour
 
     private void Update(){
         UIUpdate();
-        if(coinFromTrack == specialModeCoin && isSpecialMode == false){
+/*        if(coinFromTrack == specialModeCoin && isSpecialMode == false){
             isSpecialMode = !isSpecialMode;
             SpecialMode();
-        }
-        BuffUpdate();
+        }*/
+ /*       BuffUpdate();*/
     }
 
     private void SwitchCanvas(){
@@ -322,7 +322,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Cafe");
     }
-
+/*
     ///BUFF SYSTEM
     #region BUFF
 
@@ -336,9 +336,9 @@ public class GameManager : MonoBehaviour
                 buff.Remove(buff[i]);
             }
         }
-    }
+    }*/
 
-    public void AddBuff(IBuffable buffs){
+/*    public void AddBuff(IBuffable buffs){
         bool isOnList = false;
         for(int i = 0; i < buff.Count; i++){
             if(buff[i].BuffName == buffs.BuffName){
@@ -353,9 +353,9 @@ public class GameManager : MonoBehaviour
             buff.Add(buffs);
             buffs.Apply(characterControllers);
         }
-    }
+    }*/
 
-    private float FinishTimeWithLevel(IBuffable buffs){
+/*    private float FinishTimeWithLevel(IBuffable buffs){
         if(buffs.BuffName == "SecondShot"){
             return buffs.FinishTime *= ShowLevelSecondShot();
         }
@@ -370,13 +370,13 @@ public class GameManager : MonoBehaviour
         }
 
         return buffs.FinishTime;
-    }
+    }*/
 
-    private void SpecialMode(){
+/*    private void SpecialMode(){
         GameManager.Instance.AddBuff(new CaffeineBoost());
     }
 
-    #endregion
+    #endregion*/
 
     ///GET USER DATA MANAGER VALUE
     #region GET USERDATA

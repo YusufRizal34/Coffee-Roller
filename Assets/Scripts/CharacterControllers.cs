@@ -213,7 +213,7 @@ public class CharacterControllers : MonoBehaviour
         rb.AddForce(0,5,-1, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other){
+/*    private void OnTriggerEnter(Collider other){
         if(other.tag == "Interactable"){
             var objects = other.GetComponent<IInteractable>();
             if(objects != null) objects.Interaction();
@@ -230,5 +230,5 @@ public class CharacterControllers : MonoBehaviour
                 if(objects != null) objects.Interaction();
             }
         }
-    }
+    }*/
 }

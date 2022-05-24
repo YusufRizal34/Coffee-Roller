@@ -6,25 +6,21 @@ public class Unit : MonoBehaviour
 {
 
 
-	public List<Kursi> target = new List<Kursi>();
-	public int currentTarget;
+	public Queue<Kursi> target = new Queue<Kursi>();
 	float speed = 1;
 	Vector3[] path;
 	int targetIndex;
-	public Transform Kasir;
-	public bool cekSampai;
-	bool cekEksekusi;
 
 	void Start()
 	{
-		CariKursi();
+/*		CariKursi();
         currentTarget = CompareDistance();
-        PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);
+        PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);*/
     }
 
 	void LateUpdate()
 	{
-/*            PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);*/
+        /*PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);*/
     }
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
@@ -34,12 +30,13 @@ public class Unit : MonoBehaviour
 			StopCoroutine("FollowPath");
 			path = newPath;
 			targetIndex = 0;
-			float distanceFromTarget = Vector3.Distance(target[currentTarget].gameObject.transform.position, transform.position);
+/*			float distanceFromTarget = Vector3.Distance(target.gameObject.transform.position, transform.position);
 
 			if (distanceFromTarget > 0.5f)
 			{
-				StartCoroutine("FollowPath");
-			}
+				
+			}*/
+			StartCoroutine("FollowPath");
 		}
     }
 
@@ -87,7 +84,7 @@ public class Unit : MonoBehaviour
 		}
 	}
 
-    private int CompareDistance()
+   /* private int CompareDistance()
     {
         int minDistance = -1;
         for (int i = 0; i < target.Count; i++)
@@ -107,32 +104,26 @@ public class Unit : MonoBehaviour
             {
                 minDistance = i;
             }
-           /* print(minDistance);*/
+           *//* print(minDistance);*//*
         }
         return minDistance;
-    }
+    }*/
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Interactable")
 		{
 			var objects = other.gameObject.GetComponent<IInteractable>();
-			objects.Interaction();
+			objects.InteraksiPelayan(gameObject);
 		}
 	}
 
-	IEnumerator OtwKasir()
-	{
-		yield return new WaitForSeconds(5);
-/*		print("OtwKasir " + Time.time);*/
-	}
-
-	void CariKursi()
+/*	void CariKursi()
     {
 		Kursi[] kursi = Object.FindObjectsOfType<Kursi>();
 		for(int i=0; i<kursi.Length; i++)
         {
 			target.Add(kursi[i]);
         }
-    }
+    }*/
 }

@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interaction();
+    void InteraksiPelayan(GameObject pelayan);
+    void InteraksiPelanggan();
 }

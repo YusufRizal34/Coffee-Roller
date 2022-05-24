@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class Kursi : MonoBehaviour, IInteractable
 {
-    public bool IsSit { get; set; }
-
-    public void Interaction()
+    public bool isserve; // mengecek apakah pelayan sudah mengantarkan makanan
+    public bool IsServe 
     {
-        IsSit = !IsSit;
+        get { return isserve; }
+        set { isserve = value; }
+    }
+
+    public bool issit; // mengecek pelanggan di meja
+    public bool IsSit 
+    { 
+        get { return issit; }
+        set { issit = value; } 
+    }
+
+    public void InteraksiPelanggan()
+    {
+        IsSit = !IsSit; 
+    }
+    public void InteraksiPelayan(GameObject pelayan)
+    {
+        if (IsSit == true && IsServe == false)
+        {
+            PathRequestManager.RequestPath(pelayan.transform.position, this.transform.position, pelayan.GetComponent<Unit>().OnPathFound);
+        }
     }
 }
