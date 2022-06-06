@@ -25,7 +25,7 @@ public class PathRequestManager : MonoBehaviour
 		PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
 		instance.pathRequestQueue.Enqueue(newRequest);
 		instance.TryProcessNext();
-		print("sembarang");
+/*		print("sembarang");*/
 	}
 
 	void TryProcessNext()

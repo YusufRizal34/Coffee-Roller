@@ -5,11 +5,14 @@ using System.Collections.Generic;
 public class Unit : MonoBehaviour
 {
 
-
 	public Queue<Kursi> target = new Queue<Kursi>();
-	float speed = 1;
+	public float speed = 5;
 	Vector3[] path;
 	int targetIndex;
+	public bool isProsesUrut;
+	Kursi currentTarget;
+	public Transform tempatPelayan;
+	public bool cekSeseorangRequest;
 
 	void Start()
 	{
@@ -113,8 +116,16 @@ public class Unit : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Interactable")
 		{
-			var objects = other.gameObject.GetComponent<IInteractable>();
-			objects.InteraksiPelayan(gameObject);
+			var objects = other.gameObject.GetComponent<Kursi>();
+/*			objects.InteraksiPelayan(gameObject);*/
+			isProsesUrut = false;
+			objects.IsServe = true;
+			TryProccessingNext();
+        }
+		else if(other.gameObject.tag == "TempatPelayan")
+        {
+			isProsesUrut = false;
+			TryProccessingNext();
 		}
 	}
 
@@ -126,4 +137,28 @@ public class Unit : MonoBehaviour
 			target.Add(kursi[i]);
         }
     }*/
+	
+	public void RequestNomerKursi(Kursi kursi)
+    {
+		cekSeseorangRequest = true;
+		target.Enqueue(kursi);
+		TryProccessingNext();
+/*        PathRequestManager.RequestPath(this.transform.position, kursi.transform.position, OnPathFound);*/
+    }
+
+	public void TryProccessingNext()
+    {
+		 if (target.Count > 0 && isProsesUrut == false)
+            {
+			currentTarget = target.Dequeue();
+			isProsesUrut = true;
+			PathRequestManager.RequestPath(this.transform.position, currentTarget.transform.position, OnPathFound);
+			} 
+		
+        else if (target.Count < 1 && isProsesUrut == false && cekSeseorangRequest == false) 
+        {
+			isProsesUrut = true;
+			PathRequestManager.RequestPath(this.transform.position, tempatPelayan.position, OnPathFound);
+		}
+    }
 }

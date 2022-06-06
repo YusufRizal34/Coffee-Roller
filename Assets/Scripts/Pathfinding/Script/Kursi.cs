@@ -26,7 +26,13 @@ public class Kursi : MonoBehaviour, IInteractable
     {
         if (IsSit == true && IsServe == false)
         {
-            PathRequestManager.RequestPath(pelayan.transform.position, this.transform.position, pelayan.GetComponent<Unit>().OnPathFound);
+            pelayan.GetComponent<Unit>().RequestNomerKursi(this);
+            /*PathRequestManager.RequestPath(pelayan.transform.position, this.transform.position, pelayan.GetComponent<Unit>().OnPathFound);*/
+        }
+        else if(IsSit == true && IsServe == true)
+        {
+
         }
     }
+
 }
