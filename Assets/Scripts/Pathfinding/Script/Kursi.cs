@@ -20,18 +20,26 @@ public class Kursi : MonoBehaviour, IInteractable
 
     public void InteraksiPelanggan()
     {
-        IsSit = !IsSit; 
+        /*IsSit = !IsSit;*/
+        
+        if(IsSit == false)
+        {
+            issit = true;
+            Unit pelayan = FindObjectOfType<Unit>();
+            pelayan.GetComponent<Unit>().RequestNomerKursi(this);
+        }
+
     }
     public void InteraksiPelayan(GameObject pelayan)
     {
         if (IsSit == true && IsServe == false)
         {
-            pelayan.GetComponent<Unit>().RequestNomerKursi(this);
+      /*      pelayan.GetComponent<Unit>().RequestNomerKursi(this);*/
             /*PathRequestManager.RequestPath(pelayan.transform.position, this.transform.position, pelayan.GetComponent<Unit>().OnPathFound);*/
         }
         else if(IsSit == true && IsServe == true)
         {
-
+            pelayan.GetComponent<Unit>().Kembali();
         }
     }
 

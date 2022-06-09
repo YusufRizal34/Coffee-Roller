@@ -55,7 +55,8 @@ public class Unit : MonoBehaviour
 				{
 					targetIndex = 0;
 					path = new Vector3[0];
-                    yield break;
+					print("mbarang");
+					yield break;
 				}
 				currentWaypoint = path[targetIndex];
             }
@@ -117,17 +118,18 @@ public class Unit : MonoBehaviour
 		if (other.gameObject.tag == "Interactable")
 		{
 			var objects = other.gameObject.GetComponent<Kursi>();
-/*			objects.InteraksiPelayan(gameObject);*/
-			isProsesUrut = false;
+            objects.InteraksiPelayan(gameObject);
+            isProsesUrut = false;
 			objects.IsServe = true;
+			cekSeseorangRequest = false;
 			TryProccessingNext();
         }
-		else if(other.gameObject.tag == "TempatPelayan")
+        else if (other.gameObject.tag == "TempatPelayan")
         {
-			isProsesUrut = false;
-			TryProccessingNext();
-		}
-	}
+            isProsesUrut = false;
+            TryProccessingNext();
+        }
+    }
 
 /*	void CariKursi()
     {
@@ -140,25 +142,34 @@ public class Unit : MonoBehaviour
 	
 	public void RequestNomerKursi(Kursi kursi)
     {
-		cekSeseorangRequest = true;
-		target.Enqueue(kursi);
+        cekSeseorangRequest = true;
+        target.Enqueue(kursi);
 		TryProccessingNext();
-/*        PathRequestManager.RequestPath(this.transform.position, kursi.transform.position, OnPathFound);*/
-    }
+		/*        PathRequestManager.RequestPath(this.transform.position, kursi.transform.position, OnPathFound);*/
+		print(target.Count);
+	}
 
 	public void TryProccessingNext()
     {
-		 if (target.Count > 0 && isProsesUrut == false)
+		 if (isProsesUrut == false && cekSeseorangRequest == true)
             {
-			currentTarget = target.Dequeue();
+			currentTarget = target.Peek();
 			isProsesUrut = true;
-			PathRequestManager.RequestPath(this.transform.position, currentTarget.transform.position, OnPathFound);
-			} 
-		
-        else if (target.Count < 1 && isProsesUrut == false && cekSeseorangRequest == false) 
+            PathRequestManager.RequestPath(this.transform.position, currentTarget.transform.position, OnPathFound);
+			target.Dequeue();
+        }
+
+        else if (isProsesUrut == false && cekSeseorangRequest == false)
         {
-			isProsesUrut = true;
-			PathRequestManager.RequestPath(this.transform.position, tempatPelayan.position, OnPathFound);
-		}
+            isProsesUrut = true;
+            PathRequestManager.RequestPath(this.transform.position, tempatPelayan.position, OnPathFound);
+			isProsesUrut = false;
+        }
+    }
+	public void Kembali()
+    {
+		print("aku g percoyo");
+		cekSeseorangRequest = false;
+		TryProccessingNext();
     }
 }

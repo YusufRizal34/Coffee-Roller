@@ -71,8 +71,8 @@ public class Pelanggan : MonoBehaviour
         {
             var objects = other.gameObject.GetComponent<IInteractable>();
             objects.InteraksiPelanggan();
-            Unit pelayan = FindObjectOfType<Unit>();
-            objects.InteraksiPelayan(pelayan.gameObject);
+/*            Unit pelayan = FindObjectOfType<Unit>();
+            objects.InteraksiPelayan(pelayan.gameObject);*/
         }
         else
         {
