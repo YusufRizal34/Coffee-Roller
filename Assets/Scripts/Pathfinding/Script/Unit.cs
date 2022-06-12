@@ -121,7 +121,14 @@ public class Unit : MonoBehaviour
             objects.InteraksiPelayan(gameObject);
             isProsesUrut = false;
 			objects.IsServe = true;
-			cekSeseorangRequest = false;
+			if(target.Count > 0)
+            {
+				cekSeseorangRequest = true;
+			}
+            else
+            {
+				cekSeseorangRequest = false;
+			}
 			TryProccessingNext();
         }
         else if (other.gameObject.tag == "TempatPelayan")
@@ -146,7 +153,7 @@ public class Unit : MonoBehaviour
         target.Enqueue(kursi);
 		TryProccessingNext();
 		/*        PathRequestManager.RequestPath(this.transform.position, kursi.transform.position, OnPathFound);*/
-		print(target.Count);
+		print("1");
 	}
 
 	public void TryProccessingNext()
@@ -157,18 +164,18 @@ public class Unit : MonoBehaviour
 			isProsesUrut = true;
             PathRequestManager.RequestPath(this.transform.position, currentTarget.transform.position, OnPathFound);
 			target.Dequeue();
-        }
+		}
 
         else if (isProsesUrut == false && cekSeseorangRequest == false)
         {
-            isProsesUrut = true;
+			isProsesUrut = true;
             PathRequestManager.RequestPath(this.transform.position, tempatPelayan.position, OnPathFound);
 			isProsesUrut = false;
         }
     }
 	public void Kembali()
     {
-		print("aku g percoyo");
+/*		print("aku g percoyo");*/
 		cekSeseorangRequest = false;
 		TryProccessingNext();
     }

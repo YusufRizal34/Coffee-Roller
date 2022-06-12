@@ -7,8 +7,21 @@ public class Pelanggan : MonoBehaviour
     public float speed = 5;
     Vector3[] path;
     int targetIndex;
+	public Transform keKursi;
 	Transform keKasir;
 	Transform kePintu;
+
+	void Start()
+    {
+		Kursi[] jumlahKursi = FindObjectsOfType<Kursi>();
+		for(int i = 0; i < jumlahKursi.Length; i++)
+        {
+            if (!jumlahKursi[i].IsSit)
+            {
+				PathRequestManager.RequestPath(this.transform.position, jumlahKursi[i].gameObject.transform.position, OnPathFound);
+			}
+        }
+	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
 	{
