@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Kursi : MonoBehaviour, IInteractable
 {
+    public Pelanggan pelanggan;
     public bool isserve; // mengecek apakah pelayan sudah mengantarkan makanan
-    public bool IsServe 
+    public bool IsServe
     {
         get { return isserve; }
         set { isserve = value; }
@@ -22,11 +23,14 @@ public class Kursi : MonoBehaviour, IInteractable
     {
         /*IsSit = !IsSit;*/
         
-        if(IsSit == false)
+        if(IsSit == true && IsServe == false)
         {
-            issit = true;
             Unit pelayan = FindObjectOfType<Unit>();
             pelayan.GetComponent<Unit>().RequestNomerKursi(this);
+        }
+        else if(IsSit == true && IsServe == true)
+        {
+            pelanggan.habisMakan();
         }
 
     }

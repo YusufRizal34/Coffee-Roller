@@ -121,6 +121,7 @@ public class Unit : MonoBehaviour
             objects.InteraksiPelayan(gameObject);
             isProsesUrut = false;
 			objects.IsServe = true;
+			objects.InteraksiPelanggan();
 			if(target.Count > 0)
             {
 				cekSeseorangRequest = true;
@@ -153,7 +154,6 @@ public class Unit : MonoBehaviour
         target.Enqueue(kursi);
 		TryProccessingNext();
 		/*        PathRequestManager.RequestPath(this.transform.position, kursi.transform.position, OnPathFound);*/
-		print("1");
 	}
 
 	public void TryProccessingNext()

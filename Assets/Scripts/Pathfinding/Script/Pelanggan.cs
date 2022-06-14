@@ -7,9 +7,9 @@ public class Pelanggan : MonoBehaviour
     public float speed = 5;
     Vector3[] path;
     int targetIndex;
-	public Transform keKursi;
-	Transform keKasir;
-	Transform kePintu;
+/*	public Transform keKursi;*/
+/*	public Transform keKasir;*/
+	public Transform kePintu;
 
 	void Start()
     {
@@ -18,7 +18,9 @@ public class Pelanggan : MonoBehaviour
         {
             if (!jumlahKursi[i].IsSit)
             {
+				jumlahKursi[i].IsSit = true;
 				PathRequestManager.RequestPath(this.transform.position, jumlahKursi[i].gameObject.transform.position, OnPathFound);
+				break;
 			}
         }
 	}
@@ -82,14 +84,25 @@ public class Pelanggan : MonoBehaviour
     {
         if (other.gameObject.tag == "Interactable")
         {
-            var objects = other.gameObject.GetComponent<IInteractable>();
+            var objects = other.gameObject.GetComponent<Kursi>();
             objects.InteraksiPelanggan();
+			objects.pelanggan = this;
 /*            Unit pelayan = FindObjectOfType<Unit>();
             objects.InteraksiPelayan(pelayan.gameObject);*/
         }
-        else
-        {
-
-        }
     }
+	private void OnTriggerExit(Collider other)
+    {
+		if (other.gameObject.tag == "Interactable")
+		{
+			var objects = other.gameObject.GetComponent<Kursi>();
+			objects.IsSit = false;
+			objects.IsServe = false;
+		}
+	}
+
+	public void habisMakan()
+    {
+		PathRequestManager.RequestPath(this.transform.position, kePintu.position, OnPathFound);
+	}
 }
