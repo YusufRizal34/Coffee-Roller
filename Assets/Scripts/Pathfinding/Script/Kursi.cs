@@ -5,6 +5,7 @@ using UnityEngine;
 public class Kursi : MonoBehaviour, IInteractable
 {
     public Pelanggan pelanggan;
+    public GameObject FloatingTextPrefab;
     public bool isserve; // mengecek apakah pelayan sudah mengantarkan makanan
     public bool IsServe
     {
@@ -30,6 +31,7 @@ public class Kursi : MonoBehaviour, IInteractable
         }
         else if(IsSit == true && IsServe == true)
         {
+            ShowFloatingText();
             pelanggan.habisMakan();
         }
 
@@ -43,8 +45,25 @@ public class Kursi : MonoBehaviour, IInteractable
         }
         else if(IsSit == true && IsServe == true)
         {
+/*            if (FloatingTextPrefab)
+            {
+                ShowFloatingText();
+            }*/
+
             pelayan.GetComponent<Unit>().Kembali();
         }
+    }
+
+    void ShowFloatingText()
+    {
+        print("iki floating text");
+        Instantiate(FloatingTextPrefab, transform.position, Quaternion.identity);
+        StartCoroutine("FloatingTextTenggelam");
+    }
+
+    IEnumerator FloatingTextTenggelam()
+    {
+        yield return new WaitForSeconds(5);
     }
 
 }

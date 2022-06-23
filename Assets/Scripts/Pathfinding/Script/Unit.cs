@@ -13,9 +13,11 @@ public class Unit : MonoBehaviour
 	Kursi currentTarget;
 	public Transform tempatPelayan;
 	public bool cekSeseorangRequest;
+	public bool cekKembali;
 
 	void Start()
 	{
+		cekKembali = true;
 /*		CariKursi();
         currentTarget = CompareDistance();
         PathRequestManager.RequestPath(this.transform.position, target[currentTarget].transform.position, OnPathFound);*/
@@ -134,6 +136,7 @@ public class Unit : MonoBehaviour
         }
         else if (other.gameObject.tag == "TempatPelayan")
         {
+			cekKembali = true;
             isProsesUrut = false;
             TryProccessingNext();
         }
@@ -158,15 +161,16 @@ public class Unit : MonoBehaviour
 
 	public void TryProccessingNext()
     {
-		 if (isProsesUrut == false && cekSeseorangRequest == true)
+		 if (isProsesUrut == false && cekSeseorangRequest == true && cekKembali == true)
             {
 			currentTarget = target.Peek();
 			isProsesUrut = true;
             PathRequestManager.RequestPath(this.transform.position, currentTarget.transform.position, OnPathFound);
 			target.Dequeue();
+			cekKembali = false;
 		}
 
-        else if (isProsesUrut == false && cekSeseorangRequest == false)
+        else if (isProsesUrut == false && cekKembali == false)
         {
 			isProsesUrut = true;
             PathRequestManager.RequestPath(this.transform.position, tempatPelayan.position, OnPathFound);

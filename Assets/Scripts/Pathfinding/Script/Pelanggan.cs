@@ -10,6 +10,7 @@ public class Pelanggan : MonoBehaviour
 /*	public Transform keKursi;*/
 /*	public Transform keKasir;*/
 	public Transform kePintu;
+	int totalKursi;
 
 	void Start()
     {
@@ -22,6 +23,14 @@ public class Pelanggan : MonoBehaviour
 				PathRequestManager.RequestPath(this.transform.position, jumlahKursi[i].gameObject.transform.position, OnPathFound);
 				break;
 			}
+            else
+            {
+				totalKursi++;
+            }
+        }
+		if(totalKursi == jumlahKursi.Length)
+        {
+			habisMakan();
         }
 	}
 

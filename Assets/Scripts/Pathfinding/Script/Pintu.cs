@@ -6,6 +6,6 @@ public class Pintu : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        Destroy(other);
+        Destroy(other.gameObject);
     }
 }
