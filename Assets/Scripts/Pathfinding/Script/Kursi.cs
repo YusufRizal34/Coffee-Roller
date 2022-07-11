@@ -32,6 +32,7 @@ public class Kursi : MonoBehaviour, IInteractable
         else if(IsSit == true && IsServe == true)
         {
             ShowFloatingText();
+            GameManager.Instance.AddCoin(5);
             pelanggan.habisMakan();
         }
 
