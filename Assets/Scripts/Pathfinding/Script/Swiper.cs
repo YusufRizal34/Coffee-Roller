@@ -37,7 +37,7 @@ public class Swiper : MonoBehaviour
 
                 rotX -= deltaY * Time.deltaTime * rotspeed * dir;
                 rotY += deltaX * Time.deltaTime * rotspeed * dir;
-                rotX = Mathf.Clamp(rotX, -20f, 20f);
+                rotX = Mathf.Clamp(rotX, 0f, 20f);
                 rotY = Mathf.Clamp(rotY, -20f, 20f);
 
                 cam.transform.eulerAngles = new Vector3(rotX, rotY, 0f);
